@@ -9,6 +9,9 @@ public class SettingsManager : MonoBehaviour
     bool sbs = false;
     bool selfie = false;
     int serverPort = 26659;
+    int angleX = 0;
+    int angleY = 0;
+    int angleZ = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -18,6 +21,9 @@ public class SettingsManager : MonoBehaviour
             if (arg == "-sbs") sbs = true;
             if (arg == "-selfie") selfie = true;
             if (arg.StartsWith("-port=")) serverPort = int.Parse(arg.Substring(6));
+            if (arg.StartsWith("-angleX=")) angleX = int.Parse(arg.Substring(7));
+            if (arg.StartsWith("-angleY=")) angleY = int.Parse(arg.Substring(7));
+            if (arg.StartsWith("-angleZ=")) angleZ = int.Parse(arg.Substring(7));
         }
 
         if (sbs) {
@@ -40,6 +46,9 @@ public class SettingsManager : MonoBehaviour
         }
 
         GameObject.Find("IO").GetComponent<IO>().StartServer(serverPort);
+
+        Quaternion relativeRotation = Quaternion.Euler((float)angleX, (float)angleY, (float)angleZ);
+        GameObject.Find("DorsalDeviceManager").GetComponent<DorsalDeviceManager>().SetControllerRelativeRotations(relativeRotation);
     }
 
     // Update is called once per frame

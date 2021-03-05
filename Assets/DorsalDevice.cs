@@ -23,7 +23,7 @@ public class DorsalDevice {
     double minTimeDiff = 0.1; // s
     private int samples = 50;
     private int samplesTaken = 0;
-    Quaternion relativeRotation;
+    Quaternion relativeRotation = Quaternion.identity;
     Vector3 dRight;
     Vector3 dUp;
     Vector3 dForward;
@@ -68,15 +68,11 @@ public class DorsalDevice {
         velX = new double[samples];  // m/s
         velY = new double[samples];
         velZ = new double[samples];
-        /*accelX = new double[samples];  // g
-        accelY = new double[samples];
-        accelZ = new double[samples];*/
         accel = new Vector3[samples];  // g
         gyro = new Quaternion[samples];  // deg
         gyroRate = new Vector3[samples];  // deg/s
         dGravity = new Vector3[samples];  // g
         timestamp = new double[samples];  // seconds
-
 
         screenCentre = GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().position;
         screenNormal = -GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().forward;
@@ -85,6 +81,10 @@ public class DorsalDevice {
         screenHeight = GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().localScale.y * 10f;
 
         SetDeviceType(_deviceType);
+    }
+
+    public void SetRelativeRotation(Quaternion _relativeRotation) {
+        relativeRotation = _relativeRotation;
     }
 
     public void SetDeviceType(DeviceType _deviceType) {
@@ -146,12 +146,12 @@ public class DorsalDevice {
     }
 
     private void OnRotationAction(InputAction.CallbackContext obj) {
-        deviceRotation = obj.action.ReadValue<Quaternion>();
+        deviceRotation = relativeRotation * obj.action.ReadValue<Quaternion>();
     }
 
     private void OnPoseAction(InputAction.CallbackContext obj) {
         UnityEngine.XR.OpenXR.Input.Pose pose = (UnityEngine.XR.OpenXR.Input.Pose)obj.action.ReadValueAsObject();
-        deviceRotation = pose.rotation;
+        deviceRotation = pose.rotation * relativeRotation;
         devicePosition = pose.position;
 
         if (obj.time > timestamp[0]) {
@@ -163,9 +163,9 @@ public class DorsalDevice {
         inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceRotation, out Quaternion dRot);
         inputDevice.TryGetFeatureValue(UnityEngine.XR.CommonUsages.deviceAngularVelocity, out Vector3 dRotRate);
 
-        dForward = relativeRotation * (dRot * Vector3.forward);
-        dUp = relativeRotation * (dRot * Vector3.up);
-        dRight = relativeRotation * (dRot * Vector3.right);
+        dForward = (dRot * relativeRotation * Vector3.forward);
+        dUp = (dRot * relativeRotation * Vector3.up);
+        dRight = (dRot * relativeRotation * Vector3.right);
 
         for (int i = samplesTaken - 1; i >= 1; i--) {
             this.pos[i] = this.pos[i - 1];
