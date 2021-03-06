@@ -46,7 +46,7 @@ You can set these command line parameters via the app's Properties in Steam or v
 
 SteamVR's OpenXR runtime has problems with Oculus controllers; at time of writing, the face buttons are not recognised when pressed, but when the thumbstick is pressed, it acts as if the thumbstick _and_ both face buttons are pressed.
 
-Based on previous experience, I would expect Steam to fix this within a few days.
+~~Based on previous experience, I would expect Steam to fix this within a few days.~~ This has been fixed in SteamVR beta v1.16.9; you can switch to the beta branch by following these instructions: https://www.vive.com/us/support/vive/category_howto/optin-to-steamvr-beta.html
 
 In the mean time, try running DorsalVR via the Oculus app. (This is not possible via Virtual Desktop, unfortunately for Oculus Quest users, but can be done via Oculus Link.) If you use [Revive](https://github.com/LibreVR/Revive/wiki) you may need to disable or uninstall it to prevent it automatically opening Oculus VR apps in SteamVR.
 
