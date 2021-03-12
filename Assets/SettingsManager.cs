@@ -40,7 +40,11 @@ public class SettingsManager : MonoBehaviour
             GameObject.Find("Selfie Stick").GetComponent<DorsalDriver>().deviceType = DorsalDevice.DeviceType.HMD;
             GameObject.Find("Selfie Stick").GetComponent<DorsalDriver>().ConnectToChosenDevice();
             GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().position = new Vector3(0, 0, GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().position.z);
-            GameObject.Find("Monitor Board (Right Eye)").GetComponent<Transform>().position = GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().position;
+            try { 
+                GameObject.Find("Monitor Board (Right Eye)").GetComponent<Transform>().position = GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().position;
+            } catch {
+
+            }
         } else {
             GameObject.Find("Room").SetActive(true);
         }
