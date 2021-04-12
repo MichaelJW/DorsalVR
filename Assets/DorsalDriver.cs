@@ -23,6 +23,7 @@ public class DorsalDriver : MonoBehaviour {
     public void ConnectToChosenDevice() {
         switch (deviceType) {
             case DorsalDevice.DeviceType.Undefined:
+                dorsalDevice = null;
                 break;
             case DorsalDevice.DeviceType.HMD:
                 dorsalDevice = dorsalDeviceManager.hmdDorsalDevice;
