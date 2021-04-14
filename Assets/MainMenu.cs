@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Ruccho.GraphicsCapture;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+using UnityEngine.XR.Interaction.Toolkit;
 
 public class MainMenu : MonoBehaviour
 {
@@ -43,5 +46,12 @@ public class MainMenu : MonoBehaviour
     public void CloseMenu() {
         _uiPointer.SetActive(false);
         this.gameObject.SetActive(false);
+    }
+
+    public void Update() {
+        RaycastResult raycastResult;
+        _uiPointer.GetComponent<XRRayInteractor>().TryGetCurrentUIRaycastResult(out raycastResult);
+        Debug.Log(raycastResult.worldPosition);
+        GameObject.Find("Sphere").transform.position = raycastResult.worldPosition;
     }
 }

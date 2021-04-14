@@ -27,6 +27,8 @@ public class IO : MonoBehaviour
     }
 
     public void StartServer(int _serverPort) {
+        EndServer();
+
         serverPort = _serverPort;
         var r = new System.Random();
         serverId = (uint)r.Next();
