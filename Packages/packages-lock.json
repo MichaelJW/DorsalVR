@@ -139,6 +139,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "io.github.ruccho.graphicscapture": {
+      "version": "https://github.com/ruccho/UnityGraphicsCapture.git?path=/UnityGraphicsCapture/Packages/io.github.ruccho.graphicscapture",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "f2ad02dbf5a5842805456473bc69d20b68b62c29"
+    },
     "com.unity.modules.ai": {
       "version": "1.0.0",
       "depth": 0,

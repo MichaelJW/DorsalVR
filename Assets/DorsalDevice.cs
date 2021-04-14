@@ -74,11 +74,11 @@ public class DorsalDevice {
         dGravity = new Vector3[samples];  // g
         timestamp = new double[samples];  // seconds
 
-        screenCentre = GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().position;
-        screenNormal = -GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().forward;
+        screenCentre = GameObject.Find("Screen").GetComponent<Transform>().position;
+        screenNormal = -GameObject.Find("Screen").GetComponent<Transform>().forward;
         // Multiply by ten because the assets have a scale factor of 0.1
-        screenWidth = GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().localScale.x * 10f;
-        screenHeight = GameObject.Find("Monitor Board (Left Eye)").GetComponent<Transform>().localScale.y * 10f;
+        screenWidth = GameObject.Find("Screen").GetComponent<Transform>().localScale.x;
+        screenHeight = GameObject.Find("Screen").GetComponent<Transform>().localScale.y;
 
         SetDeviceType(_deviceType);
     }
