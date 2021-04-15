@@ -127,7 +127,7 @@ public class DorsalDevice {
                         inputDevice = allInputDevices[i];
 
                         poseAction = new InputAction();
-                        poseAction.AddBinding("<XRController>{LeftHand}/devicePose");
+                        poseAction.AddBinding("<XRController>{LeftHand}/pointer");
                         poseAction.performed += OnPoseAction;
                         poseAction.Enable();
                     }
@@ -136,7 +136,7 @@ public class DorsalDevice {
                         inputDevice = allInputDevices[i];
 
                         poseAction = new InputAction();
-                        poseAction.AddBinding("<XRController>{RightHand}/devicePose");
+                        poseAction.AddBinding("<XRController>{RightHand}/pointer");
                         poseAction.performed += OnPoseAction;
                         poseAction.Enable();
                     }
