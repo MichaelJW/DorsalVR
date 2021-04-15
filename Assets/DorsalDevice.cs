@@ -76,7 +76,6 @@ public class DorsalDevice {
 
         screenCentre = GameObject.Find("Screen").GetComponent<Transform>().position;
         screenNormal = -GameObject.Find("Screen").GetComponent<Transform>().forward;
-        // Multiply by ten because the assets have a scale factor of 0.1
         screenWidth = GameObject.Find("Screen").GetComponent<Transform>().localScale.x;
         screenHeight = GameObject.Find("Screen").GetComponent<Transform>().localScale.y;
 

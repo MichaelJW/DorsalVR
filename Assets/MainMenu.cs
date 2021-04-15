@@ -51,7 +51,6 @@ public class MainMenu : MonoBehaviour
     public void Update() {
         RaycastResult raycastResult;
         _uiPointer.GetComponent<XRRayInteractor>().TryGetCurrentUIRaycastResult(out raycastResult);
-        Debug.Log(raycastResult.worldPosition);
         GameObject.Find("Sphere").transform.position = raycastResult.worldPosition;
     }
 }
