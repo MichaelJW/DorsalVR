@@ -16,6 +16,7 @@ public class IO : MonoBehaviour
     private byte[] buffer = new byte[1024];
     private IPEndPoint[] slotEndPoints;
     private DateTime lastDataRequestedAt;
+    private bool dataHasBeenRequested = false;
 
     [SerializeField]
     DSUDeviceManager dsuDeviceManager;
@@ -93,6 +94,7 @@ public class IO : MonoBehaviour
                 message[20], message[21], BitConverter.ToString(message, 22, 6), clientEP.Port)
             );
             lastDataRequestedAt = System.DateTime.Now;
+            dataHasBeenRequested = true;
             if (message[20] == 1 || message[20] == 0) {  // wants controllers by slot
                 slotEndPoints[(int)message[21]] = clientEP;
             }
@@ -114,9 +116,8 @@ public class IO : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (System.DateTime.Now - lastDataRequestedAt > TimeSpan.FromSeconds(2)) {
-            Debug.Log("Try restarting server...");
-            EndServer();
+        if (dataHasBeenRequested & System.DateTime.Now - lastDataRequestedAt > TimeSpan.FromSeconds(2)) {
+            Debug.Log("Time has passed since last data request. Restarting server...");
             StartServer(serverPort);
         }
     }

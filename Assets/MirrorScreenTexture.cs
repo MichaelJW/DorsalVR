@@ -32,7 +32,9 @@ public class MirrorScreenTexture : MonoBehaviour
 
     private void UpdateFromSource() {
         Texture2D captureTex = client.GetTexture();
-        captureTex.filterMode = FilterMode.Point;
+        if (captureTex != null) {
+            captureTex.filterMode = FilterMode.Point;
+        }
 
         if (_middleEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
             _middleEyeScreen.GetComponent<Renderer>().material.mainTexture = captureTex;
