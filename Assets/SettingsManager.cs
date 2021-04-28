@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using Ruccho.GraphicsCapture;
+using UnityEngine.InputSystem;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class SettingsManager : MonoBehaviour
 
         ApplySettings();
 
+        InputSystem.AddDevice<SteeringWheel.SteeringWheelDorsalDevice>();
+
         GameObject.Find("IO").GetComponent<IO>().StartServer(serverPort);
     }
 
@@ -59,12 +62,12 @@ public class SettingsManager : MonoBehaviour
         screen.SetSBS3D(sbs);
         if (mountToHead) {
             room.SetActive(false);
-            headMount.GetComponent<DorsalDriver>().deviceType = DorsalDevice.DeviceType.HMD;
+            headMount.GetComponent<DorsalDriver>().deviceType = OldDorsalDevice.DeviceType.HMD;
             headMount.GetComponent<DorsalDriver>().ConnectToChosenDevice();
             screen.transform.localPosition = new Vector3(0, 0, 1.3f);
         } else {
             room.SetActive(true);
-            headMount.GetComponent<DorsalDriver>().deviceType = DorsalDevice.DeviceType.Undefined;
+            headMount.GetComponent<DorsalDriver>().deviceType = OldDorsalDevice.DeviceType.Undefined;
             headMount.GetComponent<DorsalDriver>().ConnectToChosenDevice();
             headMount.transform.localPosition = Vector3.zero;
             headMount.transform.localRotation = Quaternion.identity;
@@ -72,6 +75,6 @@ public class SettingsManager : MonoBehaviour
         }
 
         Quaternion relativeRotation = Quaternion.Euler((float)angleX, (float)angleY, (float)angleZ);
-        GameObject.Find("DorsalDeviceManager").GetComponent<DorsalDeviceManager>().SetControllerRelativeRotations(relativeRotation);
+        GameObject.Find("DorsalDeviceManager").GetComponent<OldDorsalDeviceManager>().SetControllerRelativeRotations(relativeRotation);
     }
 }

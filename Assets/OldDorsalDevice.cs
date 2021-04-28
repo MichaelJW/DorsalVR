@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using UnityEngine.XR.OpenXR.Input;
 
-public class DorsalDevice {
+public class OldDorsalDevice {
     // Hacky - for callback. Fix later.
     public DSU.DSUDevice callbackDSUDevice;
 
@@ -63,7 +63,7 @@ public class DorsalDevice {
         RightHand = 3
     }
 
-    public DorsalDevice(DeviceType _deviceType) {
+    public OldDorsalDevice(DeviceType _deviceType) {
         pos = new Vector3[samples];  // metres
         velX = new double[samples];  // m/s
         velY = new double[samples];

@@ -16,7 +16,7 @@ public class DSUDeviceManager : MonoBehaviour
     private bool devicesAreReady = false;
 
     [SerializeField]
-    DorsalDeviceManager dorsalDeviceManager;
+    OldDorsalDeviceManager dorsalDeviceManager;
 
     // Start is called before the first frame update
     void Start()

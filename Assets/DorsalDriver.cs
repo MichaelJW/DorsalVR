@@ -8,12 +8,12 @@ using UnityEngine.XR.OpenXR.Input;
 
 // Based on TrackedPoseDriver, but stripped down and modified to do what we need here
 public class DorsalDriver : MonoBehaviour {
-    DorsalDevice dorsalDevice;
+    OldDorsalDevice dorsalDevice;
 
     [SerializeField]
-    DorsalDeviceManager dorsalDeviceManager;
+    OldDorsalDeviceManager dorsalDeviceManager;
     [SerializeField]
-    public DorsalDevice.DeviceType deviceType;
+    public OldDorsalDevice.DeviceType deviceType;
 
     public void Start() {
         ConnectToChosenDevice();
@@ -22,16 +22,16 @@ public class DorsalDriver : MonoBehaviour {
 
     public void ConnectToChosenDevice() {
         switch (deviceType) {
-            case DorsalDevice.DeviceType.Undefined:
+            case OldDorsalDevice.DeviceType.Undefined:
                 dorsalDevice = null;
                 break;
-            case DorsalDevice.DeviceType.HMD:
+            case OldDorsalDevice.DeviceType.HMD:
                 dorsalDevice = dorsalDeviceManager.hmdDorsalDevice;
                 break;
-            case DorsalDevice.DeviceType.LeftHand:
+            case OldDorsalDevice.DeviceType.LeftHand:
                 dorsalDevice = dorsalDeviceManager.leftHandDorsalDevice;
                 break;
-            case DorsalDevice.DeviceType.RightHand:
+            case OldDorsalDevice.DeviceType.RightHand:
                 dorsalDevice = dorsalDeviceManager.rightHandDorsalDevice;
                 break;
             default:

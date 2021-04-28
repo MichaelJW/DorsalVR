@@ -129,13 +129,13 @@ namespace DSU {
         private ControllerInfo controllerInfo;
         private ControllerData controllerData;
 
-        private DorsalDevice _motionDevice;
-        public DorsalDevice motionDevice {
+        private OldDorsalDevice _motionDevice;
+        public OldDorsalDevice motionDevice {
             get { return _motionDevice; }
             set { _motionDevice = value; _motionDevice.callbackDSUDevice = this; }
         }
-        public DorsalDevice buttonDevice;
-        public DorsalDevice pointerDevice;
+        public OldDorsalDevice buttonDevice;
+        public OldDorsalDevice pointerDevice;
 
         private float minTimeBetweenPackets = 0.1f; // seconds
         private uint serverId;

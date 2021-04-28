@@ -1,0 +1,71 @@
+{
+    "name": "DolphinControls",
+    "maps": [
+        {
+            "name": "GameCube",
+            "id": "8b1f429f-d3e8-4548-942e-7f2eb47dc734",
+            "actions": [
+                {
+                    "name": "A",
+                    "type": "Button",
+                    "id": "5d62f93c-57b8-47b7-9dd0-ec59ca7549e6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "B",
+                    "type": "Button",
+                    "id": "d8cd58a9-4918-4f4a-8987-3a852a27e70c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left Stick X",
+                    "type": "Value",
+                    "id": "7d53ab81-ede9-44f8-a1f1-e9623ba93ff7",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "381b2c54-e329-4f2c-a3c6-d712fec40530",
+                    "path": "<Keyboard>/#(A)",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9cc9333e-b4c8-48a3-8a95-d766b60b6b09",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "B",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e787a5d1-b2a8-4726-9c2f-e949fb11acb4",
+                    "path": "<SteeringWheelDorsalDevice>/tilt",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Stick X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
