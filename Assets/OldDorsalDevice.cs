@@ -8,7 +8,7 @@ using UnityEngine.XR.OpenXR.Input;
 
 public class OldDorsalDevice {
     // Hacky - for callback. Fix later.
-    public DSU.DSUDevice callbackDSUDevice;
+    public OldDSU.DSUDevice callbackDSUDevice;
 
     // For internal representation of controller
     Vector3[] pos;

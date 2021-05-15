@@ -58,7 +58,7 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9cc9333e-b4c8-48a3-8a95-d766b60b6b09"",
-                    ""path"": """",
+                    ""path"": ""<XRController>/triggerPressed"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

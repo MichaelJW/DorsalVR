@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DSU {
+namespace OldDSU {
     // DSU code modifed from https://github.com/iwubcode/OpenTrackDSUServer
     public enum MessageType {
         VersionInfo = 0x100000,

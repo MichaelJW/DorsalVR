@@ -43,7 +43,7 @@ public class SettingsManager : MonoBehaviour
 
         InputSystem.AddDevice<SteeringWheel.SteeringWheelDorsalDevice>();
 
-        GameObject.Find("IO").GetComponent<IO>().StartServer(serverPort);
+        //GameObject.Find("IO").GetComponent<IO>().StartServer(serverPort);
     }
 
     public void SetSBS3D(bool isEnabled) {

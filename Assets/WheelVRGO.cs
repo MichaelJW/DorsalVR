@@ -20,7 +20,7 @@ public class WheelVRGO : MonoBehaviour
             controls.GameCube.Enable();
         } else {
             transform.rotation = Quaternion.AngleAxis((float)controls.GameCube.LeftStickX.ReadValueAsObject() * -90f, Vector3.forward);
-            Debug.Log((float)controls.GameCube.LeftStickX.ReadValueAsObject());
+            //Debug.Log((float)controls.GameCube.LeftStickX.ReadValueAsObject());
         }
     }
 }
