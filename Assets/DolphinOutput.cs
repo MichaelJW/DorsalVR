@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using DolphinDSUPacket;
 
-public class DolphinOutput : MonoBehaviour, DolphinControls.IGameCubeActions {
+public class DolphinOutput : MonoBehaviour {
     DolphinControls controls;
     DSUServer dsuServer;
     Packet packet;
@@ -12,13 +12,12 @@ public class DolphinOutput : MonoBehaviour, DolphinControls.IGameCubeActions {
     public void OnEnable() { 
         if (controls == null) {
             controls = new DolphinControls();
-            controls.GameCube.SetCallbacks(this);
         }
-        controls.GameCube.Enable();
+        controls.DolphinGCPad.Enable();
     }
 
     public void OnDisable() {
-        controls.GameCube.Disable();
+        controls.DolphinGCPad.Disable();
     }
 
     // Start is called before the first frame update
@@ -39,9 +38,9 @@ public class DolphinOutput : MonoBehaviour, DolphinControls.IGameCubeActions {
     void Update()
     {
 
-        packet.gcPad.aButton = (byte)(controls.GameCube.A.ReadValue<float>() * 255);
-        packet.gcPad.bButton = (byte)(controls.GameCube.B.ReadValue<float>() * 255);
-        packet.gcPad.mainStickX = (byte)((controls.GameCube.LeftStickX.ReadValue<float>() - 0.5) * 255);
+        packet.gcPad.aButton = (byte)(controls.DolphinGCPad.A.ReadValue<float>() * 255);
+        packet.gcPad.bButton = (byte)(controls.DolphinGCPad.B.ReadValue<float>() * 255);
+        packet.gcPad.mainStickX = (byte)((controls.DolphinGCPad.MainStickX.ReadValue<float>() - 0.5) * 255);
 
         Debug.Log(System.BitConverter.ToString(packet.GetMessageBytes(2)));
 
@@ -66,20 +65,19 @@ public class DolphinOutput : MonoBehaviour, DolphinControls.IGameCubeActions {
          * - we could allow the server to grab the bytes every X ms but this seems silly since DolphinOutput *knows* when the packet
          *   will be ready
          * 
+         * Well, the above works! Next up is to expand this to cover all inputs, for completeness. 
+         * There are several possible routes to choose from next; will consider that at the time based on what I feel like doing.
+         * To consider: 
+         *  - In some cases we will want a specific, unchangeable menu option that maps to a Dolphin input (particularly for hotkeys
+         *    like "save state") but will also want to offer the user the option to assign an input to this. A "MenuDevice" isn't
+         *    necessarily the best way of doing this, because we don't want the user to be able to un-assign the MenuDevice input.
+         *  - How do we let the user switch which DorsalDevice they're "holding"? For now, possibly just a menu; maybe a menu per
+         *    hand. This way each hand can hold a separate Wiimote, and we can swap which hand is holding Wiimote #1. Some devices
+         *    will be two-handed but maybe with the *option* to hold them in one hand (e.g. hold a steering wheel and a gun).
+         * 
          */
 
         //Debug.Log(string.Format("RVAO: {0}", controls.GameCube.A.ReadValueAsObject()));
         //Debug.Log(string.Format("RVAO: {0}", controls.GameCube.LeftStickX.ReadValueAsObject()));
-    }
-
-    void DolphinControls.IGameCubeActions.OnA(InputAction.CallbackContext context) {
-        Debug.Log("A was pressed.");
-    }
-
-    void DolphinControls.IGameCubeActions.OnB(InputAction.CallbackContext context) {
-        Debug.Log("B was pressed.");
-    }
-    void DolphinControls.IGameCubeActions.OnLeftStickX(InputAction.CallbackContext context) {
-        Debug.Log(string.Format("Left Stick X: {0}", context.ReadValueAsObject()));
     }
 }

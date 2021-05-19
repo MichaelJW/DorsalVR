@@ -2,7 +2,7 @@
     "name": "DolphinControls",
     "maps": [
         {
-            "name": "GameCube",
+            "name": "Dolphin/GCPad",
             "id": "8b1f429f-d3e8-4548-942e-7f2eb47dc734",
             "actions": [
                 {
@@ -22,9 +22,145 @@
                     "interactions": ""
                 },
                 {
-                    "name": "Left Stick X",
+                    "name": "X",
+                    "type": "Button",
+                    "id": "0ba24df7-2a34-4181-b996-35615d6254d9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Y",
+                    "type": "Button",
+                    "id": "1b3291c8-56c7-4571-85d8-e40b80c0c019",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Z",
+                    "type": "Button",
+                    "id": "d7177015-5303-44fb-99f3-990955abb31d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Start",
+                    "type": "Button",
+                    "id": "575340ce-15b7-49b4-83a7-3fd8618691f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Main Stick X",
                     "type": "Value",
                     "id": "7d53ab81-ede9-44f8-a1f1-e9623ba93ff7",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Main Stick Y",
+                    "type": "Value",
+                    "id": "6979b2f5-e27d-412e-8bfc-9d048cf663c3",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "C-Stick X",
+                    "type": "Value",
+                    "id": "8fd2b1ce-f5a5-4f16-8fe8-314704cd96d1",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "C-Stick Y",
+                    "type": "Value",
+                    "id": "65c18ef8-cac3-42d9-9e30-280d521fd114",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "L Trigger",
+                    "type": "Value",
+                    "id": "8a9f028c-a446-45e8-9852-172bb54cb46f",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "R Trigger",
+                    "type": "Value",
+                    "id": "4e501986-4438-45af-a922-18c021520fa9",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Up",
+                    "type": "Button",
+                    "id": "d44d3426-a3db-4d5d-b8a9-9fe1eac22789",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Down",
+                    "type": "Button",
+                    "id": "4f68898e-1d3d-4a5c-9cb1-53ae313453ed",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Left",
+                    "type": "Button",
+                    "id": "91e66df8-7219-46da-b56d-04dde3bdee25",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Right",
+                    "type": "Button",
+                    "id": "08467e25-1572-403d-8099-7e01d8140e5f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left Stick X",
+                    "type": "Value",
+                    "id": "46db065c-6aa5-48f7-83e9-015d66edfca1",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left Stick Y",
+                    "type": "Value",
+                    "id": "0fd48c1a-abfe-448d-9898-545db06f396f",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right Stick X",
+                    "type": "Value",
+                    "id": "d18923a4-9b6a-4039-a217-9c5341c63f5f",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right Stixk Y",
+                    "type": "Value",
+                    "id": "6a0f1b62-b685-4788-a60e-9bfdaef0e940",
                     "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": ""
@@ -60,7 +196,1042 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
+                    "action": "Main Stick X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c3e326d8-f84a-4e6d-af4b-9afbed9e9460",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "99207021-e8b0-4c6f-ac78-36e5fb5ba5a1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R Trigger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "581c21b5-e8da-44ef-a6ec-35f350a464d6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c55de01-3394-4952-a7b0-95ad43fd38c1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3756dde1-17c8-49a0-b84c-96f37ed5710d",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1a039d54-f7cc-4e3b-9b0a-a18f54c833d9",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ee40acda-5e70-4d1d-8284-5d1a06ee5e33",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
                     "action": "Left Stick X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c4ff8e38-4ef8-4f9c-9f47-3a1d0057dfba",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Stick Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f5a1828b-1ac4-4cf3-a5bf-15a00985992e",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Stixk Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd878fdb-03a6-4980-b048-5eff7ae7b11b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Stick X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dolphin/Wiimote",
+            "id": "3c78cb15-d3b9-4fae-9336-61cf7710be83",
+            "actions": [
+                {
+                    "name": "A",
+                    "type": "Button",
+                    "id": "2eb4291c-5263-4533-94e9-8e84f64524e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "B",
+                    "type": "Button",
+                    "id": "a367764f-27ab-43a2-b92f-6bee442088cf",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "One",
+                    "type": "Button",
+                    "id": "45322abc-af3e-4fd3-9c17-de8e87e72f47",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Two",
+                    "type": "Button",
+                    "id": "084da213-be32-4b0c-b1a0-ad061264531e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Minus",
+                    "type": "Button",
+                    "id": "8fa4af7f-2af7-4ca0-8ba8-2e1650a97e46",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Plus",
+                    "type": "Button",
+                    "id": "46bc8910-1695-4a4f-aca6-4ab762171d83",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Home",
+                    "type": "Button",
+                    "id": "31d9bfb1-6a88-4e06-940d-41f83b6eadac",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Accelerometer X",
+                    "type": "Value",
+                    "id": "3f6e0897-6684-44c5-870a-67c802b4619c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Accelerometer Y",
+                    "type": "Value",
+                    "id": "5865a9c4-6580-4c66-aabe-d4b61100aa14",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Accelerometer Z",
+                    "type": "Value",
+                    "id": "88cae884-3247-4f1a-b0d3-7c18816991b3",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Gyro Pitch",
+                    "type": "Value",
+                    "id": "914607d3-6e72-49eb-bd99-7a4308bcd20c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Gyro Yaw",
+                    "type": "Value",
+                    "id": "0cac6723-1ea2-44e8-a1c9-754c7e99c85a",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Gyro Roll",
+                    "type": "Value",
+                    "id": "91fe8096-e550-4e5d-9e7b-89f0521cdd4a",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Up",
+                    "type": "Button",
+                    "id": "01ac6988-eeb3-4067-b7f3-6a5383cfbf2d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Down",
+                    "type": "Button",
+                    "id": "0f5d7510-8dea-43a4-a317-737e9e6f018e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Left",
+                    "type": "Button",
+                    "id": "6a5a5a45-9648-4e4c-9269-6070e7706d44",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Right",
+                    "type": "Button",
+                    "id": "8c718c6f-cbf4-4da7-916d-35cf6be4e8e9",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Recenter",
+                    "type": "Button",
+                    "id": "5f66384f-65a9-4720-ad23-280eacbb76e2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Shake X",
+                    "type": "Button",
+                    "id": "16a41835-cb4e-4bf2-a7f0-e998d3345f48",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Shake Y",
+                    "type": "Button",
+                    "id": "ad2c44fa-392d-4817-a6e4-4f9d0f474a6c",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Shake Z",
+                    "type": "Button",
+                    "id": "1165a948-3f8e-4f20-b202-6b0cb95887e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "1e33419c-c8b0-4d0e-9089-e5ebf369a527",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0a152129-11da-4d35-ab5f-c49b87e576e7",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "B",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "62ab2aa1-f0c4-4d91-a8e6-5b2de8d3aad2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "One",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "10800db7-bc2e-4d18-834c-284c97307b9c",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Two",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c7106317-a877-40f2-9f1b-98ad8ccb3c6d",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Plus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "38207a07-6313-4876-9640-bb4c8f2cf5f2",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Minus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9a17a5d2-eaaf-4aab-8d83-d7b5a38d27e0",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Home",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a31771c1-abbd-4bab-ad26-f63c49c51521",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerometer X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7b2b7e89-bcca-4eed-8564-dd272f1704b0",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerometer Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "bd918059-713d-4f44-9dfd-93d1375d52ec",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerometer Z",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "afd600c0-6b28-478b-be9b-5e3c88ee34e6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gyro Pitch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9ea101f3-f534-44e1-a986-df0724d4aa7b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gyro Roll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "80da1a96-6a19-4092-9f3d-d87260af08e9",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Gyro Yaw",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "65d5c74f-e87b-41f6-8baa-b1f784e03b4d",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3d89f163-0280-4160-9217-7ace21b65f91",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1878af1d-ab20-46f6-a0bc-4366016d6ee7",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9e007377-2f74-48eb-a2fd-95ce17fe5fe1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7230df37-d602-43c1-8479-e27f33978ee6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Recenter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "34ae2bb9-393b-4ab2-bfb0-cf8a1d1dfd87",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shake X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2ed43e7f-7dbb-4966-a405-e6d795e13b3e",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shake Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7de1ba62-08ad-4a70-ba08-2ae1cb6e4d05",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shake Z",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dolphin/Nunchuk",
+            "id": "a8720965-e7b3-4efe-a20a-07daabde30f3",
+            "actions": [
+                {
+                    "name": "C",
+                    "type": "Button",
+                    "id": "daa60724-3b8f-4503-a256-4a2adeb619b2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Z",
+                    "type": "Button",
+                    "id": "b307bc87-aac1-4306-9144-389bcd5c2e81",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Stick X",
+                    "type": "Value",
+                    "id": "5dcac0e7-bbbd-4b92-8609-2519c03ec582",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Stick Y",
+                    "type": "Value",
+                    "id": "efbbdaf2-a65b-4d1f-a74a-3c0ec98f3fa2",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Accelerometer X",
+                    "type": "Value",
+                    "id": "9534ee29-2eae-483f-8dc8-355ea6055a42",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Accelerometer Y",
+                    "type": "Value",
+                    "id": "64dedc06-130f-4dba-9e8c-90e2beaca22a",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Accelerometer Z",
+                    "type": "Value",
+                    "id": "e25d6c3c-d0d4-497e-8ebf-9d026be3297c",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "6c7b1287-1d70-4b48-b3cf-6d501ff5603a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Z",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "970f4380-3da3-4969-ac70-33eeed5bb137",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "C",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6393dfc1-7a66-410b-a55a-f2d316f90cde",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stick X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7cf77f3b-1251-4e38-bb83-bc429c9aa516",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Stick Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "37463765-21e8-477f-8cd8-78a94c5b1672",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerometer Z",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1e9f93b8-14c2-467c-9027-e4319bcd0fbf",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerometer X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9247b4bb-c1ba-4cc5-bc2e-2121d5abdb91",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Accelerometer Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dolphin/ClassicController",
+            "id": "4559053d-5ec9-4e39-a37b-10f0849b57f6",
+            "actions": [
+                {
+                    "name": "A",
+                    "type": "Button",
+                    "id": "41819247-f2e4-409b-80c0-f4c8214fdd97",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "B",
+                    "type": "Button",
+                    "id": "7fec8229-d0e1-4222-a4f9-39c8cfc3a813",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "X",
+                    "type": "Button",
+                    "id": "cad82d43-49be-41ef-9430-11ac0dc221e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Y",
+                    "type": "Button",
+                    "id": "95568cd9-2bf1-4386-ab5c-48338dd956af",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "L",
+                    "type": "Value",
+                    "id": "1dc51f92-99b5-4ff4-bbc6-78c611867554",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "R",
+                    "type": "Value",
+                    "id": "6a64b04b-69c9-4be7-a36e-963dd91ef815",
+                    "expectedControlType": "Analog",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ZL",
+                    "type": "Button",
+                    "id": "fc99bc02-5150-4564-b365-74827edccc8b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "ZR",
+                    "type": "Button",
+                    "id": "e752d711-b218-41f6-97c9-4dc4d6225901",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Minus",
+                    "type": "Button",
+                    "id": "08e089e7-1347-462c-b6d2-f1a8c2793a97",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Plus",
+                    "type": "Button",
+                    "id": "8b205221-94de-435e-b070-1cda22143525",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Home",
+                    "type": "Button",
+                    "id": "8e5d30dc-2827-463e-be84-1db03c4c1422",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Up",
+                    "type": "Button",
+                    "id": "be4ae787-0328-478b-8cda-623bee1e801a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Down",
+                    "type": "Button",
+                    "id": "e19bbab1-8301-4e44-ada1-9565866e843b",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Left",
+                    "type": "Button",
+                    "id": "c8dfbbda-80b5-4b0f-af7f-297537a08461",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "D-Pad Right",
+                    "type": "Button",
+                    "id": "b8187fb0-ad61-402d-ac23-46a31a1a24e0",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "89707e25-6372-4497-b4e6-e084fe0b89de",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "A",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f0336a10-2bff-4017-abf5-3db6be267238",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "B",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e0bf622f-d54a-429b-8389-e95395614d4b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "09cc03b8-c6ad-4da8-9ec0-49e0835bbe44",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "18d7f30b-16d2-4909-b729-80379d784775",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZL",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8194a364-d26e-4100-8e4a-dbf34a1381c4",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Plus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0d426434-715e-4a37-bb9a-2c16a88f8a2a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Minus",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f551893c-38f8-414c-8899-3895eaf2277d",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZR",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "487e421d-533c-4c85-a73d-1256e40aa727",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "R",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ad576af4-6e18-4742-bc70-569b79ee85d3",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "L",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "72ceb512-1d93-4aa9-8e66-ad522838bc5b",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Home",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0b37c840-2516-4bf5-8c3b-aecb1aba0e68",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Up",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4b55f191-f2ac-49f1-aa4b-76349e738e5a",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Down",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "895a4761-1017-4664-819a-6013eb57275f",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Left",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fbf6b5b8-26a4-40d9-87a2-2365efbd4cd8",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "D-Pad Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "Dolphin/Hotkeys",
+            "id": "0d3e7ce2-66ac-4906-8120-60c7dd43554c",
+            "actions": [
+                {
+                    "name": "Toggle Pause",
+                    "type": "Button",
+                    "id": "f70e48e3-c424-4da1-9219-ee4cdc7a8852",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Take Screenshot",
+                    "type": "Button",
+                    "id": "5df7df97-ba24-4282-a44e-872ebc2f82d1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Save State",
+                    "type": "Button",
+                    "id": "549e5a97-dc52-4f41-a21c-43564d27f29f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Load State",
+                    "type": "Button",
+                    "id": "5fe69594-2f77-43ea-81ae-6dda5a1ce332",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0633e465-bdba-43c2-acfc-cb1b4cda8769",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Toggle Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0060749a-3db2-4f25-84ff-ee14db6ddbf6",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Take Screenshot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "44849715-e021-4f4e-ad28-37e597d07d17",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Save State",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e75c3022-a7ce-48d6-bc3c-d568421cc234",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Load State",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
