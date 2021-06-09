@@ -132,38 +132,6 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
-                },
-                {
-                    "name": "Left Stick X",
-                    "type": "Value",
-                    "id": "46db065c-6aa5-48f7-83e9-015d66edfca1",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Left Stick Y",
-                    "type": "Value",
-                    "id": "0fd48c1a-abfe-448d-9898-545db06f396f",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Right Stick X",
-                    "type": "Value",
-                    "id": "d18923a4-9b6a-4039-a217-9c5341c63f5f",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
-                },
-                {
-                    "name": "Right Stixk Y",
-                    "type": "Value",
-                    "id": "6a0f1b62-b685-4788-a60e-9bfdaef0e940",
-                    "expectedControlType": "Axis",
-                    "processors": "",
-                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -181,7 +149,7 @@
                 {
                     "name": "",
                     "id": "9cc9333e-b4c8-48a3-8a95-d766b60b6b09",
-                    "path": "<XRController>/triggerPressed",
+                    "path": "<XRController>{RightHand}/triggerPressed",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -268,45 +236,23 @@
                 },
                 {
                     "name": "",
-                    "id": "ee40acda-5e70-4d1d-8284-5d1a06ee5e33",
-                    "path": "",
+                    "id": "5ddf9bc3-73d6-4fc0-8e39-c4f06310f0a6",
+                    "path": "<XRController>{RightHand}/thumbstick/y",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Left Stick X",
+                    "action": "Main Stick Y",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "c4ff8e38-4ef8-4f9c-9f47-3a1d0057dfba",
+                    "id": "4182d2d1-c699-4c9c-be27-512fb692e696",
                     "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Left Stick Y",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "f5a1828b-1ac4-4cf3-a5bf-15a00985992e",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Right Stixk Y",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "fd878fdb-03a6-4980-b048-5eff7ae7b11b",
-                    "path": "",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Right Stick X",
+                    "action": "Start",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
@@ -983,6 +929,38 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Left Stick X",
+                    "type": "Value",
+                    "id": "5cd80bd3-b9c1-435b-903c-7c3645401253",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Left Stick Y",
+                    "type": "Value",
+                    "id": "3ba13395-b70d-41a4-8c2e-310dcf7ff0dd",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right Stick X",
+                    "type": "Value",
+                    "id": "14193cd8-6efc-442c-bdbe-15958a2e451f",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Right Stick Y",
+                    "type": "Value",
+                    "id": "bc079f6c-8ba4-4762-b05c-f11f35acf5c9",
+                    "expectedControlType": "Axis",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -1148,6 +1126,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "D-Pad Right",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fcef164c-bc87-43e2-b0ac-4c1b7ad92471",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Stick Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "893b5c93-857b-4c81-a75f-b4890238a6a1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Stick Y",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "11f313cc-98f2-4886-9667-c7a2fa9841ef",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Left Stick X",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "33276f6f-8372-49d9-9aa2-5c45adcac504",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Right Stick X",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

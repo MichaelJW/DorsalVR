@@ -19,7 +19,7 @@ public class WheelVRGO : MonoBehaviour
             controls = new DolphinControls();
             controls.DolphinGCPad.Enable();
         } else {
-            transform.rotation = Quaternion.AngleAxis((float)controls.DolphinGCPad.LeftStickX.ReadValueAsObject() * -90f, Vector3.forward);
+            //transform.rotation = Quaternion.AngleAxis((float)controls.DolphinGCPad.MainStickX.ReadValueAsObject() * -90f, Vector3.forward);
             //Debug.Log((float)controls.GameCube.LeftStickX.ReadValueAsObject());
         }
     }

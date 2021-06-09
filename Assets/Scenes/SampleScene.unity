@@ -350,7 +350,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c493c7526efa6e24892aa956f3b62bc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dsuDeviceManager: {fileID: 1289601168}
+  dsuDeviceManager: {fileID: 0}
 --- !u!4 &103111047
 Transform:
   m_ObjectHideFlags: 0
@@ -1224,7 +1224,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72055f480bdaf946a5c69a661018b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dorsalDeviceManager: {fileID: 1028138579}
+  dorsalDeviceManager: {fileID: 0}
   deviceType: 0
 --- !u!4 &350175715
 Transform:
@@ -1984,8 +1984,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72055f480bdaf946a5c69a661018b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dorsalDeviceManager: {fileID: 1028138579}
-  deviceType: 2
+  dorsalDeviceManager: {fileID: 0}
+  deviceType: 0
 --- !u!4 &663245144
 Transform:
   m_ObjectHideFlags: 0
@@ -2428,8 +2428,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72055f480bdaf946a5c69a661018b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dorsalDeviceManager: {fileID: 1028138579}
-  deviceType: 3
+  dorsalDeviceManager: {fileID: 0}
+  deviceType: 0
 --- !u!4 &750755014
 Transform:
   m_ObjectHideFlags: 0
@@ -3753,8 +3753,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b72055f480bdaf946a5c69a661018b1a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dorsalDeviceManager: {fileID: 1028138579}
-  deviceType: 1
+  dorsalDeviceManager: {fileID: 0}
+  deviceType: 0
 --- !u!4 &1519216628
 Transform:
   m_ObjectHideFlags: 0

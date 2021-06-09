@@ -145,38 +145,6 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
-                },
-                {
-                    ""name"": ""Left Stick X"",
-                    ""type"": ""Value"",
-                    ""id"": ""46db065c-6aa5-48f7-83e9-015d66edfca1"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Left Stick Y"",
-                    ""type"": ""Value"",
-                    ""id"": ""0fd48c1a-abfe-448d-9898-545db06f396f"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Right Stick X"",
-                    ""type"": ""Value"",
-                    ""id"": ""d18923a4-9b6a-4039-a217-9c5341c63f5f"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """"
-                },
-                {
-                    ""name"": ""Right Stixk Y"",
-                    ""type"": ""Value"",
-                    ""id"": ""6a0f1b62-b685-4788-a60e-9bfdaef0e940"",
-                    ""expectedControlType"": ""Axis"",
-                    ""processors"": """",
-                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -194,7 +162,7 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9cc9333e-b4c8-48a3-8a95-d766b60b6b09"",
-                    ""path"": ""<XRController>/triggerPressed"",
+                    ""path"": ""<XRController>{RightHand}/triggerPressed"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -281,45 +249,23 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""ee40acda-5e70-4d1d-8284-5d1a06ee5e33"",
-                    ""path"": """",
+                    ""id"": ""5ddf9bc3-73d6-4fc0-8e39-c4f06310f0a6"",
+                    ""path"": ""<XRController>{RightHand}/thumbstick/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Left Stick X"",
+                    ""action"": ""Main Stick Y"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c4ff8e38-4ef8-4f9c-9f47-3a1d0057dfba"",
+                    ""id"": ""4182d2d1-c699-4c9c-be27-512fb692e696"",
                     ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Left Stick Y"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""f5a1828b-1ac4-4cf3-a5bf-15a00985992e"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Right Stixk Y"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""fd878fdb-03a6-4980-b048-5eff7ae7b11b"",
-                    ""path"": """",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Right Stick X"",
+                    ""action"": ""Start"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -996,6 +942,38 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Left Stick X"",
+                    ""type"": ""Value"",
+                    ""id"": ""5cd80bd3-b9c1-435b-903c-7c3645401253"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Left Stick Y"",
+                    ""type"": ""Value"",
+                    ""id"": ""3ba13395-b70d-41a4-8c2e-310dcf7ff0dd"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Right Stick X"",
+                    ""type"": ""Value"",
+                    ""id"": ""14193cd8-6efc-442c-bdbe-15958a2e451f"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Right Stick Y"",
+                    ""type"": ""Value"",
+                    ""id"": ""bc079f6c-8ba4-4762-b05c-f11f35acf5c9"",
+                    ""expectedControlType"": ""Axis"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -1163,6 +1141,50 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                     ""action"": ""D-Pad Right"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fcef164c-bc87-43e2-b0ac-4c1b7ad92471"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Stick Y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""893b5c93-857b-4c81-a75f-b4890238a6a1"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left Stick Y"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""11f313cc-98f2-4886-9667-c7a2fa9841ef"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Left Stick X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""33276f6f-8372-49d9-9aa2-5c45adcac504"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Right Stick X"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -1271,10 +1293,6 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         m_DolphinGCPad_DPadDown = m_DolphinGCPad.FindAction("D-Pad Down", throwIfNotFound: true);
         m_DolphinGCPad_DPadLeft = m_DolphinGCPad.FindAction("D-Pad Left", throwIfNotFound: true);
         m_DolphinGCPad_DPadRight = m_DolphinGCPad.FindAction("D-Pad Right", throwIfNotFound: true);
-        m_DolphinGCPad_LeftStickX = m_DolphinGCPad.FindAction("Left Stick X", throwIfNotFound: true);
-        m_DolphinGCPad_LeftStickY = m_DolphinGCPad.FindAction("Left Stick Y", throwIfNotFound: true);
-        m_DolphinGCPad_RightStickX = m_DolphinGCPad.FindAction("Right Stick X", throwIfNotFound: true);
-        m_DolphinGCPad_RightStixkY = m_DolphinGCPad.FindAction("Right Stixk Y", throwIfNotFound: true);
         // Dolphin/Wiimote
         m_DolphinWiimote = asset.FindActionMap("Dolphin/Wiimote", throwIfNotFound: true);
         m_DolphinWiimote_A = m_DolphinWiimote.FindAction("A", throwIfNotFound: true);
@@ -1324,6 +1342,10 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         m_DolphinClassicController_DPadDown = m_DolphinClassicController.FindAction("D-Pad Down", throwIfNotFound: true);
         m_DolphinClassicController_DPadLeft = m_DolphinClassicController.FindAction("D-Pad Left", throwIfNotFound: true);
         m_DolphinClassicController_DPadRight = m_DolphinClassicController.FindAction("D-Pad Right", throwIfNotFound: true);
+        m_DolphinClassicController_LeftStickX = m_DolphinClassicController.FindAction("Left Stick X", throwIfNotFound: true);
+        m_DolphinClassicController_LeftStickY = m_DolphinClassicController.FindAction("Left Stick Y", throwIfNotFound: true);
+        m_DolphinClassicController_RightStickX = m_DolphinClassicController.FindAction("Right Stick X", throwIfNotFound: true);
+        m_DolphinClassicController_RightStickY = m_DolphinClassicController.FindAction("Right Stick Y", throwIfNotFound: true);
         // Dolphin/Hotkeys
         m_DolphinHotkeys = asset.FindActionMap("Dolphin/Hotkeys", throwIfNotFound: true);
         m_DolphinHotkeys_TogglePause = m_DolphinHotkeys.FindAction("Toggle Pause", throwIfNotFound: true);
@@ -1395,10 +1417,6 @@ public class @DolphinControls : IInputActionCollection, IDisposable
     private readonly InputAction m_DolphinGCPad_DPadDown;
     private readonly InputAction m_DolphinGCPad_DPadLeft;
     private readonly InputAction m_DolphinGCPad_DPadRight;
-    private readonly InputAction m_DolphinGCPad_LeftStickX;
-    private readonly InputAction m_DolphinGCPad_LeftStickY;
-    private readonly InputAction m_DolphinGCPad_RightStickX;
-    private readonly InputAction m_DolphinGCPad_RightStixkY;
     public struct DolphinGCPadActions
     {
         private @DolphinControls m_Wrapper;
@@ -1419,10 +1437,6 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         public InputAction @DPadDown => m_Wrapper.m_DolphinGCPad_DPadDown;
         public InputAction @DPadLeft => m_Wrapper.m_DolphinGCPad_DPadLeft;
         public InputAction @DPadRight => m_Wrapper.m_DolphinGCPad_DPadRight;
-        public InputAction @LeftStickX => m_Wrapper.m_DolphinGCPad_LeftStickX;
-        public InputAction @LeftStickY => m_Wrapper.m_DolphinGCPad_LeftStickY;
-        public InputAction @RightStickX => m_Wrapper.m_DolphinGCPad_RightStickX;
-        public InputAction @RightStixkY => m_Wrapper.m_DolphinGCPad_RightStixkY;
         public InputActionMap Get() { return m_Wrapper.m_DolphinGCPad; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1480,18 +1494,6 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 @DPadRight.started -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnDPadRight;
                 @DPadRight.performed -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnDPadRight;
                 @DPadRight.canceled -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnDPadRight;
-                @LeftStickX.started -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnLeftStickX;
-                @LeftStickX.performed -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnLeftStickX;
-                @LeftStickX.canceled -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnLeftStickX;
-                @LeftStickY.started -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnLeftStickY;
-                @LeftStickY.performed -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnLeftStickY;
-                @LeftStickY.canceled -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnLeftStickY;
-                @RightStickX.started -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnRightStickX;
-                @RightStickX.performed -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnRightStickX;
-                @RightStickX.canceled -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnRightStickX;
-                @RightStixkY.started -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnRightStixkY;
-                @RightStixkY.performed -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnRightStixkY;
-                @RightStixkY.canceled -= m_Wrapper.m_DolphinGCPadActionsCallbackInterface.OnRightStixkY;
             }
             m_Wrapper.m_DolphinGCPadActionsCallbackInterface = instance;
             if (instance != null)
@@ -1544,18 +1546,6 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 @DPadRight.started += instance.OnDPadRight;
                 @DPadRight.performed += instance.OnDPadRight;
                 @DPadRight.canceled += instance.OnDPadRight;
-                @LeftStickX.started += instance.OnLeftStickX;
-                @LeftStickX.performed += instance.OnLeftStickX;
-                @LeftStickX.canceled += instance.OnLeftStickX;
-                @LeftStickY.started += instance.OnLeftStickY;
-                @LeftStickY.performed += instance.OnLeftStickY;
-                @LeftStickY.canceled += instance.OnLeftStickY;
-                @RightStickX.started += instance.OnRightStickX;
-                @RightStickX.performed += instance.OnRightStickX;
-                @RightStickX.canceled += instance.OnRightStickX;
-                @RightStixkY.started += instance.OnRightStixkY;
-                @RightStixkY.performed += instance.OnRightStixkY;
-                @RightStixkY.canceled += instance.OnRightStixkY;
             }
         }
     }
@@ -1853,6 +1843,10 @@ public class @DolphinControls : IInputActionCollection, IDisposable
     private readonly InputAction m_DolphinClassicController_DPadDown;
     private readonly InputAction m_DolphinClassicController_DPadLeft;
     private readonly InputAction m_DolphinClassicController_DPadRight;
+    private readonly InputAction m_DolphinClassicController_LeftStickX;
+    private readonly InputAction m_DolphinClassicController_LeftStickY;
+    private readonly InputAction m_DolphinClassicController_RightStickX;
+    private readonly InputAction m_DolphinClassicController_RightStickY;
     public struct DolphinClassicControllerActions
     {
         private @DolphinControls m_Wrapper;
@@ -1872,6 +1866,10 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         public InputAction @DPadDown => m_Wrapper.m_DolphinClassicController_DPadDown;
         public InputAction @DPadLeft => m_Wrapper.m_DolphinClassicController_DPadLeft;
         public InputAction @DPadRight => m_Wrapper.m_DolphinClassicController_DPadRight;
+        public InputAction @LeftStickX => m_Wrapper.m_DolphinClassicController_LeftStickX;
+        public InputAction @LeftStickY => m_Wrapper.m_DolphinClassicController_LeftStickY;
+        public InputAction @RightStickX => m_Wrapper.m_DolphinClassicController_RightStickX;
+        public InputAction @RightStickY => m_Wrapper.m_DolphinClassicController_RightStickY;
         public InputActionMap Get() { return m_Wrapper.m_DolphinClassicController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1926,6 +1924,18 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 @DPadRight.started -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnDPadRight;
                 @DPadRight.performed -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnDPadRight;
                 @DPadRight.canceled -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnDPadRight;
+                @LeftStickX.started -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnLeftStickX;
+                @LeftStickX.performed -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnLeftStickX;
+                @LeftStickX.canceled -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnLeftStickX;
+                @LeftStickY.started -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnLeftStickY;
+                @LeftStickY.performed -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnLeftStickY;
+                @LeftStickY.canceled -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnLeftStickY;
+                @RightStickX.started -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnRightStickX;
+                @RightStickX.performed -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnRightStickX;
+                @RightStickX.canceled -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnRightStickX;
+                @RightStickY.started -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnRightStickY;
+                @RightStickY.performed -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnRightStickY;
+                @RightStickY.canceled -= m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface.OnRightStickY;
             }
             m_Wrapper.m_DolphinClassicControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -1975,6 +1985,18 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 @DPadRight.started += instance.OnDPadRight;
                 @DPadRight.performed += instance.OnDPadRight;
                 @DPadRight.canceled += instance.OnDPadRight;
+                @LeftStickX.started += instance.OnLeftStickX;
+                @LeftStickX.performed += instance.OnLeftStickX;
+                @LeftStickX.canceled += instance.OnLeftStickX;
+                @LeftStickY.started += instance.OnLeftStickY;
+                @LeftStickY.performed += instance.OnLeftStickY;
+                @LeftStickY.canceled += instance.OnLeftStickY;
+                @RightStickX.started += instance.OnRightStickX;
+                @RightStickX.performed += instance.OnRightStickX;
+                @RightStickX.canceled += instance.OnRightStickX;
+                @RightStickY.started += instance.OnRightStickY;
+                @RightStickY.performed += instance.OnRightStickY;
+                @RightStickY.canceled += instance.OnRightStickY;
             }
         }
     }
@@ -2054,10 +2076,6 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         void OnDPadDown(InputAction.CallbackContext context);
         void OnDPadLeft(InputAction.CallbackContext context);
         void OnDPadRight(InputAction.CallbackContext context);
-        void OnLeftStickX(InputAction.CallbackContext context);
-        void OnLeftStickY(InputAction.CallbackContext context);
-        void OnRightStickX(InputAction.CallbackContext context);
-        void OnRightStixkY(InputAction.CallbackContext context);
     }
     public interface IDolphinWiimoteActions
     {
@@ -2110,6 +2128,10 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         void OnDPadDown(InputAction.CallbackContext context);
         void OnDPadLeft(InputAction.CallbackContext context);
         void OnDPadRight(InputAction.CallbackContext context);
+        void OnLeftStickX(InputAction.CallbackContext context);
+        void OnLeftStickY(InputAction.CallbackContext context);
+        void OnRightStickX(InputAction.CallbackContext context);
+        void OnRightStickY(InputAction.CallbackContext context);
     }
     public interface IDolphinHotkeysActions
     {

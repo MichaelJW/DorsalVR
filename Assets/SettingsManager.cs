@@ -5,6 +5,10 @@ using UnityEditor;
 using UnityEngine;
 using Ruccho.GraphicsCapture;
 using UnityEngine.InputSystem;
+using YamlDotNet.Serialization;
+using System.IO;
+using YamlDotNet.RepresentationModel;
+using Dorsal.Config;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -41,7 +45,11 @@ public class SettingsManager : MonoBehaviour
 
         ApplySettings();
 
-        InputSystem.AddDevice<SteeringWheel.SteeringWheelDorsalDevice>();
+        //InputSystem.AddDevice<SteeringWheel.SteeringWheelDorsalDevice>();
+        Dictionary<string, Config> modeConfig = ConfigLoader.ParseYamlFile("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");
+        Debug.Log(modeConfig["(common)"].dolphinConfig.exePath);
+
+        //LoadFromYAML("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");
 
         //GameObject.Find("IO").GetComponent<IO>().StartServer(serverPort);
     }
