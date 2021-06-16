@@ -51,23 +51,39 @@ public class SettingsManager : MonoBehaviour
 
         //InputSystem.AddDevice<SteeringWheel.SteeringWheelDorsalDevice>();
         Dictionary<string, Config> modeConfig = ConfigLoader.ParseYamlFile("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");
-        Debug.Log(modeConfig["(common)"].dolphinConfig.exePath);
-
-        Debug.Log(deviceManager.devices.Count);
 
         foreach (DeviceConfig device in modeConfig["(common)"].devices) {
-            if (device.type == "Screen") {
-                GameObject screenContainer = new GameObject();
-                screenContainer.name = "Screen Container";
-                Dorsal.Devices.Screen screen = screenContainer.AddComponent<Dorsal.Devices.Screen>();
-                screen.ID = device.id;
-                screen.transform.position = device.offset;
-                deviceManager.devices.Add(screen);
-                screen.Instantiate();
-            }
-        }
+            GameObject container = new GameObject();
+            container.name = device.type + " Container | " + device.id;
+            Dorsal.Devices.DeviceTransformer transformer = container.AddComponent<Dorsal.Devices.DeviceTransformer>();
+            transformer.TransformFromConfig(device);
 
-        Debug.Log(deviceManager.devices.Count);
+            switch (device.mountTo) {
+                case "head":
+                    // It may be smarter here to have one GameObject per "mountable"
+                    // i.e. one for "head", one for "left hand", one for "middle hand", etc.
+                    // and then add this GO to that GO.
+                    // This would be more efficient than making multiple GOs for each mountable,
+                    // with each one having to do its own Update(), FixedUpdate(), BeforeRender().
+                    GameObject mount = new GameObject();
+                    mount.name = device.type + " Container Mount | " + device.id;
+                    mount.AddComponent<Dorsal.Devices.DeviceMounter>();
+                    container.transform.parent = mount.transform;
+                    break;
+                default:
+                    break;
+            }
+            
+            if (device.type == "Screen") {
+                Dorsal.Devices.Screen screen = container.AddComponent<Dorsal.Devices.Screen>();
+                screen.ID = device.id;
+                deviceManager.devices.Add(screen);
+                
+                screen.Instantiate();
+                screen.SetSBS3D(device.stereoscopic == "sbs");
+            }
+            
+        }
 
         //LoadFromYAML("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");
 

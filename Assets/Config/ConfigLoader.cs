@@ -119,6 +119,8 @@ namespace Dorsal.Config {
 
                     deviceConfig.type = GetYamlString(deviceNode, "type") ?? deviceConfig.type;
                     deviceConfig.active = GetYamlBool(deviceNode, "active", deviceConfig.active);
+                    deviceConfig.mountTo = GetYamlString(deviceNode, "mountTo") ?? deviceConfig.mountTo;
+                    deviceConfig.stereoscopic= GetYamlString(deviceNode, "stereoscopic") ?? deviceConfig.stereoscopic;
 
                     if (deviceNode is YamlMappingNode mapDeviceNode) {
                         if (mapDeviceNode.Children.ContainsKey("offset")) {
@@ -126,6 +128,22 @@ namespace Dorsal.Config {
                                 GetYamlFloat(mapDeviceNode["offset"], "x", deviceConfig.offset.x),
                                 GetYamlFloat(mapDeviceNode["offset"], "y", deviceConfig.offset.y),
                                 GetYamlFloat(mapDeviceNode["offset"], "z", deviceConfig.offset.z)
+                            );
+                        }
+
+                        if (mapDeviceNode.Children.ContainsKey("scale")) {
+                            deviceConfig.scale.Set(
+                                GetYamlFloat(mapDeviceNode["scale"], "x", deviceConfig.scale.x),
+                                GetYamlFloat(mapDeviceNode["scale"], "y", deviceConfig.scale.y),
+                                GetYamlFloat(mapDeviceNode["scale"], "z", deviceConfig.scale.z)
+                            );
+                        }
+
+                        if (mapDeviceNode.Children.ContainsKey("rotation")) {
+                            deviceConfig.rotation.Set(
+                                GetYamlFloat(mapDeviceNode["rotation"], "x", deviceConfig.rotation.x),
+                                GetYamlFloat(mapDeviceNode["rotation"], "y", deviceConfig.rotation.y),
+                                GetYamlFloat(mapDeviceNode["rotation"], "z", deviceConfig.rotation.z)
                             );
                         }
                     }
@@ -204,8 +222,6 @@ namespace Dorsal.Config {
 
         public static float GetYamlFloat(YamlNode node, string key, float previousValue) {
             if (node is YamlMappingNode mNode && mNode.Children.ContainsKey(key)) {
-                Debug.Log(node[key]);
-                Debug.Log(Convert.ToSingle("0"));
                 return Convert.ToSingle(node[key].ToString());
             }
             return previousValue;

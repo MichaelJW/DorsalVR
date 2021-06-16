@@ -54,7 +54,7 @@ public class DolphinOutput : MonoBehaviour {
         packet.gcPad.dPadLeft = (byte)(controls.DolphinGCPad.DPadLeft.ReadValue<float>() * 255);
         packet.gcPad.dPadRight = (byte)(controls.DolphinGCPad.DPadRight.ReadValue<float>() * 255);
 
-        Debug.Log(System.BitConverter.ToString(packet.GetMessageBytes(2)));
+        //Debug.Log(System.BitConverter.ToString(packet.GetMessageBytes(2)));
 
         dsuServer.SendDataBytes(2, packet.GetMessageBytes(2));
 

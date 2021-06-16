@@ -32,9 +32,20 @@ namespace Dorsal.Devices {
 
         private GameObject AddScreenGO(string type) {
             GameObject screenGO = GameObject.CreatePrimitive(PrimitiveType.Quad);
-            screenGO.name = string.Format("Screen | {0} | {1}", ID, type);
+            screenGO.name = type;
             screenGO.transform.parent = this.gameObject.transform;
             screenGO.transform.localPosition = Vector3.zero;
+            screenGO.transform.localRotation = Quaternion.identity;
+            screenGO.transform.localScale = Vector3.one;
+
+            screenGO.GetComponent<MeshCollider>().enabled = false;
+
+            MeshRenderer meshRenderer = screenGO.GetComponent<MeshRenderer>();
+            meshRenderer.shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.Off;
+            meshRenderer.receiveShadows = false;
+            meshRenderer.lightProbeUsage = UnityEngine.Rendering.LightProbeUsage.Off;
+            meshRenderer.reflectionProbeUsage = UnityEngine.Rendering.ReflectionProbeUsage.Off;
+            meshRenderer.material.shader = Shader.Find("UI/Default");
 
             return screenGO;
         }
@@ -50,17 +61,17 @@ namespace Dorsal.Devices {
                 captureTex.filterMode = FilterMode.Point;
             }
 
-            if (_middleEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
+            if (_middleEyeScreen.activeInHierarchy && _middleEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
                 _middleEyeScreen.GetComponent<Renderer>().material.mainTexture = captureTex;
                 _middleEyeScreen.GetComponent<Renderer>().material.mainTextureScale = new Vector2(1f, -1f);
             }
 
-            if (_leftEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
+            if (_leftEyeScreen.activeInHierarchy && _leftEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
                 _leftEyeScreen.GetComponent<Renderer>().material.mainTexture = captureTex;
                 _leftEyeScreen.GetComponent<Renderer>().material.mainTextureScale = new Vector2(0.5f, -1f);
             }
 
-            if (_rightEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
+            if (_rightEyeScreen.activeInHierarchy && _rightEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
                 _rightEyeScreen.GetComponent<Renderer>().material.mainTexture = captureTex;
                 _rightEyeScreen.GetComponent<Renderer>().material.mainTextureScale = new Vector2(0.5f, -1f);
                 _rightEyeScreen.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0.5f, 0f);

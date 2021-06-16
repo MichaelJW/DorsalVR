@@ -29,7 +29,11 @@ namespace Dorsal.Config {
         public string id;
         public string type;
         public bool active;
-        public Vector3 offset = new Vector3();
+        public string mountTo;
+        public string stereoscopic;
+        public Vector3 offset = new Vector3(0f, 0f, 0f);
+        public Vector3 scale = new Vector3(1f, 1f, 1f);
+        public Vector3 rotation = new Vector3(0f, 0f, 0f);
 
         public DeviceConfig Clone() {
             DeviceConfig clone = new DeviceConfig();
@@ -37,7 +41,11 @@ namespace Dorsal.Config {
             clone.id = id;
             clone.type = type;
             clone.active = active;
-            clone.offset = offset;
+            clone.mountTo = mountTo;
+            clone.stereoscopic = stereoscopic;
+            clone.offset = new Vector3(offset.x, offset.y, offset.z);
+            clone.scale = new Vector3(scale.x, scale.y, scale.z);
+            clone.rotation = new Vector3(rotation.x, rotation.y, rotation.z);
 
             return clone;
         }
