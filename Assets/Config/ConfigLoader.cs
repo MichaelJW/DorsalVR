@@ -6,6 +6,7 @@ using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 using System.IO;
 using System.Reflection;
+using UnityEngine;
 
 namespace Dorsal.Config {
     class ConfigLoader {
@@ -14,6 +15,7 @@ namespace Dorsal.Config {
             try {
                 yamlString = File.ReadAllText(yamlPath);
             } catch (Exception e) {
+                Debug.LogError(e.Message);
                 return null;
             }
             return ParseYamlString(yamlString);
@@ -24,6 +26,7 @@ namespace Dorsal.Config {
             try {
                 yamlString = File.ReadAllText(yamlPath);
             } catch (Exception e) {
+                Debug.LogError(e.Message);
                 yamlString = null;
             }
             if (yamlString != null) ParseYamlString(yamlString, modeConfig);
