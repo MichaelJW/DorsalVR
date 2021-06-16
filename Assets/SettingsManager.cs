@@ -28,9 +28,13 @@ public class SettingsManager : MonoBehaviour
 
     Vector3 originalScreenPos;
 
+    Dorsal.Devices.DeviceManager deviceManager;
+
     // Start is called before the first frame update
     void Start()
     {
+        deviceManager = GameObject.FindObjectOfType<Dorsal.Devices.DeviceManager>();
+
         string[] args = System.Environment.GetCommandLineArgs();
         foreach (string arg in args) {
             if (arg == "-sbs") sbs = true;
@@ -48,6 +52,22 @@ public class SettingsManager : MonoBehaviour
         //InputSystem.AddDevice<SteeringWheel.SteeringWheelDorsalDevice>();
         Dictionary<string, Config> modeConfig = ConfigLoader.ParseYamlFile("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");
         Debug.Log(modeConfig["(common)"].dolphinConfig.exePath);
+
+        Debug.Log(deviceManager.devices.Count);
+
+        foreach (DeviceConfig device in modeConfig["(common)"].devices) {
+            if (device.type == "Screen") {
+                GameObject screenContainer = new GameObject();
+                screenContainer.name = "Screen Container";
+                Dorsal.Devices.Screen screen = screenContainer.AddComponent<Dorsal.Devices.Screen>();
+                screen.ID = device.id;
+                screen.transform.position = device.offset;
+                deviceManager.devices.Add(screen);
+                screen.Instantiate();
+            }
+        }
+
+        Debug.Log(deviceManager.devices.Count);
 
         //LoadFromYAML("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");
 

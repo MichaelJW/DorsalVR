@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Dorsal.Config {
     public class Config {
         // id, DeviceConfig
-        public Dictionary<string, DeviceConfig> devices;
+        public List<DeviceConfig> devices;
         public DolphinConfig dolphinConfig;
         public ControlsConfig controlsConfig;
 
@@ -14,9 +14,9 @@ namespace Dorsal.Config {
 
             if (dolphinConfig != null) clone.dolphinConfig = dolphinConfig.Clone();
             if (devices != null) {
-                clone.devices = new Dictionary<string, DeviceConfig>();
-                foreach (string id in devices.Keys) {
-                    clone.devices[id] = devices[id].Clone();
+                clone.devices = new List<DeviceConfig>();
+                foreach (DeviceConfig device in devices) {
+                    clone.devices.Add(device.Clone());
                 }
             }
             if (controlsConfig != null) clone.controlsConfig = controlsConfig.Clone();
@@ -29,6 +29,7 @@ namespace Dorsal.Config {
         public string id;
         public string type;
         public bool active;
+        public Vector3 offset = new Vector3();
 
         public DeviceConfig Clone() {
             DeviceConfig clone = new DeviceConfig();
@@ -36,6 +37,7 @@ namespace Dorsal.Config {
             clone.id = id;
             clone.type = type;
             clone.active = active;
+            clone.offset = offset;
 
             return clone;
         }

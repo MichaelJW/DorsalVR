@@ -6,6 +6,7 @@ using YamlDotNet.Core;
 using YamlDotNet.RepresentationModel;
 using System.IO;
 using System.Reflection;
+using System.Linq;
 using UnityEngine;
 
 namespace Dorsal.Config {
@@ -108,16 +109,26 @@ namespace Dorsal.Config {
                     }
                     string deviceId = GetYamlString(deviceNode, "id");
                     if (modeConfig[currentMode].devices == null) {
-                        modeConfig[currentMode].devices = new Dictionary<string, DeviceConfig>();
+                        modeConfig[currentMode].devices = new List<DeviceConfig>();
                     }
-                    if (!modeConfig[currentMode].devices.ContainsKey(deviceId)) {
-                        modeConfig[currentMode].devices[deviceId] = new DeviceConfig();
-                    }
-                    DeviceConfig deviceConfig = modeConfig[currentMode].devices[deviceId];
 
-                    deviceConfig.id = deviceId;  // redundant, perhaps
+                    if (modeConfig[currentMode].devices.Count(d => d.id == deviceId) == 0) { 
+                        modeConfig[currentMode].devices.Add(new DeviceConfig() { id = deviceId });
+                    }
+                    DeviceConfig deviceConfig = modeConfig[currentMode].devices.First<DeviceConfig>(d => d.id == deviceId);
+
                     deviceConfig.type = GetYamlString(deviceNode, "type") ?? deviceConfig.type;
                     deviceConfig.active = GetYamlBool(deviceNode, "active", deviceConfig.active);
+
+                    if (deviceNode is YamlMappingNode mapDeviceNode) {
+                        if (mapDeviceNode.Children.ContainsKey("offset")) {
+                            deviceConfig.offset.Set(
+                                GetYamlFloat(mapDeviceNode["offset"], "x", deviceConfig.offset.x),
+                                GetYamlFloat(mapDeviceNode["offset"], "y", deviceConfig.offset.y),
+                                GetYamlFloat(mapDeviceNode["offset"], "z", deviceConfig.offset.z)
+                            );
+                        }
+                    }
                 }
             }
 
@@ -184,6 +195,20 @@ namespace Dorsal.Config {
             return previousValue;
         }
 
+        public static float GetYamlFloat(YamlNode node, string key) {
+            if (node is YamlMappingNode mNode && mNode.Children.ContainsKey(key)) {
+                return Convert.ToSingle(node[key].ToString());
+            }
+            return 0f;
+        }
 
+        public static float GetYamlFloat(YamlNode node, string key, float previousValue) {
+            if (node is YamlMappingNode mNode && mNode.Children.ContainsKey(key)) {
+                Debug.Log(node[key]);
+                Debug.Log(Convert.ToSingle("0"));
+                return Convert.ToSingle(node[key].ToString());
+            }
+            return previousValue;
+        }
     }
 }
