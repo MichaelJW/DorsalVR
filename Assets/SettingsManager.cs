@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 using Ruccho.GraphicsCapture;
@@ -91,6 +92,15 @@ public class SettingsManager : MonoBehaviour
                 modeConfig["(common)"].dolphinConfig.exePath,
                 string.Format("--exec=\"{0}\"", modeConfig["(common)"].dolphinConfig.isoPath)
             );
+            if (modeConfig["(common)"].dolphinConfig.outputGameTo != "") {
+                Dorsal.Devices.Screen dolphinGameScreen = deviceManager.devices.OfType<Dorsal.Devices.Screen>()
+                                                            .Where<Dorsal.Devices.Screen>(
+                                                                t => t.ID == modeConfig["(common)"].dolphinConfig.outputGameTo
+                                                            ).FirstOrDefault();
+                if (dolphinGameScreen != null) {
+                    dolphinGameScreen.SetHwndViaDelegate(dp.GetGameHWnd);
+                }
+            }
             //UnityEngine.Debug.Log(string.Format("Process info: {0} {1} {2} {3} {4}", p.Id, p.Handle, p.MainWindowHandle, p.HandleCount, p.Container));
         }
 

@@ -47,7 +47,7 @@ namespace Dorsal.Processes {
                         StringBuilder builder = new StringBuilder(windowTextLength);
                         GetWindowText(hWnd, builder, windowTextLength + 1);
                         // We know the game window title contains pipes
-                        if (builder.ToString().Contains("|")) { 
+                        if (builder.ToString().Contains("|")) {
                             gameHWnd = hWnd;
                             return true;  // EnumWindowsProc spec wants this
                         }

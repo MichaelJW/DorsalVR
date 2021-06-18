@@ -12,6 +12,9 @@ namespace Dorsal.Devices {
         GameObject _rightEyeScreen;
 
         private CaptureClient client = new CaptureClient();
+        public delegate IntPtr GetHWndDel();
+
+        GetHWndDel _del;
 
         private string _id;
         public string ID {
@@ -53,11 +56,23 @@ namespace Dorsal.Devices {
 
         // Update is called once per frame
         void Update() {
-            Debug.Log("Target handles:");
-            foreach (ICaptureTarget t in Utils.GetTargets()) {
-                Debug.Log(string.Format("{0} | {1} | {2}", t.Handle, t.Description, t.IsCapturable()));
+            bool foundTarget = false;
+            if (_del != null) {
+                IntPtr hWnd = _del();
+                if (hWnd != (IntPtr)0) {
+                    if (client.CurrentTarget.Handle != hWnd) {
+                        foreach (ICaptureTarget t in Utils.GetTargets()) {
+                            if (t.Handle == hWnd) {
+                                client.SetTarget(t);
+                                foundTarget = true;
+                                break;
+                            }
+                        }
+                    } else {
+                        foundTarget = true;
+                    }
+                }
             }
-            Debug.Log("//Target");
 
             UpdateFromSource();
         }
@@ -91,6 +106,10 @@ namespace Dorsal.Devices {
             } catch (CreateCaptureException e) {
                 Debug.LogWarning("Could not capture target. Error was: " + e.Message);
             }
+        }
+
+        public void SetHwndViaDelegate(GetHWndDel del) {
+            _del = del;
         }
 
         public void OnBeforeRender() {
