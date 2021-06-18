@@ -9,6 +9,7 @@ using YamlDotNet.Serialization;
 using System.IO;
 using YamlDotNet.RepresentationModel;
 using Dorsal.Config;
+using System.Diagnostics;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -81,8 +82,16 @@ public class SettingsManager : MonoBehaviour
                 
                 screen.Instantiate();
                 screen.SetSBS3D(device.stereoscopic == "sbs");
-            }
-            
+            }   
+        }
+
+        if (modeConfig["(common)"].dolphinConfig.exePath != null) {
+            Dorsal.Processes.ProcessManager processManager = GameObject.Find("ProcessManager").GetComponent<Dorsal.Processes.ProcessManager>();
+            Dorsal.Processes.DolphinProcess dp = processManager.StartDolphinProcess(
+                modeConfig["(common)"].dolphinConfig.exePath,
+                string.Format("--exec=\"{0}\"", modeConfig["(common)"].dolphinConfig.isoPath)
+            );
+            //UnityEngine.Debug.Log(string.Format("Process info: {0} {1} {2} {3} {4}", p.Id, p.Handle, p.MainWindowHandle, p.HandleCount, p.Container));
         }
 
         //LoadFromYAML("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");

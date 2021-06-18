@@ -26,6 +26,7 @@ namespace Dorsal.Devices {
             _rightEyeScreen.layer = 7;
 
             IEnumerable<ICaptureTarget> monitors = Utils.GetMonitors();
+            
             client.SetTarget(monitors.First());
             Application.onBeforeRender += OnBeforeRender;
         }
@@ -52,6 +53,12 @@ namespace Dorsal.Devices {
 
         // Update is called once per frame
         void Update() {
+            Debug.Log("Target handles:");
+            foreach (ICaptureTarget t in Utils.GetTargets()) {
+                Debug.Log(string.Format("{0} | {1} | {2}", t.Handle, t.Description, t.IsCapturable()));
+            }
+            Debug.Log("//Target");
+
             UpdateFromSource();
         }
 
