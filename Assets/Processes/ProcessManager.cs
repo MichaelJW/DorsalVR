@@ -24,12 +24,31 @@ namespace Dorsal.Processes {
 
         private List<IDorsalProcess> _processes = new List<IDorsalProcess>();
 
-        public DolphinProcess StartDolphinProcess(string filePath, string arguments = "") {
+        public DolphinProcess StartDolphinProcess(Dorsal.Config.DolphinConfig dolphinConfig) {
             try {
                 DolphinProcess dp = new DolphinProcess();
                 Process p = new Process();
-                p.StartInfo.FileName = filePath;
-                p.StartInfo.Arguments = arguments;
+                p.StartInfo.FileName = dolphinConfig.exePath;
+
+                string args = "";
+                if (dolphinConfig.exec != "") args += " --exec=\"" + dolphinConfig.exec + "\"";
+                if (dolphinConfig.user != "") args += " --user=\"" + dolphinConfig.user + "\"";
+                if (dolphinConfig.videoBackend != "") args += " --video_backend=" + dolphinConfig.videoBackend;
+                if (dolphinConfig.audioEmulation != "") args += " --audio_emulation=" + dolphinConfig.audioEmulation;
+                if (dolphinConfig.movie != "") args += " --movie=\"" + dolphinConfig.movie + "\"";
+                if (dolphinConfig.nandTitle!= "") args += " --nand_title=\"" + dolphinConfig.nandTitle + "\"";
+                if (dolphinConfig.saveState != "") args += " --save_state=\"" + dolphinConfig.saveState + "\"";
+                foreach (string key in dolphinConfig.config.Keys) {
+                    args += " --config=" + key + "=";
+                    if (dolphinConfig.config[key].Contains(" ")) {
+                        args += "\"" + dolphinConfig.config[key] + "\"";
+                    } else {
+                        args += dolphinConfig.config[key];
+                    }
+                }
+                UnityEngine.Debug.Log(args);
+                p.StartInfo.Arguments = args;
+
                 p.Start();
                 dp.WindowsProcess = p;
                 _processes.Add(dp);
@@ -43,10 +62,6 @@ namespace Dorsal.Processes {
 
         public void Update() {
             DolphinProcess dp = _processes.OfType<DolphinProcess>().FirstOrDefault<DolphinProcess>();
-
-            if (dp != null) {
-                UnityEngine.Debug.Log(string.Format("Game hWnd: {0}", dp.GetGameHWnd()));
-            }
         }
 
         public void OnDestroy() {

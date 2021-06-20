@@ -53,17 +53,37 @@ namespace Dorsal.Config {
 
     public class DolphinConfig {
         public string exePath;
-        public string userPath;
-        public string isoPath;
-        public string outputGameTo;
+        public List<string> outputGameTo = new List<string>();
+
+        public string exec = "";
+        public string videoBackend = "";
+        public string audioEmulation = "";
+        public string movie = "";
+        public string user = "";
+        public string nandTitle = "";
+        public string saveState = "";
+        public Dictionary<string, string> config = new Dictionary<string, string>();
 
         public DolphinConfig Clone() {
             DolphinConfig clone = new DolphinConfig();
 
             clone.exePath = exePath;
-            clone.userPath = userPath;
-            clone.isoPath = isoPath;
-            clone.outputGameTo = outputGameTo;
+            clone.outputGameTo = new List<string>();
+            foreach (string output in outputGameTo) {
+                clone.outputGameTo.Add(output);
+            }
+
+            clone.exec = exec;
+            clone.videoBackend = videoBackend;
+            clone.audioEmulation = audioEmulation;
+            clone.movie = movie;
+            clone.user = user;
+            clone.nandTitle = nandTitle;
+            clone.saveState = saveState;
+            clone.config = new Dictionary<string, string>();
+            foreach (string key in config.Keys) {
+                clone.config.Add(key, config[key]);
+            }
 
             return clone;
         }

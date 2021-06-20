@@ -61,7 +61,7 @@ namespace Dorsal.Processes {
         }
 
         public void Close() {
-            if (_windowsProcess != null) _windowsProcess.CloseMainWindow();
+            if (_windowsProcess != null && !_windowsProcess.HasExited) _windowsProcess.CloseMainWindow();
         }
     }
 }

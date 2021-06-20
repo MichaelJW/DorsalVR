@@ -95,9 +95,41 @@ namespace Dorsal.Config {
                 DolphinConfig dolphinConfig = modeConfig[currentMode].dolphinConfig;
 
                 dolphinConfig.exePath = GetYamlString(dolphinYaml, "exePath") ?? dolphinConfig.exePath;
-                dolphinConfig.userPath = GetYamlString(dolphinYaml, "userPath") ?? dolphinConfig.userPath;
-                dolphinConfig.isoPath = GetYamlString(dolphinYaml, "isoPath") ?? dolphinConfig.isoPath;
-                dolphinConfig.outputGameTo = GetYamlString(dolphinYaml, "outputGameTo") ?? dolphinConfig.outputGameTo;
+                dolphinConfig.exec = GetYamlString(dolphinYaml, "exec") ?? dolphinConfig.exec;
+                dolphinConfig.videoBackend = GetYamlString(dolphinYaml, "videoBackend") ?? dolphinConfig.videoBackend;
+                dolphinConfig.audioEmulation = GetYamlString(dolphinYaml, "audioEmulation") ?? dolphinConfig.audioEmulation;
+                dolphinConfig.movie = GetYamlString(dolphinYaml, "movie") ?? dolphinConfig.movie;
+                dolphinConfig.user = GetYamlString(dolphinYaml, "user") ?? dolphinConfig.user;
+
+                if (dolphinYaml is YamlMappingNode mDolphinYaml) {
+                    if (mDolphinYaml.Children.ContainsKey("outputGameTo")) {
+                        YamlNode outputNode = mDolphinYaml.Children["outputGameTo"];
+                        if (outputNode is YamlScalarNode vOutputNode) {
+                            if (vOutputNode.Value == "unset") {
+                                dolphinConfig.outputGameTo.Clear();
+                            } else {
+                                if (!dolphinConfig.outputGameTo.Contains((string)vOutputNode)) dolphinConfig.outputGameTo.Add((string)vOutputNode);
+                            }
+                        } else if (outputNode is YamlSequenceNode sOutputNode) {
+                            foreach (YamlNode valueNode in sOutputNode.Children) {
+                                if ((string)valueNode == "unset") {
+                                    dolphinConfig.outputGameTo.Clear();
+                                } else {
+                                    if (!dolphinConfig.outputGameTo.Contains((string)valueNode)) dolphinConfig.outputGameTo.Add((string)valueNode);
+                                }
+                            }
+                        }
+                    }
+
+                    if (mDolphinYaml.Children.ContainsKey("config")) {
+                        YamlNode configNode = mDolphinYaml.Children["config"];
+                        if (configNode is YamlMappingNode mConfigNode) {
+                            foreach (YamlNode keyNode in mConfigNode.Children.Keys) {
+                                if (!dolphinConfig.config.ContainsKey((string)keyNode)) dolphinConfig.config.Add((string)keyNode, (string)mConfigNode.Children[keyNode]);
+                            }
+                        }
+                    }
+                }
             }
 
             /// Devices

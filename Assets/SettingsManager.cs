@@ -89,16 +89,18 @@ public class SettingsManager : MonoBehaviour
         if (modeConfig["(common)"].dolphinConfig.exePath != null) {
             Dorsal.Processes.ProcessManager processManager = GameObject.Find("ProcessManager").GetComponent<Dorsal.Processes.ProcessManager>();
             Dorsal.Processes.DolphinProcess dp = processManager.StartDolphinProcess(
-                modeConfig["(common)"].dolphinConfig.exePath,
-                string.Format("--exec=\"{0}\"", modeConfig["(common)"].dolphinConfig.isoPath)
+                modeConfig["(common)"].dolphinConfig
             );
-            if (modeConfig["(common)"].dolphinConfig.outputGameTo != "") {
-                Dorsal.Devices.Screen dolphinGameScreen = deviceManager.devices.OfType<Dorsal.Devices.Screen>()
-                                                            .Where<Dorsal.Devices.Screen>(
-                                                                t => t.ID == modeConfig["(common)"].dolphinConfig.outputGameTo
-                                                            ).FirstOrDefault();
-                if (dolphinGameScreen != null) {
-                    dolphinGameScreen.SetHwndViaDelegate(dp.GetGameHWnd);
+            if (modeConfig["(common)"].dolphinConfig.outputGameTo.Count > 0) {
+                foreach (string output in modeConfig["(common)"].dolphinConfig.outputGameTo) {
+
+                    Dorsal.Devices.Screen dolphinGameScreen = deviceManager.devices.OfType<Dorsal.Devices.Screen>()
+                                                                .Where<Dorsal.Devices.Screen>(
+                                                                    t => t.ID == output
+                                                                ).FirstOrDefault();
+                    if (dolphinGameScreen != null) {
+                        dolphinGameScreen.SetHwndViaDelegate(dp.GetGameHWnd);
+                    }
                 }
             }
             //UnityEngine.Debug.Log(string.Format("Process info: {0} {1} {2} {3} {4}", p.Id, p.Handle, p.MainWindowHandle, p.HandleCount, p.Container));
