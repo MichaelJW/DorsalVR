@@ -60,17 +60,15 @@ public class SettingsManager : MonoBehaviour
             Dorsal.Devices.DeviceTransformer transformer = container.AddComponent<Dorsal.Devices.DeviceTransformer>();
             transformer.TransformFromConfig(device);
 
-            switch (device.mountTo) {
+            switch (device.mountTo.ToLower().Replace(" ", "")) {
                 case "head":
-                    // It may be smarter here to have one GameObject per "mountable"
-                    // i.e. one for "head", one for "left hand", one for "middle hand", etc.
-                    // and then add this GO to that GO.
-                    // This would be more efficient than making multiple GOs for each mountable,
-                    // with each one having to do its own Update(), FixedUpdate(), BeforeRender().
-                    GameObject mount = new GameObject();
-                    mount.name = device.type + " Container Mount | " + device.id;
-                    mount.AddComponent<Dorsal.Devices.DeviceMounter>();
-                    container.transform.parent = mount.transform;
+                    container.transform.parent = GameObject.Find("Head Mount").transform;
+                    break;
+                case "lefthand":
+                    container.transform.parent = GameObject.Find("Left Hand Mount").transform;
+                    break;
+                case "righthand":
+                    container.transform.parent = GameObject.Find("Right Hand Mount").transform;
                     break;
                 default:
                     break;
