@@ -14,22 +14,6 @@ using System.Diagnostics;
 
 public class SettingsManager : MonoBehaviour
 {
-    public bool sbs = false;
-    public bool mountToHead = false;
-    int serverPort = 26659;
-    int angleX = 0;
-    int angleY = 0;
-    int angleZ = 0;
-
-    [SerializeField]
-    GameObject headMount;
-    [SerializeField]
-    GameObject room;
-    [SerializeField]
-    MirrorScreenTexture screen;
-
-    Vector3 originalScreenPos;
-
     Dorsal.Devices.DeviceManager deviceManager;
 
     // Start is called before the first frame update
@@ -37,22 +21,23 @@ public class SettingsManager : MonoBehaviour
     {
         deviceManager = GameObject.FindObjectOfType<Dorsal.Devices.DeviceManager>();
 
+        string yamlFile = "";
+
         string[] args = System.Environment.GetCommandLineArgs();
         foreach (string arg in args) {
-            if (arg == "-sbs") sbs = true;
-            if (arg == "-selfie") mountToHead = true;
-            if (arg.StartsWith("-port=")) serverPort = int.Parse(arg.Substring(6));
-            if (arg.StartsWith("-angleX=")) angleX = int.Parse(arg.Substring(7));
-            if (arg.StartsWith("-angleY=")) angleY = int.Parse(arg.Substring(7));
-            if (arg.StartsWith("-angleZ=")) angleZ = int.Parse(arg.Substring(7));
+            if (arg.StartsWith("--yaml=")) yamlFile = arg.Substring(7);
         }
 
-        originalScreenPos = screen.transform.localPosition;
+        #if (UNITY_EDITOR)
+        yamlFile = "C:\\Emu\\DorsalVR\\config\\tester.yaml";
+        #endif
 
-        ApplySettings();
+        // Later we will allow choosing this via UI, but for now, just quit
+        if (!File.Exists(yamlFile)) {
+            Application.Quit();
+        }
 
-        //InputSystem.AddDevice<SteeringWheel.SteeringWheelDorsalDevice>();
-        Dictionary<string, Config> modeConfig = ConfigLoader.ParseYamlFile("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");
+        Dictionary<string, Config> modeConfig = ConfigLoader.ParseYamlFile(yamlFile);
 
         foreach (DeviceConfig device in modeConfig["(common)"].devices) {
             GameObject container = new GameObject();
@@ -101,43 +86,12 @@ public class SettingsManager : MonoBehaviour
                     }
                 }
             }
-            //UnityEngine.Debug.Log(string.Format("Process info: {0} {1} {2} {3} {4}", p.Id, p.Handle, p.MainWindowHandle, p.HandleCount, p.Container));
-        }
 
-        //LoadFromYAML("C:\\Emu\\DorsalVR\\config\\MKDD.yaml");
+            GameObject dolphinOutput = new GameObject();
+            dolphinOutput.name = "Dolphin Output";
+            dolphinOutput.AddComponent<DolphinOutput>();
+        }
 
         //GameObject.Find("IO").GetComponent<IO>().StartServer(serverPort);
-    }
-
-    public void SetSBS3D(bool isEnabled) {
-        sbs = isEnabled;
-    }
-
-    public void SetMounttoHead(bool isEnabled) {
-        mountToHead = isEnabled;
-    }
-
-    public void SetScreenSource(ICaptureTarget target) {
-        screen.SetTarget(target);
-    }
-
-    public void ApplySettings() {
-        screen.SetSBS3D(sbs);
-        if (mountToHead) {
-            room.SetActive(false);
-            headMount.GetComponent<DorsalDriver>().deviceType = OldDorsalDevice.DeviceType.HMD;
-            headMount.GetComponent<DorsalDriver>().ConnectToChosenDevice();
-            screen.transform.localPosition = new Vector3(0, 0, 1.3f);
-        } else {
-            room.SetActive(true);
-            headMount.GetComponent<DorsalDriver>().deviceType = OldDorsalDevice.DeviceType.Undefined;
-            headMount.GetComponent<DorsalDriver>().ConnectToChosenDevice();
-            headMount.transform.localPosition = Vector3.zero;
-            headMount.transform.localRotation = Quaternion.identity;
-            screen.transform.localPosition = originalScreenPos;
-        }
-
-        Quaternion relativeRotation = Quaternion.Euler((float)angleX, (float)angleY, (float)angleZ);
-        GameObject.Find("DorsalDeviceManager").GetComponent<OldDorsalDeviceManager>().SetControllerRelativeRotations(relativeRotation);
     }
 }

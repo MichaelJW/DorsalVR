@@ -18,6 +18,7 @@ public class DolphinOutput : MonoBehaviour {
 
     public void OnDisable() {
         controls.DolphinGCPad.Disable();
+        EndServer();
     }
 
     // Start is called before the first frame update
@@ -29,6 +30,10 @@ public class DolphinOutput : MonoBehaviour {
     }
 
     private void OnDestroy() {
+        EndServer();
+    }
+
+    private void EndServer() {
         if (dsuServer != null) {
             dsuServer.EndServer();
         }
