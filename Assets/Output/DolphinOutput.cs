@@ -9,11 +9,8 @@ public class DolphinOutput : MonoBehaviour {
     DSUServer dsuServer;
     Packet packet;
 
-    public void OnEnable() { 
-        if (controls == null) {
-            controls = new DolphinControls();
-        }
-        controls.DolphinGCPad.Enable();
+    public void OnEnable() {
+        SetUp();
     }
 
     public void OnDisable() {
@@ -24,8 +21,19 @@ public class DolphinOutput : MonoBehaviour {
     // Start is called before the first frame update
     void Start()
     {
-        dsuServer = new DSUServer();
-        dsuServer.StartServer(26659);
+        SetUp();
+    }
+
+    private void SetUp() {
+        if (controls == null) {
+            controls = new DolphinControls();
+            controls.DolphinGCPad.Enable();
+        }
+
+        if (dsuServer == null) {
+            dsuServer = new DSUServer();
+            dsuServer.StartServer(26659);
+        }
         packet = new Packet();
     }
 
@@ -59,9 +67,10 @@ public class DolphinOutput : MonoBehaviour {
         packet.gcPad.dPadLeft = (byte)(controls.DolphinGCPad.DPadLeft.ReadValue<float>() * 255);
         packet.gcPad.dPadRight = (byte)(controls.DolphinGCPad.DPadRight.ReadValue<float>() * 255);
 
-        //Debug.Log(System.BitConverter.ToString(packet.GetMessageBytes(2)));
-
+        dsuServer.SendDataBytes(0, packet.GetMessageBytes(0));
+        dsuServer.SendDataBytes(1, packet.GetMessageBytes(1));
         dsuServer.SendDataBytes(2, packet.GetMessageBytes(2));
+        dsuServer.SendDataBytes(3, packet.GetMessageBytes(3));
 
         /*
          * 

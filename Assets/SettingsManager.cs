@@ -91,7 +91,5 @@ public class SettingsManager : MonoBehaviour
             dolphinOutput.name = "Dolphin Output";
             dolphinOutput.AddComponent<DolphinOutput>();
         }
-
-        //GameObject.Find("IO").GetComponent<IO>().StartServer(serverPort);
     }
 }

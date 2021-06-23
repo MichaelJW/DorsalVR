@@ -6,7 +6,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using UnityEngine.XR.OpenXR.Input;
 
+// No longer used - but not deleting quite yet because will need it to create an IMUDorsalDevice
+
 public class OldDorsalDevice {
+    /*
     // Hacky - for callback. Fix later.
     public OldDSU.DSUDevice callbackDSUDevice;
 
@@ -277,4 +280,5 @@ public class OldDorsalDevice {
         );
         return nIntersection;
     }
+    */
 }

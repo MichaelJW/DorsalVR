@@ -261,7 +261,7 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""4182d2d1-c699-4c9c-be27-512fb692e696"",
-                    ""path"": """",
+                    ""path"": ""<XRController>{RightHand}/thumbstickClicked"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

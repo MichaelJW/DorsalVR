@@ -6,8 +6,10 @@ using UnityEngine.InputSystem;
 using UnityEngine.XR;
 using UnityEngine.XR.OpenXR.Input;
 
-// Based on TrackedPoseDriver, but stripped down and modified to do what we need here
+// No longer used - but kept temporarily for reference
+
 public class DorsalDriver : MonoBehaviour {
+    /*
     OldDorsalDevice dorsalDevice;
 
     [SerializeField]
@@ -59,4 +61,5 @@ public class DorsalDriver : MonoBehaviour {
             transform.localRotation = dorsalDevice.deviceRotation;
         }
     }
+    */
 }

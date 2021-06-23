@@ -56,7 +56,6 @@ namespace Dorsal.Devices {
 
         // Update is called once per frame
         void Update() {
-            bool foundTarget = false;
             if (_del != null) {
                 IntPtr hWnd = _del();
                 if (hWnd != (IntPtr)0) {
@@ -64,13 +63,10 @@ namespace Dorsal.Devices {
                         foreach (ICaptureTarget t in Utils.GetTargets()) {
                             if (t.Handle == hWnd) {
                                 client.SetTarget(t);
-                                foundTarget = true;
                                 break;
                             }
                         }
-                    } else {
-                        foundTarget = true;
-                    }
+                    } 
                 }
             }
 

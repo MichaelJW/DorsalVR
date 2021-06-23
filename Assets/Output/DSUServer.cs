@@ -38,6 +38,8 @@ public class DSUServer
         socket.Bind(new IPEndPoint(IPAddress.Loopback, serverPort));
         serverIsRunning = true;
 
+        Debug.Log(string.Format("Server running on port: {0}", serverPort));
+
         StartListening();
     }
 
@@ -67,6 +69,8 @@ public class DSUServer
     }
 
     private void ProcessMessage(byte[] message, IPEndPoint clientEP) {
+        int numPortsSupported = 4;
+
         if (System.Text.Encoding.UTF8.GetString(message, 0, 4) != "DSUC") return;
         int port;
 
@@ -77,7 +81,7 @@ public class DSUServer
 
             for (int i = 0; i < numPortsRequested; i++) {
                 port = (int)message[24 + i];
-                if (port >= 4 | port < 0) {
+                if (port >= numPortsSupported | port < 0) {
                     Debug.Log(string.Format("Port {0} out of range.", port));
                 } else {
                     Debug.Log(string.Format("Sending info for controller in port {0}", port));
@@ -89,8 +93,12 @@ public class DSUServer
                 string.Format("DATA requested: {0}\tSlot requested: {1}\tMAC requested: {2}\tPort: {3}",
                 message[20], message[21], BitConverter.ToString(message, 22, 6), clientEP.Port)
             );
-            if (message[20] == 1 || message[20] == 0) {  // wants controllers by slot
+            if (message[20] == 1) {  // wants controllers by slot
                 slotEndPoints[(int)message[21]] = clientEP;
+            } else if (message[20] == 0) {  // wants all controllers
+                for (int i = 0; i < numPortsSupported; i++) {
+                    slotEndPoints[i] = clientEP;
+                }
             }
         } else {
             Debug.Log(string.Format("Did not recognise request: {0}", BitConverter.ToString(message)));
@@ -98,7 +106,7 @@ public class DSUServer
     }
 
     private void SendMessage(byte[] message, IPEndPoint clientEP) {
-        Debug.Log("Sending message...");
+        //Debug.Log(string.Format("Sending message to {2}:{1}: {0}", System.BitConverter.ToString(message), clientEP.Port, clientEP.Address));
         socket.SendTo(message, clientEP);
     }
 
@@ -156,8 +164,6 @@ public class DSUServer
 
     public void SendDataBytes(int slot, byte[] data) {
         if (slotEndPoints[slot] != null) {
-            byte[] output = new byte[100];
-
             if (baseDataMessage == null) {
                 baseDataMessage = new byte[31];
 
@@ -189,13 +195,17 @@ public class DSUServer
                 Array.Copy(new byte[6], 0, baseDataMessage, index, 6);  // mac address; leave blank
                 index += 6;
                 baseDataMessage[index++] = (byte)0;  // battery status = not applicable
+                // No need for a zero byte here
             }
 
-            Array.Copy(baseDataMessage, 0, output, 0, 31);
-            Array.Copy(data, 0, output, 31, 69);
+            // Add header and info to output; add actual controller data; set the slot; apply CRC32
+            byte[] output = new byte[100];
+            Array.Copy(baseDataMessage, output, 31);
             output[20] = (byte)slot;
+            Array.Copy(data, 0, output, 31, 69);
             Array.Copy(crc32.ComputeChecksumBytes(output), 0, output, 8, 4);
 
+            // Send the whole packet
             SendMessage(output, slotEndPoints[slot]);
         }
     }
