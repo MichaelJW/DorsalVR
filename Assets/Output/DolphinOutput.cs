@@ -14,8 +14,7 @@ public class DolphinOutput : MonoBehaviour {
     }
 
     public void OnDisable() {
-        controls.DolphinGCPad.Disable();
-        EndServer();
+        Finish();
     }
 
     // Start is called before the first frame update
@@ -24,12 +23,15 @@ public class DolphinOutput : MonoBehaviour {
         SetUp();
     }
 
-    private void SetUp() {
-        if (controls == null) {
-            controls = new DolphinControls();
-            controls.DolphinGCPad.Enable();
+    public void SetControls(DolphinControls dolphinControls) {
+        if (controls != null) {
+            controls.Disable();
         }
+        controls = dolphinControls;
+        controls.Enable();
+    }
 
+    private void SetUp() {
         if (dsuServer == null) {
             dsuServer = new DSUServer();
             dsuServer.StartServer(26659);
@@ -38,6 +40,13 @@ public class DolphinOutput : MonoBehaviour {
     }
 
     private void OnDestroy() {
+        Finish();
+    }
+
+    private void Finish() {
+        if (controls != null) {
+            controls.Disable();
+        }
         EndServer();
     }
 
@@ -50,22 +59,24 @@ public class DolphinOutput : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        packet.gcPad.aButton = (byte)(controls.DolphinGCPad.A.ReadValue<float>() * 255);
-        packet.gcPad.bButton = (byte)(controls.DolphinGCPad.B.ReadValue<float>() * 255);
-        packet.gcPad.xButton = (byte)(controls.DolphinGCPad.X.ReadValue<float>() * 255);
-        packet.gcPad.yButton = (byte)(controls.DolphinGCPad.Y.ReadValue<float>() * 255);
-        packet.gcPad.zButton = (byte)(controls.DolphinGCPad.Z.ReadValue<float>() * 255);
-        packet.gcPad.startButton = (byte)(controls.DolphinGCPad.Start.ReadValue<float>() * 255);
-        packet.gcPad.mainStickX = (byte)((controls.DolphinGCPad.MainStickX.ReadValue<float>() - 0.5) * 255);
-        packet.gcPad.mainStickY = (byte)((controls.DolphinGCPad.MainStickY.ReadValue<float>() - 0.5) * 255);
-        packet.gcPad.cStickX = (byte)((controls.DolphinGCPad.CStickX.ReadValue<float>() - 0.5) * 255);
-        packet.gcPad.cStickY = (byte)((controls.DolphinGCPad.CStickY.ReadValue<float>() - 0.5) * 255);
-        packet.gcPad.leftTrigger = (byte)(controls.DolphinGCPad.LTrigger.ReadValue<float>() * 255);
-        packet.gcPad.rightTrigger = (byte)(controls.DolphinGCPad.RTrigger.ReadValue<float>() * 255);
-        packet.gcPad.dPadUp = (byte)(controls.DolphinGCPad.DPadUp.ReadValue<float>() * 255);
-        packet.gcPad.dPadDown = (byte)(controls.DolphinGCPad.DPadDown.ReadValue<float>() * 255);
-        packet.gcPad.dPadLeft = (byte)(controls.DolphinGCPad.DPadLeft.ReadValue<float>() * 255);
-        packet.gcPad.dPadRight = (byte)(controls.DolphinGCPad.DPadRight.ReadValue<float>() * 255);
+        if (controls != null) {
+            packet.gcPad.aButton = (byte)(controls.DolphinGCPad.A.ReadValue<float>() * 255);
+            packet.gcPad.bButton = (byte)(controls.DolphinGCPad.B.ReadValue<float>() * 255);
+            packet.gcPad.xButton = (byte)(controls.DolphinGCPad.X.ReadValue<float>() * 255);
+            packet.gcPad.yButton = (byte)(controls.DolphinGCPad.Y.ReadValue<float>() * 255);
+            packet.gcPad.zButton = (byte)(controls.DolphinGCPad.Z.ReadValue<float>() * 255);
+            packet.gcPad.startButton = (byte)(controls.DolphinGCPad.Start.ReadValue<float>() * 255);
+            packet.gcPad.mainStickX = (byte)((controls.DolphinGCPad.MainStickX.ReadValue<float>() + 1.0) * 127);
+            packet.gcPad.mainStickY = (byte)((controls.DolphinGCPad.MainStickY.ReadValue<float>() + 1.0) * 127);
+            packet.gcPad.cStickX = (byte)((controls.DolphinGCPad.CStickX.ReadValue<float>() + 1.0) * 127);
+            packet.gcPad.cStickY = (byte)((controls.DolphinGCPad.CStickY.ReadValue<float>() + 1.0) * 127);
+            packet.gcPad.leftTrigger = (byte)(controls.DolphinGCPad.LTrigger.ReadValue<float>() * 255);
+            packet.gcPad.rightTrigger = (byte)(controls.DolphinGCPad.RTrigger.ReadValue<float>() * 255);
+            packet.gcPad.dPadUp = (byte)(controls.DolphinGCPad.DPadUp.ReadValue<float>() * 255);
+            packet.gcPad.dPadDown = (byte)(controls.DolphinGCPad.DPadDown.ReadValue<float>() * 255);
+            packet.gcPad.dPadLeft = (byte)(controls.DolphinGCPad.DPadLeft.ReadValue<float>() * 255);
+            packet.gcPad.dPadRight = (byte)(controls.DolphinGCPad.DPadRight.ReadValue<float>() * 255);
+        }
 
         dsuServer.SendDataBytes(0, packet.GetMessageBytes(0));
         dsuServer.SendDataBytes(1, packet.GetMessageBytes(1));

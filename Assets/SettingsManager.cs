@@ -87,9 +87,19 @@ public class SettingsManager : MonoBehaviour
                 }
             }
 
+            DolphinControls dolphinControls = new DolphinControls();
+            foreach (string actionMap in modeConfig["(common)"].controlsConfig.controls.Keys) {
+                foreach (string action in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping.Keys) {
+                    foreach (string binding in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping[action]) {
+                        dolphinControls.asset.FindActionMap(actionMap).FindAction(action).AddBinding(binding);
+                    }
+                }
+            }
+
             GameObject dolphinOutput = new GameObject();
             dolphinOutput.name = "Dolphin Output";
             dolphinOutput.AddComponent<DolphinOutput>();
+            dolphinOutput.GetComponent<DolphinOutput>().SetControls(dolphinControls);
         }
     }
 }
