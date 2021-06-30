@@ -113,10 +113,6 @@ public class SettingsManager : MonoBehaviour
                 }
             }
 
-            UnityEngine.Debug.Log($"IMU devices registered: {InputSystem.GetDevice<Dorsal.Devices.IMU>()}");
-
-            UnityEngine.Debug.Log($"XRController devices registered: {InputSystem.GetDevice<UnityEngine.InputSystem.XR.XRController>()}");
-
             DolphinControls dolphinControls = new DolphinControls();
             foreach (string actionMap in modeConfig["(common)"].controlsConfig.controls.Keys) {
                 foreach (string action in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping.Keys) {

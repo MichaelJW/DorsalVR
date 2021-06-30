@@ -25,10 +25,8 @@ namespace Dorsal.Devices {
         public Vector3 eulerDeviceRotation;
         [InputControl(name = "accelerometer", layout = "Vector3")]
         public Vector3 accelerometer;
-        [InputControl(name = "gyroscope", layout = "Quaternion")]
-        public Quaternion gyroscope;
-        [InputControl(name = "eulerGyroscope", layout = "Vector3")]
-        public Vector3 eulerGyroscope;
+        [InputControl(name = "gyroscope", layout = "Vector3")]
+        public Vector3 gyroscope;
     }
 
     #if UNITY_EDITOR
@@ -46,8 +44,7 @@ namespace Dorsal.Devices {
         public QuaternionControl deviceRotation { get; private set; }
         public Vector3Control eulerDeviceRotation { get; private set; }
         public Vector3Control accelerometer { get; private set; }
-        public QuaternionControl gyroscope { get; private set; }
-        public Vector3Control eulerGyroscope { get; private set; }
+        public Vector3Control gyroscope { get; private set; }
 
         protected override void FinishSetup() {
             base.FinishSetup();
@@ -56,8 +53,7 @@ namespace Dorsal.Devices {
             deviceRotation = GetChildControl<QuaternionControl>("deviceRotation");
             eulerDeviceRotation = GetChildControl<Vector3Control>("eulerDeviceRotation");
             accelerometer = GetChildControl<Vector3Control>("accelerometer");
-            gyroscope = GetChildControl<QuaternionControl>("gyroscope");
-            eulerGyroscope = GetChildControl<Vector3Control>("eulerGyroscope");
+            gyroscope = GetChildControl<Vector3Control>("gyroscope");
         }
 
         static IMU() {
@@ -169,7 +165,7 @@ namespace Dorsal.Devices {
         Vector3[] accel;
         Quaternion[] dRot;  // device rotation
         Quaternion[] gyro;
-        Vector3[] gyroRate;
+        Vector3[] angVel;
         Vector3[] dGravity;
         double[] timestamp;
         double minTimeDiff = 0.1; // seconds
@@ -187,7 +183,7 @@ namespace Dorsal.Devices {
             accel = new Vector3[samples];  // g
             dRot = new Quaternion[samples];
             gyro = new Quaternion[samples];  // deg
-            gyroRate = new Vector3[samples];  // deg/s
+            angVel = new Vector3[samples];  // deg/s
             timestamp = new double[samples];  // seconds
         }
 
@@ -209,7 +205,7 @@ namespace Dorsal.Devices {
                 dRot[i] = dRot[i - 1];
 
                 gyro[i] = gyro[i - 1];
-                gyroRate[i] = gyroRate[i - 1];
+                angVel[i] = angVel[i - 1];
                 timestamp[i] = timestamp[i - 1];
             }
             samplesTaken = Math.Min(samplesTaken + 1, samples);
@@ -225,7 +221,7 @@ namespace Dorsal.Devices {
         }
 
         // NB this is IInputUpdateCallbackReceiver.OnUpdate(); it's synced to the InputSystem, not
-        // to the framerate.
+        // to the framerate. Put InputSystem.QueueStateEvent() in here to make it work well.
         public void OnUpdate() {
             // Use samples to calculate latest outputs to send
 
@@ -243,6 +239,9 @@ namespace Dorsal.Devices {
                 velZ[0] = (dPos[0].z - dPos[j].z) / diffTime;
 
                 //gyroRate[0] = dRotRate * (float)(180f / Math.PI);
+                Quaternion diffRot = dRot[0] * Quaternion.Inverse(dRot[j]);
+                diffRot.ToAngleAxis(out float angle, out Vector3 axis);
+                angVel[0] = (axis * angle) / (float)diffTime;
 
                 if (samplesTaken >= samples) {
                     // Divide by 9.8 to get g since v/dt will be in m/s/s
@@ -258,6 +257,12 @@ namespace Dorsal.Devices {
             dForward = dRot[0] * _rotationOffset * Vector3.forward;
             dUp = dRot[0] * _rotationOffset * Vector3.up;
             dRight = dRot[0] * _rotationOffset * Vector3.right;
+
+            Vector3 dGyroscope = new Vector3(
+                Vector3.Dot(angVel[0], dRight),
+                Vector3.Dot(angVel[0], dUp),
+                Vector3.Dot(angVel[0], -dForward)
+            );
 
             Vector3 dGravity = new Vector3(
                 Vector3.Dot(Vector3.up, -dRight),
@@ -278,8 +283,8 @@ namespace Dorsal.Devices {
                 state.devicePosition = dPos[0] + positionOffset;
                 state.deviceRotation = dRot[0] * rotationOffset;
                 state.eulerDeviceRotation = state.deviceRotation.eulerAngles;
-                state.gyroscope = Quaternion.identity;
-                state.eulerGyroscope = state.gyroscope.eulerAngles;
+                state.gyroscope = dGyroscope;
+
                 InputSystem.QueueStateEvent<DorsalIMUState>(this, state, timestamp[0]);
             }
         }
