@@ -178,6 +178,15 @@ namespace Dorsal.Config {
                                 GetYamlFloat(mapDeviceNode["rotation"], "z", deviceConfig.rotation.z)
                             );
                         }
+
+                        if (mapDeviceNode.Children.ContainsKey("bindings")) {
+                            YamlNode bindingsNode = mapDeviceNode.Children["bindings"];
+                            if (bindingsNode is YamlMappingNode mBindingsNode) {
+                                foreach (YamlNode keyNode in mBindingsNode.Children.Keys) {
+                                    if (!deviceConfig.bindings.ContainsKey((string)keyNode)) deviceConfig.bindings.Add((string)keyNode, (string)mBindingsNode[keyNode]);
+                                }
+                            }
+                        }
                     }
                 }
             }

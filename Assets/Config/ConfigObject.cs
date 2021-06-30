@@ -28,12 +28,13 @@ namespace Dorsal.Config {
     public class DeviceConfig {
         public string id;
         public string type;
-        public bool active;
-        public string mountTo;
+        public bool active = true;
+        public string mountTo = "";
         public string stereoscopic;
         public Vector3 offset = new Vector3(0f, 0f, 0f);
         public Vector3 scale = new Vector3(1f, 1f, 1f);
         public Vector3 rotation = new Vector3(0f, 0f, 0f);
+        public Dictionary<string, string> bindings = new Dictionary<string, string>();
 
         public DeviceConfig Clone() {
             DeviceConfig clone = new DeviceConfig();
@@ -46,6 +47,10 @@ namespace Dorsal.Config {
             clone.offset = new Vector3(offset.x, offset.y, offset.z);
             clone.scale = new Vector3(scale.x, scale.y, scale.z);
             clone.rotation = new Vector3(rotation.x, rotation.y, rotation.z);
+            clone.bindings= new Dictionary<string, string>();
+            foreach (string key in bindings.Keys) {
+                clone.bindings.Add(key, bindings[key]);
+            }
 
             return clone;
         }

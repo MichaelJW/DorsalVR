@@ -58,14 +58,40 @@ public class SettingsManager : MonoBehaviour
                 default:
                     break;
             }
-            
-            if (device.type == "Screen") {
-                Dorsal.Devices.Screen screen = container.AddComponent<Dorsal.Devices.Screen>();
-                screen.ID = device.id;
-                deviceManager.devices.Add(screen);
-                
-                screen.Instantiate();
-                screen.SetSBS3D(device.stereoscopic == "sbs");
+
+            switch (device.type.ToLower()) {
+                case "screen":
+                    Dorsal.Devices.Screen screen = container.AddComponent<Dorsal.Devices.Screen>();
+                    screen.ID = device.id;
+                    deviceManager.devices.Add(screen);
+
+                    screen.Instantiate();
+                    screen.SetSBS3D(device.stereoscopic == "sbs");
+                    break;
+                case "imu":
+                    Dorsal.Devices.IMU imu = deviceManager.devices.OfType<Dorsal.Devices.IMU>().FirstOrDefault(d => d.ID == device.id);
+                    if (imu == null) {
+                        imu = InputSystem.AddDevice<Dorsal.Devices.IMU>(device.id);
+                        imu.ID = device.id;
+                        
+                        deviceManager.devices.Add(imu);
+                        InputSystem.EnableDevice(imu);
+                    }
+
+                    if (device.bindings.ContainsKey("position")) {
+                        InputAction positionAction = new InputAction();
+                        positionAction.AddBinding(device.bindings["position"]);
+                        imu.positionAction = positionAction;
+                    }
+                    if (device.bindings.ContainsKey("rotation")) {
+                        InputAction rotationAction = new InputAction();
+                        rotationAction.AddBinding(device.bindings["rotation"]);
+                        imu.rotationAction = rotationAction;
+                    }
+                    break;
+                default:
+                    UnityEngine.Debug.Log($"Unrecognised Device type: {device.type}");
+                    break;
             }   
         }
 
@@ -87,6 +113,10 @@ public class SettingsManager : MonoBehaviour
                 }
             }
 
+            UnityEngine.Debug.Log($"IMU devices registered: {InputSystem.GetDevice<Dorsal.Devices.IMU>()}");
+
+            UnityEngine.Debug.Log($"XRController devices registered: {InputSystem.GetDevice<UnityEngine.InputSystem.XR.XRController>()}");
+
             DolphinControls dolphinControls = new DolphinControls();
             foreach (string actionMap in modeConfig["(common)"].controlsConfig.controls.Keys) {
                 foreach (string action in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping.Keys) {
@@ -102,16 +132,5 @@ public class SettingsManager : MonoBehaviour
             dolphinOutput.GetComponent<DolphinOutput>().SetControls(dolphinControls);
         }
         
-        Dorsal.Devices.IMU imu = InputSystem.AddDevice<Dorsal.Devices.IMU>();
-        InputAction positionAction = new InputAction();
-        positionAction.Rename("IMU Right Hand Position");
-        UnityEngine.Debug.Log(positionAction.type);
-        UnityEngine.Debug.Log(positionAction.expectedControlType);
-        positionAction.AddBinding("<XRController>{RightHand}/devicePosition");
-        imu.positionAction = positionAction;
-        InputAction rotationAction = new InputAction();
-        rotationAction.AddBinding("<XRController>{RightHand}/deviceRotation");
-        imu.rotationAction = rotationAction;
     }
-
 }

@@ -1325,7 +1325,6 @@ GameObject:
   m_Component:
   - component: {fileID: 710246417}
   - component: {fileID: 710246418}
-  - component: {fileID: 710246419}
   m_Layer: 0
   m_Name: Right Hand Mount
   m_TagString: Untagged
@@ -1394,18 +1393,6 @@ MonoBehaviour:
       m_Groups: 
       m_Action: Rotation
       m_Flags: 0
---- !u!114 &710246419
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 710246416}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b279439454ddcc54f9cbfe3a73884ca0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &835049816
 GameObject:
   m_ObjectHideFlags: 0

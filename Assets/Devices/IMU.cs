@@ -10,18 +10,20 @@ using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.Controls;
+using System.Runtime.InteropServices;
 
 namespace Dorsal.Devices {
+    [StructLayout(LayoutKind.Auto)]
     public struct DorsalIMUState : IInputStateTypeInfo {
         public FourCC format => new FourCC('D', 'I', 'M', 'U');
 
-        [InputControl(layout = "Vector3")]
+        [InputControl(name = "devicePosition", layout = "Vector3")]
         public Vector3 devicePosition;
-        [InputControl(layout = "Quaternion")]
+        [InputControl(name = "deviceRotation", layout = "Quaternion")]
         public Quaternion deviceRotation;
-        [InputControl(layout = "Vector3")]
+        [InputControl(name = "accelerometer", layout = "Vector3")]
         public Vector3 accelerometer;
-        [InputControl(layout = "Quaternion")]
+        [InputControl(name = "gyroscope", layout = "Quaternion")]
         public Quaternion gyroscope;
     }
 
@@ -107,13 +109,10 @@ namespace Dorsal.Devices {
         }
 
         private void BindPosition() {
-            Debug.Log("Bind");
             if (!_positionBound && _positionAction != null) {
                 _positionAction.performed += OnPositionUpdate;
                 _positionBound = true;
                 _positionAction.Enable();
-                Debug.Log("Bound");
-                Debug.Log(_positionAction.bindings[0].groups);
             }
         }
 
@@ -131,12 +130,10 @@ namespace Dorsal.Devices {
         }
 
         private void UnbindPosition() {
-            Debug.Log("Unbind");
             if (_positionBound && _positionAction != null) {
                 _positionAction.Disable();
                 _positionAction.performed -= OnPositionUpdate;
                 _positionBound = false;
-                Debug.Log("Unbound");
             }
         }
 
@@ -157,11 +154,12 @@ namespace Dorsal.Devices {
         }
 
         // For internal representation of controller
-        Vector3[] pos;
+        Vector3[] dPos;  // device position
         double[] velX;
         double[] velY;
         double[] velZ;
         Vector3[] accel;
+        Quaternion[] dRot;  // device rotation
         Quaternion[] gyro;
         Vector3[] gyroRate;
         Vector3[] dGravity;
@@ -174,14 +172,14 @@ namespace Dorsal.Devices {
         Vector3 dForward;
 
         public IMU() {
-            pos = new Vector3[samples];  // metres
+            dPos = new Vector3[samples];  // metres
             velX = new double[samples];  // m/s
             velY = new double[samples];
             velZ = new double[samples];
             accel = new Vector3[samples];  // g
+            dRot = new Quaternion[samples];
             gyro = new Quaternion[samples];  // deg
             gyroRate = new Vector3[samples];  // deg/s
-            dGravity = new Vector3[samples];  // g
             timestamp = new double[samples];  // seconds
         }
 
@@ -190,15 +188,9 @@ namespace Dorsal.Devices {
         }
 
         private void UpdateOutputs(double time) {
-            Vector3 dPos = _positionAction.ReadValue<Vector3>();
-            Quaternion dRot = _rotationAction.ReadValue<Quaternion>();
-
-            dForward = dRot * _rotationOffset * Vector3.forward;
-            dUp = dRot * _rotationOffset * Vector3.up;
-            dRight = dRot * _rotationOffset * Vector3.right;
-
+            // Update our samples with the latest data
             for (int i = samplesTaken - 1; i >= 1; i--) {
-                pos[i] = pos[i - 1];
+                dPos[i] = dPos[i - 1];
 
                 velX[i] = velX[i - 1];
                 velY[i] = velY[i - 1];
@@ -206,19 +198,28 @@ namespace Dorsal.Devices {
 
                 accel[i] = accel[i - 1];
 
+                dRot[i] = dRot[i - 1];
+
                 gyro[i] = gyro[i - 1];
                 gyroRate[i] = gyroRate[i - 1];
-                dGravity[i] = dGravity[i - 1];
                 timestamp[i] = timestamp[i - 1];
             }
+            samplesTaken = Math.Min(samplesTaken + 1, samples);
+
+            dPos[0] = _positionAction.ReadValue<Vector3>();
+            dRot[0] = _rotationAction.ReadValue<Quaternion>();
 
             if ((float)time - timestamp[0] > 1) {
                 timestamp[0] = Time.realtimeSinceStartup;
             } else {
                 timestamp[0] = (float)time;
             }
+        }
 
-            pos[0] = dPos;
+        // NB this is IInputUpdateCallbackReceiver.OnUpdate(); it's synced to the InputSystem, not
+        // to the framerate.
+        public void OnUpdate() {
+            // Use samples to calculate latest outputs to send
 
             // Apply smoothing if samples are too close together
             int j = 1;
@@ -229,9 +230,9 @@ namespace Dorsal.Devices {
             if (j > 0) {
                 double diffTime = timestamp[0] - timestamp[j];
                 // m/s
-                velX[0] = (pos[0].x - pos[j].x) / diffTime;
-                velY[0] = (pos[0].y - pos[j].y) / diffTime;
-                velZ[0] = (pos[0].z - pos[j].z) / diffTime;
+                velX[0] = (dPos[0].x - dPos[j].x) / diffTime;
+                velY[0] = (dPos[0].y - dPos[j].y) / diffTime;
+                velZ[0] = (dPos[0].z - dPos[j].z) / diffTime;
 
                 //gyroRate[0] = dRotRate * (float)(180f / Math.PI);
 
@@ -246,8 +247,11 @@ namespace Dorsal.Devices {
             }
 
             // We need movement relative to the device's own axes, so use dot products
+            dForward = dRot[0] * _rotationOffset * Vector3.forward;
+            dUp = dRot[0] * _rotationOffset * Vector3.up;
+            dRight = dRot[0] * _rotationOffset * Vector3.right;
 
-            dGravity[0] = new Vector3(
+            Vector3 dGravity = new Vector3(
                 Vector3.Dot(Vector3.up, -dRight),
                 Vector3.Dot(Vector3.up, -dUp),
                 Vector3.Dot(Vector3.up, dForward)
@@ -259,26 +263,15 @@ namespace Dorsal.Devices {
                 Vector3.Dot(accel[0], -dForward)
             );
 
-            samplesTaken++;
-
-            if (samplesTaken >= samples) {
-                samplesTaken = samples;
-                // Debug here if needed
-            }
-
+            // Only queue the update if we have enough samples going far enough back to get a decent result
             if (timestamp[0] - timestamp[j] >= minTimeDiff) {
                 var state = new DorsalIMUState();
-                state.accelerometer = dAccel + dGravity[0];
-                state.devicePosition = dPos + positionOffset;
-                state.deviceRotation = dRot * rotationOffset;
+                state.accelerometer = dAccel + dGravity;
+                state.devicePosition = dPos[0] + positionOffset;
+                state.deviceRotation = dRot[0] * rotationOffset;
                 state.gyroscope = Quaternion.identity;
-                InputSystem.QueueStateEvent(this, state);
+                InputSystem.QueueStateEvent<DorsalIMUState>(this, state, timestamp[0]);
             }
-        }
-
-        public void OnUpdate() {
-            // Not needed?
-            // Could perhaps split previous method in two; that one logs the new input values, and this one updates state
         }
     }
 }
