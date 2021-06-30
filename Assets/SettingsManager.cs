@@ -17,7 +17,7 @@ public class SettingsManager : MonoBehaviour
     Dorsal.Devices.DeviceManager deviceManager;
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         deviceManager = GameObject.FindObjectOfType<Dorsal.Devices.DeviceManager>();
 
@@ -101,5 +101,17 @@ public class SettingsManager : MonoBehaviour
             dolphinOutput.AddComponent<DolphinOutput>();
             dolphinOutput.GetComponent<DolphinOutput>().SetControls(dolphinControls);
         }
+        
+        Dorsal.Devices.IMU imu = InputSystem.AddDevice<Dorsal.Devices.IMU>();
+        InputAction positionAction = new InputAction();
+        positionAction.Rename("IMU Right Hand Position");
+        UnityEngine.Debug.Log(positionAction.type);
+        UnityEngine.Debug.Log(positionAction.expectedControlType);
+        positionAction.AddBinding("<XRController>{RightHand}/devicePosition");
+        imu.positionAction = positionAction;
+        InputAction rotationAction = new InputAction();
+        rotationAction.AddBinding("<XRController>{RightHand}/deviceRotation");
+        imu.rotationAction = rotationAction;
     }
+
 }
