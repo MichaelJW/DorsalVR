@@ -21,10 +21,14 @@ namespace Dorsal.Devices {
         public Vector3 devicePosition;
         [InputControl(name = "deviceRotation", layout = "Quaternion")]
         public Quaternion deviceRotation;
+        [InputControl(name = "eulerDeviceRotation", layout = "Vector3")]
+        public Vector3 eulerDeviceRotation;
         [InputControl(name = "accelerometer", layout = "Vector3")]
         public Vector3 accelerometer;
         [InputControl(name = "gyroscope", layout = "Quaternion")]
         public Quaternion gyroscope;
+        [InputControl(name = "eulerGyroscope", layout = "Vector3")]
+        public Vector3 eulerGyroscope;
     }
 
     #if UNITY_EDITOR
@@ -40,16 +44,20 @@ namespace Dorsal.Devices {
 
         public Vector3Control devicePosition { get; private set; }
         public QuaternionControl deviceRotation { get; private set; }
+        public Vector3Control eulerDeviceRotation { get; private set; }
         public Vector3Control accelerometer { get; private set; }
         public QuaternionControl gyroscope { get; private set; }
+        public Vector3Control eulerGyroscope { get; private set; }
 
         protected override void FinishSetup() {
             base.FinishSetup();
 
             devicePosition = GetChildControl<Vector3Control>("devicePosition");
             deviceRotation = GetChildControl<QuaternionControl>("deviceRotation");
+            eulerDeviceRotation = GetChildControl<Vector3Control>("eulerDeviceRotation");
             accelerometer = GetChildControl<Vector3Control>("accelerometer");
             gyroscope = GetChildControl<QuaternionControl>("gyroscope");
+            eulerGyroscope = GetChildControl<Vector3Control>("eulerGyroscope");
         }
 
         static IMU() {
@@ -269,7 +277,9 @@ namespace Dorsal.Devices {
                 state.accelerometer = dAccel + dGravity;
                 state.devicePosition = dPos[0] + positionOffset;
                 state.deviceRotation = dRot[0] * rotationOffset;
+                state.eulerDeviceRotation = state.deviceRotation.eulerAngles;
                 state.gyroscope = Quaternion.identity;
+                state.eulerGyroscope = state.gyroscope.eulerAngles;
                 InputSystem.QueueStateEvent<DorsalIMUState>(this, state, timestamp[0]);
             }
         }
