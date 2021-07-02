@@ -138,39 +138,5 @@ public class DolphinOutput : MonoBehaviour {
         dsuServer.SendDataBytes(1, packet.GetMessageBytes(1));
         dsuServer.SendDataBytes(2, packet.GetMessageBytes(2));
         dsuServer.SendDataBytes(3, packet.GetMessageBytes(3));
-
-        /*
-         * 
-         * Create more DolphinControls sections (like we have GameCube)
-         * - so one for Wiimote and one for Hotkeys; Hotkeys could be subdivided I guess
-         * - make sure we use appropriate types of input
-         * - this way we can remap things via Unity Input System import, rather than via Dolphin INI or by changing code
-         * In this class, DolphinOutput, create/update a DolphinDSUPacket based on DolphinControls
-         * - could be as simple as, in Update(), doing "if GameCube.A then packet.gamecube.a = 255" or whatever
-         * - will need to expand DolphinDSUPacket so that it has instances of Hotkeys, GCPad, and Wiimote that are accessible
-         * - I guess DolphinOutput creates this packet and updates it, so it "owns" it
-         * Add some kind of ToDataBytes() message to DolphinDSUPacket
-         * - this would return the properly formatted packet ready for the server to send
-         * - may wish to cache the previous bytes and return those via this new function until UpdateDataBytes([timestamp]) is called
-         * Pass the bytes/packet to the DSU server
-         * - using MVC I think it makes sense for DolphinOutput to be the C and to update the M (the packet) and also pass it to
-         *   the server (essentially the V), or at least alert the server that it's ready
-         * - we could allow the server to grab the bytes every X ms but this seems silly since DolphinOutput *knows* when the packet
-         *   will be ready
-         * 
-         * Well, the above works! Next up is to expand this to cover all inputs, for completeness. 
-         * There are several possible routes to choose from next; will consider that at the time based on what I feel like doing.
-         * To consider: 
-         *  - In some cases we will want a specific, unchangeable menu option that maps to a Dolphin input (particularly for hotkeys
-         *    like "save state") but will also want to offer the user the option to assign an input to this. A "MenuDevice" isn't
-         *    necessarily the best way of doing this, because we don't want the user to be able to un-assign the MenuDevice input.
-         *  - How do we let the user switch which DorsalDevice they're "holding"? For now, possibly just a menu; maybe a menu per
-         *    hand. This way each hand can hold a separate Wiimote, and we can swap which hand is holding Wiimote #1. Some devices
-         *    will be two-handed but maybe with the *option* to hold them in one hand (e.g. hold a steering wheel and a gun).
-         * 
-         */
-
-        //Debug.Log(string.Format("RVAO: {0}", controls.GameCube.A.ReadValueAsObject()));
-        //Debug.Log(string.Format("RVAO: {0}", controls.GameCube.LeftStickX.ReadValueAsObject()));
     }
 }
