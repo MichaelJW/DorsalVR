@@ -259,7 +259,7 @@ namespace Dorsal.Devices {
             dRight = dRot[0] * _rotationOffset * Vector3.right;
 
             Vector3 dGyroscope = new Vector3(
-                Vector3.Dot(angVel[0], dRight),
+                Vector3.Dot(angVel[0], -dRight),
                 Vector3.Dot(angVel[0], dUp),
                 Vector3.Dot(angVel[0], -dForward)
             );
