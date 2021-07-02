@@ -139,8 +139,9 @@ namespace DolphinDSUPacket
 
         public byte nunchukC = 0;
         public byte nunchukZ = 0;
-        public byte nunchukStickX = 0;
-        public byte nunchuckStickY = 0;
+        // For sticks, 128 is neutral, positive dir is right/down
+        public byte nunchukStickX = 128;
+        public byte nunchuckStickY = 128;
         public float nunchuckAccelX = 0;
         public float nunchuckAccelY = 0;
         public float nunchuckAccelZ = 0;
@@ -154,10 +155,11 @@ namespace DolphinDSUPacket
         public bool classicMinus = false;
         public bool classicPlus = false;
         public byte classicHome = 0;
-        public byte classicLeftStickX = 0;
-        public byte classicLeftStickY = 0;
-        public byte classicRightStickX = 0;
-        public byte classicRightStickY = 0;
+        // For sticks, 128 is neutral, positive dir is right/down
+        public byte classicLeftStickX = 128;
+        public byte classicLeftStickY = 128;
+        public byte classicRightStickX = 128;
+        public byte classicRightStickY = 128;
         public byte classicLeftTrigger = 0;
         public byte classicRightTrigger = 0;
         public byte classicDPadUp = 0;
@@ -195,9 +197,62 @@ namespace DolphinDSUPacket
             output[0] = (byte)1;  // connected
             Array.Copy(BitConverter.GetBytes(_packetNumber[slot]), 0, output, 1, 4);
 
+            int firstButtonData = 0;  // bitmask
+            int secondButtonData = 0;  // bitmask
+
             switch (slot) {
+                case 0:  // Wiimote
+                    firstButtonData += (wiimote.dPadLeft == 255 ? 128 : 0);
+                    firstButtonData += (wiimote.dPadDown == 255 ? 64 : 0);
+                    firstButtonData += (wiimote.dPadRight == 255 ? 32 : 0);
+                    firstButtonData += (wiimote.dPadUp == 255 ? 16 : 0);
+                    firstButtonData += (wiimote.plusButton ? 8 : 0);
+                    firstButtonData += (wiimote.imuirRecenter ? 4 : 0);
+                    firstButtonData += (wiimote.imuirEnabled ? 2 : 0);
+                    firstButtonData += (wiimote.minusButton ? 1 : 0);
+                    output[5] = (byte)firstButtonData;
+
+                    secondButtonData += (wiimote.twoButton == 255 ? 128 : 0);
+                    secondButtonData += (wiimote.bButton == 255 ? 64 : 0);
+                    secondButtonData += (wiimote.aButton == 255 ? 32 : 0);
+                    secondButtonData += (wiimote.oneButton == 255 ? 16 : 0);
+                    secondButtonData += (wiimote.yShake == 255 ? 8 : 0);
+                    secondButtonData += (wiimote.xShake == 255 ? 4 : 0);
+                    secondButtonData += 0;  // Mapped to R2 which we use for extension selection; not needed here
+                    secondButtonData += (wiimote.zShake == 255 ? 1 : 0);
+                    output[6] = (byte)secondButtonData;
+
+                    output[7] = wiimote.homeButton;
+                    output[8] = 0;  // maps to Touch button, unused
+                    output[9] = 128;  // maps to L stick, unused
+                    output[10] = 128;  //maps to L stick, unused
+                    output[11] = 128;  // maps to R stick X, unused
+                    output[12] = wiimote.speakerPan;
+                    output[13] = wiimote.dPadLeft;
+                    output[14] = wiimote.dPadDown;
+                    output[15] = wiimote.dPadRight;
+                    output[16] = wiimote.dPadUp;
+                    output[17] = wiimote.twoButton;
+                    output[18] = wiimote.bButton;
+                    output[19] = wiimote.aButton;
+                    output[20] = wiimote.oneButton;
+                    output[21] = wiimote.yShake;
+                    output[22] = wiimote.xShake;
+                    output[23] = 0;  // will be used to select extension
+                    output[24] = wiimote.zShake;
+
+                    // 25 - 36 inclusive are for touch input, unused
+
+                    //output[37] = 0;  // for motion data timestamp, currently unused
+                    Array.Copy(BitConverter.GetBytes(wiimote.accelX), 0, output, 45, 4);
+                    Array.Copy(BitConverter.GetBytes(wiimote.accelY), 0, output, 49, 4);
+                    Array.Copy(BitConverter.GetBytes(wiimote.accelZ), 0, output, 53, 4);
+                    Array.Copy(BitConverter.GetBytes(wiimote.gyroPitch), 0, output, 57, 4);
+                    Array.Copy(BitConverter.GetBytes(wiimote.gyroYaw), 0, output, 61, 4);
+                    Array.Copy(BitConverter.GetBytes(wiimote.gyroRoll), 0, output, 65, 4);
+                    break;
+
                 case 2:  // GCPad
-                    int firstButtonData = 0;  // bitmask
                     firstButtonData += (gcPad.dPadLeft == 255 ? 128 : 0);
                     firstButtonData += (gcPad.dPadDown == 255 ? 64 : 0);
                     firstButtonData += (gcPad.dPadRight == 255 ? 32 : 0);
@@ -208,7 +263,6 @@ namespace DolphinDSUPacket
                     firstButtonData += 0;  // maps to Share button, unused
                     output[5] = (byte)firstButtonData;
 
-                    int secondButtonData = 0;  // bitmask
                     secondButtonData += (gcPad.yButton == 255 ? 128 : 0);
                     secondButtonData += (gcPad.bButton == 255 ? 64 : 0);
                     secondButtonData += (gcPad.aButton == 255 ? 32 : 0);
@@ -241,6 +295,52 @@ namespace DolphinDSUPacket
                     // 25 - 36 inclusive are for touch input, unused
                     // 36 - 69 inclusive are for motion input, unused
                     break;
+                case 3:  // Hotkeys
+                    // D-Pad LDRU, Options, R3, L3, Share
+                    firstButtonData += (false ? 128 : 0);
+                    firstButtonData += (false ? 64 : 0);
+                    firstButtonData += (false ? 32 : 0);
+                    firstButtonData += (false ? 16 : 0);
+                    firstButtonData += (hotkeys.togglePause ? 8 : 0);
+                    firstButtonData += (false ? 4 : 0);
+                    firstButtonData += (false ? 2 : 0);
+                    firstButtonData += (hotkeys.takeScreenshot ? 1 : 0);
+                    output[5] = (byte)firstButtonData;
+
+                    // Square, Cross, Circle, Triangle (YBAX), R1, L1, R2, L2
+                    secondButtonData += (false ? 128 : 0);
+                    secondButtonData += (false ? 64 : 0);
+                    secondButtonData += (false ? 32 : 0);
+                    secondButtonData += (false ? 16 : 0);
+                    secondButtonData += (false ? 8 : 0);
+                    secondButtonData += (false ? 4 : 0);
+                    secondButtonData += (false ? 2 : 0);
+                    secondButtonData += (false ? 1 : 0);
+                    output[6] = (byte)secondButtonData;
+
+                    output[7] = 0;  // PS button
+                    output[8] = 0;  // Touch button
+                    output[9] = 128;  // L stick X  - 128 is neutral for sticks
+                    output[10] = 128;  // L stick Y
+                    output[11] = (byte)(hotkeys.increase3DDepth ? 255 : (hotkeys.decrease3DDepth ? 0 : 128));  // R stick X
+                    output[12] = (byte)(hotkeys.increase3DConvergence ? 255 : (hotkeys.decrease3DConvergence ? 0 : 128));  // R stick Y
+                    output[13] = 0;  // Analog D-Pad Left
+                    output[14] = 0;  // Analog D-Pad Down
+                    output[15] = 0;  // Analog D-Pad Right
+                    output[16] = 0;  // Analog D-Pad Up
+                    output[17] = 0;  // Analog Y (Square)
+                    output[18] = 0;  // Analog B (Cross)
+                    output[19] = (byte)(hotkeys.saveState ? 5.0f : (hotkeys.loadState ? 6.0f: 0));  // Analog A (Circle)
+                    output[20] = 0;  // Analog X (Triangle)
+                    output[21] = 0;  // Analog R1
+                    output[22] = 0;  // Analog L1
+                    output[23] = 0;  // Analog R2
+                    output[24] = 0;  // Analog L2
+
+                    // 25 - 36 inclusive are for touch input, unused
+                    // 36 - 69 inclusive are for motion input, unused
+                    break;
+
                 default:
                     break;
             }

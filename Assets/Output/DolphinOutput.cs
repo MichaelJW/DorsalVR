@@ -76,6 +76,37 @@ public class DolphinOutput : MonoBehaviour {
             packet.gcPad.dPadDown = (byte)(controls.DolphinGCPad.DPadDown.ReadValue<float>() * 255);
             packet.gcPad.dPadLeft = (byte)(controls.DolphinGCPad.DPadLeft.ReadValue<float>() * 255);
             packet.gcPad.dPadRight = (byte)(controls.DolphinGCPad.DPadRight.ReadValue<float>() * 255);
+
+            packet.wiimote.aButton = (byte)(controls.DolphinWiimote.A.ReadValue<float>() * 255);
+            packet.wiimote.bButton = (byte)(controls.DolphinWiimote.B.ReadValue<float>() * 255);
+            packet.wiimote.oneButton = (byte)(controls.DolphinWiimote.One.ReadValue<float>() * 255);
+            packet.wiimote.twoButton = (byte)(controls.DolphinWiimote.Two.ReadValue<float>() * 255);
+            packet.wiimote.minusButton = (controls.DolphinWiimote.Minus.ReadValue<float>() >= 0.5);
+            packet.wiimote.plusButton = (controls.DolphinWiimote.Plus.ReadValue<float>() >= 0.5);
+            packet.wiimote.homeButton = (byte)(controls.DolphinWiimote.Home.ReadValue<float>() * 255);
+            packet.wiimote.accelX = (controls.DolphinWiimote.AccelerometerX.ReadValue<float>());
+            packet.wiimote.accelY = (controls.DolphinWiimote.AccelerometerY.ReadValue<float>());
+            packet.wiimote.accelZ = (controls.DolphinWiimote.AccelerometerZ.ReadValue<float>());
+            packet.wiimote.gyroPitch = (controls.DolphinWiimote.GyroPitch.ReadValue<float>());
+            packet.wiimote.gyroYaw = (controls.DolphinWiimote.GyroYaw.ReadValue<float>());
+            packet.wiimote.gyroRoll = (controls.DolphinWiimote.GyroRoll.ReadValue<float>());
+            packet.wiimote.dPadUp = (byte)(controls.DolphinWiimote.DPadUp.ReadValue<float>() * 255);
+            packet.wiimote.dPadDown = (byte)(controls.DolphinWiimote.DPadDown.ReadValue<float>() * 255);
+            packet.wiimote.dPadLeft = (byte)(controls.DolphinWiimote.DPadLeft.ReadValue<float>() * 255);
+            packet.wiimote.dPadRight = (byte)(controls.DolphinWiimote.DPadRight.ReadValue<float>() * 255);
+            packet.wiimote.imuirRecenter = (controls.DolphinWiimote.Recenter.ReadValue<float>() >= 0.5);
+            packet.wiimote.xShake = (byte)(controls.DolphinWiimote.ShakeX.ReadValue<float>() * 255);
+            packet.wiimote.yShake = (byte)(controls.DolphinWiimote.ShakeY.ReadValue<float>() * 255);
+            packet.wiimote.zShake = (byte)(controls.DolphinWiimote.ShakeZ.ReadValue<float>() * 255);
+
+            packet.hotkeys.togglePause = controls.DolphinHotkeys.TogglePause.ReadValue<float>() >= 0.5;
+            packet.hotkeys.takeScreenshot = controls.DolphinHotkeys.TakeScreenshot.ReadValue<float>() >= 0.5;
+            packet.hotkeys.saveState = controls.DolphinHotkeys.SaveState.ReadValue<float>() >= 0.5;
+            packet.hotkeys.loadState = controls.DolphinHotkeys.LoadState.ReadValue<float>() >= 0.5;
+            packet.hotkeys.increase3DDepth = controls.DolphinHotkeys.IncreaseDepth.ReadValue<float>() >= 0.5;
+            packet.hotkeys.decrease3DDepth = controls.DolphinHotkeys.DecreaseDepth.ReadValue<float>() >= 0.5;
+            packet.hotkeys.increase3DConvergence = controls.DolphinHotkeys.IncreaseConvergence.ReadValue<float>() >= 0.5;
+            packet.hotkeys.decrease3DConvergence = controls.DolphinHotkeys.DecreaseConvergence.ReadValue<float>() >= 0.5;
         }
 
         dsuServer.SendDataBytes(0, packet.GetMessageBytes(0));

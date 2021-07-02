@@ -1101,6 +1101,38 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Decrease Depth"",
+                    ""type"": ""Button"",
+                    ""id"": ""a7d92616-cf96-47ec-ab79-986d0046b7f3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Increase Depth"",
+                    ""type"": ""Button"",
+                    ""id"": ""870bb38a-fede-48ec-bc98-f6555b31775a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Decrease Convergence"",
+                    ""type"": ""Button"",
+                    ""id"": ""90d29e4c-b983-4f0d-a2d5-e220ade45787"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Increase Convergence"",
+                    ""type"": ""Button"",
+                    ""id"": ""a75d7167-0b75-4ce5-9ff0-8adba86bc546"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -1145,6 +1177,50 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Load State"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""999c99bb-ac48-4cc1-b8dd-1a74bef29f71"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decrease Depth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4f803c18-0d1f-4dad-93fd-950c9003d970"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Increase Depth"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b678e0ce-f513-4508-bff0-52d92b8920f1"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Decrease Convergence"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0ae244ba-fead-408e-8bbb-14b8e3136662"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Increase Convergence"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1230,6 +1306,10 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         m_DolphinHotkeys_TakeScreenshot = m_DolphinHotkeys.FindAction("Take Screenshot", throwIfNotFound: true);
         m_DolphinHotkeys_SaveState = m_DolphinHotkeys.FindAction("Save State", throwIfNotFound: true);
         m_DolphinHotkeys_LoadState = m_DolphinHotkeys.FindAction("Load State", throwIfNotFound: true);
+        m_DolphinHotkeys_DecreaseDepth = m_DolphinHotkeys.FindAction("Decrease Depth", throwIfNotFound: true);
+        m_DolphinHotkeys_IncreaseDepth = m_DolphinHotkeys.FindAction("Increase Depth", throwIfNotFound: true);
+        m_DolphinHotkeys_DecreaseConvergence = m_DolphinHotkeys.FindAction("Decrease Convergence", throwIfNotFound: true);
+        m_DolphinHotkeys_IncreaseConvergence = m_DolphinHotkeys.FindAction("Increase Convergence", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -1887,6 +1967,10 @@ public class @DolphinControls : IInputActionCollection, IDisposable
     private readonly InputAction m_DolphinHotkeys_TakeScreenshot;
     private readonly InputAction m_DolphinHotkeys_SaveState;
     private readonly InputAction m_DolphinHotkeys_LoadState;
+    private readonly InputAction m_DolphinHotkeys_DecreaseDepth;
+    private readonly InputAction m_DolphinHotkeys_IncreaseDepth;
+    private readonly InputAction m_DolphinHotkeys_DecreaseConvergence;
+    private readonly InputAction m_DolphinHotkeys_IncreaseConvergence;
     public struct DolphinHotkeysActions
     {
         private @DolphinControls m_Wrapper;
@@ -1895,6 +1979,10 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         public InputAction @TakeScreenshot => m_Wrapper.m_DolphinHotkeys_TakeScreenshot;
         public InputAction @SaveState => m_Wrapper.m_DolphinHotkeys_SaveState;
         public InputAction @LoadState => m_Wrapper.m_DolphinHotkeys_LoadState;
+        public InputAction @DecreaseDepth => m_Wrapper.m_DolphinHotkeys_DecreaseDepth;
+        public InputAction @IncreaseDepth => m_Wrapper.m_DolphinHotkeys_IncreaseDepth;
+        public InputAction @DecreaseConvergence => m_Wrapper.m_DolphinHotkeys_DecreaseConvergence;
+        public InputAction @IncreaseConvergence => m_Wrapper.m_DolphinHotkeys_IncreaseConvergence;
         public InputActionMap Get() { return m_Wrapper.m_DolphinHotkeys; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -1916,6 +2004,18 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 @LoadState.started -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnLoadState;
                 @LoadState.performed -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnLoadState;
                 @LoadState.canceled -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnLoadState;
+                @DecreaseDepth.started -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnDecreaseDepth;
+                @DecreaseDepth.performed -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnDecreaseDepth;
+                @DecreaseDepth.canceled -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnDecreaseDepth;
+                @IncreaseDepth.started -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnIncreaseDepth;
+                @IncreaseDepth.performed -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnIncreaseDepth;
+                @IncreaseDepth.canceled -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnIncreaseDepth;
+                @DecreaseConvergence.started -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnDecreaseConvergence;
+                @DecreaseConvergence.performed -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnDecreaseConvergence;
+                @DecreaseConvergence.canceled -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnDecreaseConvergence;
+                @IncreaseConvergence.started -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnIncreaseConvergence;
+                @IncreaseConvergence.performed -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnIncreaseConvergence;
+                @IncreaseConvergence.canceled -= m_Wrapper.m_DolphinHotkeysActionsCallbackInterface.OnIncreaseConvergence;
             }
             m_Wrapper.m_DolphinHotkeysActionsCallbackInterface = instance;
             if (instance != null)
@@ -1932,6 +2032,18 @@ public class @DolphinControls : IInputActionCollection, IDisposable
                 @LoadState.started += instance.OnLoadState;
                 @LoadState.performed += instance.OnLoadState;
                 @LoadState.canceled += instance.OnLoadState;
+                @DecreaseDepth.started += instance.OnDecreaseDepth;
+                @DecreaseDepth.performed += instance.OnDecreaseDepth;
+                @DecreaseDepth.canceled += instance.OnDecreaseDepth;
+                @IncreaseDepth.started += instance.OnIncreaseDepth;
+                @IncreaseDepth.performed += instance.OnIncreaseDepth;
+                @IncreaseDepth.canceled += instance.OnIncreaseDepth;
+                @DecreaseConvergence.started += instance.OnDecreaseConvergence;
+                @DecreaseConvergence.performed += instance.OnDecreaseConvergence;
+                @DecreaseConvergence.canceled += instance.OnDecreaseConvergence;
+                @IncreaseConvergence.started += instance.OnIncreaseConvergence;
+                @IncreaseConvergence.performed += instance.OnIncreaseConvergence;
+                @IncreaseConvergence.canceled += instance.OnIncreaseConvergence;
             }
         }
     }
@@ -2017,5 +2129,9 @@ public class @DolphinControls : IInputActionCollection, IDisposable
         void OnTakeScreenshot(InputAction.CallbackContext context);
         void OnSaveState(InputAction.CallbackContext context);
         void OnLoadState(InputAction.CallbackContext context);
+        void OnDecreaseDepth(InputAction.CallbackContext context);
+        void OnIncreaseDepth(InputAction.CallbackContext context);
+        void OnDecreaseConvergence(InputAction.CallbackContext context);
+        void OnIncreaseConvergence(InputAction.CallbackContext context);
     }
 }

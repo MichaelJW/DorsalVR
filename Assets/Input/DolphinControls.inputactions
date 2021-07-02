@@ -1088,6 +1088,38 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "Decrease Depth",
+                    "type": "Button",
+                    "id": "a7d92616-cf96-47ec-ab79-986d0046b7f3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Increase Depth",
+                    "type": "Button",
+                    "id": "870bb38a-fede-48ec-bc98-f6555b31775a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Decrease Convergence",
+                    "type": "Button",
+                    "id": "90d29e4c-b983-4f0d-a2d5-e220ade45787",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Increase Convergence",
+                    "type": "Button",
+                    "id": "a75d7167-0b75-4ce5-9ff0-8adba86bc546",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -1132,6 +1164,50 @@
                     "processors": "",
                     "groups": "",
                     "action": "Load State",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "999c99bb-ac48-4cc1-b8dd-1a74bef29f71",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Decrease Depth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4f803c18-0d1f-4dad-93fd-950c9003d970",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Increase Depth",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b678e0ce-f513-4508-bff0-52d92b8920f1",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Decrease Convergence",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0ae244ba-fead-408e-8bbb-14b8e3136662",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Increase Convergence",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
