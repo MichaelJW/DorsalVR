@@ -141,10 +141,10 @@ namespace DolphinDSUPacket
         public byte nunchukZ = 0;
         // For sticks, 128 is neutral, positive dir is right/down
         public byte nunchukStickX = 128;
-        public byte nunchuckStickY = 128;
-        public float nunchuckAccelX = 0;
-        public float nunchuckAccelY = 0;
-        public float nunchuckAccelZ = 0;
+        public byte nunchukStickY = 128;
+        public float nunchukAccelX = 0;
+        public float nunchukAccelY = 0;
+        public float nunchukAccelZ = 0;
 
         public byte classicY = 0;
         public byte classicB = 0;
@@ -238,7 +238,7 @@ namespace DolphinDSUPacket
                     output[20] = wiimote.oneButton;
                     output[21] = wiimote.yShake;
                     output[22] = wiimote.xShake;
-                    output[23] = 0;  // will be used to select extension
+                    output[23] = wiimote.extension;
                     output[24] = wiimote.zShake;
 
                     // 25 - 36 inclusive are for touch input, unused
@@ -251,7 +251,57 @@ namespace DolphinDSUPacket
                     Array.Copy(BitConverter.GetBytes(wiimote.gyroYaw), 0, output, 61, 4);
                     Array.Copy(BitConverter.GetBytes(wiimote.gyroRoll), 0, output, 65, 4);
                     break;
+                case 1:  // Wiimote - Extension
+                    // D-Pad LDRU, Options, R3, L3, Share
+                    firstButtonData += (false ? 128 : 0);
+                    firstButtonData += (false ? 64 : 0);
+                    firstButtonData += (false ? 32 : 0);
+                    firstButtonData += (false ? 16 : 0);
+                    firstButtonData += (false ? 8 : 0);
+                    firstButtonData += (false ? 4 : 0);
+                    firstButtonData += (false ? 2 : 0);
+                    firstButtonData += (false ? 1 : 0);
+                    output[5] = (byte)firstButtonData;
 
+                    // Square, Cross, Circle, Triangle (YBAX), R1, L1, R2, L2
+                    secondButtonData += (false ? 128 : 0);
+                    secondButtonData += (false ? 64 : 0);
+                    secondButtonData += (false ? 32 : 0);
+                    secondButtonData += (false ? 16 : 0);
+                    secondButtonData += (false ? 8 : 0);
+                    secondButtonData += (wiimote.nunchukZ >= 0.5 ? 4 : 0);
+                    secondButtonData += (false ? 2 : 0);
+                    secondButtonData += (wiimote.nunchukC >= 0.5 ? 1 : 0);
+                    output[6] = (byte)secondButtonData;
+
+                    output[7] = 0;  // PS button
+                    output[8] = 0;  // Touch button
+                    output[9] = wiimote.nunchukStickX;  // L stick X - 128 is neutral for sticks
+                    output[10] = wiimote.nunchukStickY;  // L stick Y
+                    output[11] = 128;  // R stick X - 128 is neutral for sticks
+                    output[12] = 128;  // R stick Y
+                    output[13] = 0;  // Analog D-Pad Left
+                    output[14] = 0;  // Analog D-Pad Down
+                    output[15] = 0;  // Analog D-Pad Right
+                    output[16] = 0;  // Analog D-Pad Up
+                    output[17] = 0;  // Analog Y (Square)
+                    output[18] = 0;  // Analog B (Cross)
+                    output[19] = 0;  // Analog A (Circle)
+                    output[20] = 0;  // Analog X (Triangle)
+                    output[21] = 0;  // Analog R1
+                    output[22] = wiimote.nunchukZ;  // Analog L1
+                    output[23] = 0;  // Analog R2
+                    output[24] = wiimote.nunchukC;  // Analog L2
+
+                    // 25 - 36 inclusive are for touch input, unused
+
+                    //output[37] = 0;  // for motion data timestamp, currently unused
+                    Array.Copy(BitConverter.GetBytes(wiimote.nunchukAccelX), 0, output, 45, 4);
+                    Array.Copy(BitConverter.GetBytes(wiimote.nunchukAccelY), 0, output, 49, 4);
+                    Array.Copy(BitConverter.GetBytes(wiimote.nunchukAccelZ), 0, output, 53, 4);
+
+                    // 57 - 69 inclusive are for gyro, unused
+                    break;
                 case 2:  // GCPad
                     firstButtonData += (gcPad.dPadLeft == 255 ? 128 : 0);
                     firstButtonData += (gcPad.dPadDown == 255 ? 64 : 0);
@@ -293,7 +343,7 @@ namespace DolphinDSUPacket
                     output[24] = gcPad.rightTrigger;
                     
                     // 25 - 36 inclusive are for touch input, unused
-                    // 36 - 69 inclusive are for motion input, unused
+                    // 37 - 69 inclusive are for motion input, unused
                     break;
                 case 3:  // Hotkeys
                     // D-Pad LDRU, Options, R3, L3, Share
@@ -320,7 +370,7 @@ namespace DolphinDSUPacket
 
                     output[7] = 0;  // PS button
                     output[8] = 0;  // Touch button
-                    output[9] = 128;  // L stick X  - 128 is neutral for sticks
+                    output[9] = 128;  // L stick X - 128 is neutral for sticks
                     output[10] = 128;  // L stick Y
                     output[11] = (byte)(hotkeys.increase3DDepth ? 255 : (hotkeys.decrease3DDepth ? 0 : 128));  // R stick X
                     output[12] = (byte)(hotkeys.increase3DConvergence ? 255 : (hotkeys.decrease3DConvergence ? 0 : 128));  // R stick Y
@@ -338,9 +388,8 @@ namespace DolphinDSUPacket
                     output[24] = 0;  // Analog L2
 
                     // 25 - 36 inclusive are for touch input, unused
-                    // 36 - 69 inclusive are for motion input, unused
+                    // 37 - 69 inclusive are for motion input, unused
                     break;
-
                 default:
                     break;
             }

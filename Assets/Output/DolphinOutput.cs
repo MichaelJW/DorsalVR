@@ -8,6 +8,21 @@ public class DolphinOutput : MonoBehaviour {
     DolphinControls controls;
     DSUServer dsuServer;
     Packet packet;
+    
+    public WiimoteExtension selectedExtension = WiimoteExtension.None;
+
+    // Taken from Dolphin WiimoteEmu/ExtensionPort.h
+    public enum WiimoteExtension {
+        None,
+        Nunchuk,
+        Classic,
+        Guitar,
+        Drums,
+        Turntable,
+        UDrawTablet,
+        DrawsomeTablet,
+        Tatacon
+    }
 
     public void OnEnable() {
         SetUp();
@@ -98,6 +113,16 @@ public class DolphinOutput : MonoBehaviour {
             packet.wiimote.xShake = (byte)(controls.DolphinWiimote.ShakeX.ReadValue<float>() * 255);
             packet.wiimote.yShake = (byte)(controls.DolphinWiimote.ShakeY.ReadValue<float>() * 255);
             packet.wiimote.zShake = (byte)(controls.DolphinWiimote.ShakeZ.ReadValue<float>() * 255);
+
+            packet.wiimote.extension = (byte)selectedExtension;
+
+            packet.wiimote.nunchukC = (byte)(controls.DolphinNunchuk.C.ReadValue<float>() * 255);
+            packet.wiimote.nunchukZ = (byte)(controls.DolphinNunchuk.Z.ReadValue<float>() * 255);
+            packet.wiimote.nunchukStickX = (byte)((controls.DolphinNunchuk.StickX.ReadValue<float>() + 1.0) * 127);
+            packet.wiimote.nunchukStickY = (byte)((controls.DolphinNunchuk.StickY.ReadValue<float>() + 1.0) * 127);
+            packet.wiimote.nunchukAccelX = (controls.DolphinNunchuk.AccelerometerX.ReadValue<float>());
+            packet.wiimote.nunchukAccelY = (controls.DolphinNunchuk.AccelerometerY.ReadValue<float>());
+            packet.wiimote.nunchukAccelZ = (controls.DolphinNunchuk.AccelerometerZ.ReadValue<float>());
 
             packet.hotkeys.togglePause = controls.DolphinHotkeys.TogglePause.ReadValue<float>() >= 0.5;
             packet.hotkeys.takeScreenshot = controls.DolphinHotkeys.TakeScreenshot.ReadValue<float>() >= 0.5;

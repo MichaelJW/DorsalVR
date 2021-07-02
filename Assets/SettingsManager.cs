@@ -126,6 +126,19 @@ public class SettingsManager : MonoBehaviour
             dolphinOutput.name = "Dolphin Output";
             dolphinOutput.AddComponent<DolphinOutput>();
             dolphinOutput.GetComponent<DolphinOutput>().SetControls(dolphinControls);
+            DolphinOutput.WiimoteExtension extension = DolphinOutput.WiimoteExtension.None;
+            switch (modeConfig["(common)"].dolphinConfig.extension.ToLower()) {
+                case "nunchuk":
+                case "nunchuck":  // anticipate typos!
+                    extension = DolphinOutput.WiimoteExtension.Nunchuk;
+                    break;
+                case "":
+                case "none":
+                default:
+                    extension = DolphinOutput.WiimoteExtension.None;
+                    break;
+            }
+            dolphinOutput.GetComponent<DolphinOutput>().selectedExtension = extension;
         }
         
     }
