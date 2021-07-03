@@ -207,17 +207,40 @@ namespace Dorsal.Config {
                             YamlNode actionNode = mActionMapNode.Children[actionKey];
 
                             if (actionNode is YamlScalarNode vActionNode) {
+                                // Single value - so either "unset" or a path
                                 if (vActionNode.Value == "unset") {
                                     controlsConfig.UnsetBindings((string)actionMapKey, (string)actionKey);
                                 } else {
                                     controlsConfig.AddBinding((string)actionMapKey, (string)actionKey, vActionNode.Value);
                                 }
+                            } else if (actionNode is YamlMappingNode mActionNode) {
+                                if (GetYamlString(mActionNode, "path") != null) {
+                                    ControlBinding binding = new ControlBinding {
+                                        path = GetYamlString(mActionNode, "path"),
+                                        interactions = GetYamlString(mActionNode, "interactions", ""),
+                                        processors = GetYamlString(mActionNode, "processors", "")
+                                    };
+                                    controlsConfig.AddBinding((string)actionMapKey, (string)actionKey, binding);
+                                }
                             } else if (actionNode is YamlSequenceNode sActionNode) {
+                                // List of scalars or objects
                                 foreach (YamlNode valueNode in sActionNode.Children) {
-                                    if ((string)valueNode == "unset") {
-                                        controlsConfig.UnsetBindings((string)actionMapKey, (string)actionKey);
-                                    } else {
-                                        controlsConfig.AddBinding((string)actionMapKey, (string)actionKey, (string)valueNode);
+                                    if (valueNode is YamlScalarNode vValueNode) {
+                                        // Single value - so either "unset" or a path
+                                        if (vValueNode.Value == "unset") {
+                                            controlsConfig.UnsetBindings((string)actionMapKey, (string)actionKey);
+                                        } else {
+                                            controlsConfig.AddBinding((string)actionMapKey, (string)actionKey, vValueNode.Value);
+                                        }
+                                    } else if (valueNode is YamlMappingNode mValueNode) {
+                                        if (GetYamlString(mValueNode, "path") != null) {
+                                            ControlBinding binding = new ControlBinding {
+                                                path = GetYamlString(mValueNode, "path"),
+                                                interactions = GetYamlString(mValueNode, "interactions", ""),
+                                                processors = GetYamlString(mValueNode, "processors", "")
+                                            };
+                                            controlsConfig.AddBinding((string)actionMapKey, (string)actionKey, binding);
+                                        }
                                     }
                                 }
                             }

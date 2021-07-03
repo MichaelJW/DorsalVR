@@ -116,8 +116,10 @@ public class SettingsManager : MonoBehaviour
             DolphinControls dolphinControls = new DolphinControls();
             foreach (string actionMap in modeConfig["(common)"].controlsConfig.controls.Keys) {
                 foreach (string action in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping.Keys) {
-                    foreach (string binding in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping[action]) {
-                        dolphinControls.asset.FindActionMap(actionMap).FindAction(action).AddBinding(binding);
+                    foreach (ControlBinding binding in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping[action]) {
+                        dolphinControls.asset.FindActionMap(actionMap).FindAction(action).AddBinding(
+                            binding.path, binding.interactions, binding.processors
+                        );
                     }
                 }
             }

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Dorsal.Config {
@@ -100,7 +101,18 @@ namespace Dorsal.Config {
         // Action map, mapping
         public Dictionary<string, ControlMapping> controls = new Dictionary<string, ControlMapping>();
 
-        public void AddBinding(string actionMap, string action, string binding) {
+        public void AddBinding(string actionMap, string action, string bindingPath) {
+            ControlBinding binding = new ControlBinding { path = bindingPath };
+            if (controls.ContainsKey(actionMap)) {
+                controls[actionMap].AddBinding(action, binding);
+            } else {
+                ControlMapping controlMapping = new ControlMapping();
+                controlMapping.AddBinding(action, binding);
+                controls.Add(actionMap, controlMapping);
+            }
+        }
+
+        public void AddBinding(string actionMap, string action, ControlBinding binding) {
             if (controls.ContainsKey(actionMap)) {
                 controls[actionMap].AddBinding(action, binding);
             } else {
@@ -135,22 +147,23 @@ namespace Dorsal.Config {
 
     public class ControlMapping {
         // Action, binding(s)
-        public Dictionary<string, List<string>> mapping = new Dictionary<string, List<string>>();
+        public Dictionary<string, List<ControlBinding>> mapping = new Dictionary<string, List<ControlBinding>>();
 
-        public void AddBinding(string action, string binding) {
+        internal void AddBinding(string action, ControlBinding binding) {
             if (mapping.ContainsKey(action)) {
-                List<string> bindings = mapping[action];
-                if (!bindings.Contains(binding)) {
+                List<ControlBinding> bindings = mapping[action];
+                // We look for *exact* duplicates, based on path, interactions, *and* processors
+                if (bindings.Count(b => b.path == binding.path && b.interactions == binding.interactions && b.processors == binding.processors) == 0) { 
                     bindings.Add(binding);
                 }
             } else {
-                List<string> bindings = new List<string>();
+                List<ControlBinding> bindings = new List<ControlBinding>();
                 bindings.Add(binding);
                 mapping.Add(action, bindings);
             }
         }
 
-        public void UnsetBindings(string action) {
+        internal void UnsetBindings(string action) {
             if (mapping.ContainsKey(action)) {
                 mapping[action].Clear();
             }
@@ -160,7 +173,7 @@ namespace Dorsal.Config {
             ControlMapping clone = new ControlMapping();
 
             foreach (string key in mapping.Keys) {
-                List<string> bindings = new List<string>();
+                List<ControlBinding> bindings = new List<ControlBinding>();
                 for (int i = 0; i < mapping[key].Count; i++) {
                     bindings.Add(mapping[key][i]);
                 }
@@ -169,5 +182,11 @@ namespace Dorsal.Config {
 
             return clone;
         }
+    }
+
+    public class ControlBinding {
+        public string path = "";
+        public string interactions = "";
+        public string processors = "";
     }
 }
