@@ -1,0 +1,17 @@
+%YAML 1.1
+---
+devices:
+- type: Screen
+  id: TV
+  stereoscopic: sbs
+dolphin:
+  outputGameTo: TV
+  config:
+    Graphics.Stereoscopy.StereoMode: 1
+controls:
+  Dolphin/Hotkeys:
+    Increase Convergence: <Keyboard>/rightArrow
+    Decrease Convergence: <Keyboard>/leftArrow
+    Increase Depth: <Keyboard>/upArrow
+    Decrease Depth: <Keyboard>/downArrow
+...

@@ -59,6 +59,7 @@ namespace Dorsal.Config {
 
     public class DolphinConfig {
         public string exePath;
+        public string configDir;
         public List<string> outputGameTo = new List<string>();
 
         public string exec = "";
@@ -69,7 +70,6 @@ namespace Dorsal.Config {
         public string nandTitle = "";
         public string saveState = "";
         public string extension = "none";
-        public string configDir = "";
         public Dictionary<string, string> config = new Dictionary<string, string>();
 
         public DolphinConfig Clone() {

@@ -12,8 +12,18 @@ controls:
     Start: 
     - <XRController>{LeftHand}/thumbstickClicked
     - <XRController>{RightHand}/thumbstickClicked
+    D-Pad Up: 
+      path: <XRController>{RightHand}/thumbstick/y
+      processors: clamp(min=0.0,max=1.0)
+    D-Pad Down: 
+      path: <XRController>{RightHand}/thumbstick/y
+      processors: invert();clamp(min=0.0,max=1.0)
+    D-Pad Right: 
+      path: <XRController>{RightHand}/thumbstick/x
+      processors: clamp(min=0.0,max=1.0)
+    D-Pad Left: 
+      path: <XRController>{RightHand}/thumbstick/x
+      processors: invert();clamp(min=0.0,max=1.0)
     Main Stick X: <XRController>{LeftHand}/thumbstick/x
     Main Stick Y: <XRController>{LeftHand}/thumbstick/y
-    C-Stick X: <XRController>{RightHand}/thumbstick/x
-    C-Stick Y: <XRController>{RightHand}/thumbstick/y
 ...

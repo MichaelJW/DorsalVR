@@ -62,6 +62,7 @@ namespace Dorsal.Config {
 
         public static Dictionary<string, Config> ParseYamlFile(string yamlPath) {
             string yamlString = GetYamlStringFromYamlFile(yamlPath);
+            Debug.Log(yamlString);
             if (yamlString == null || yamlString == "") return null;
             return ParseYamlString(yamlString);
         }

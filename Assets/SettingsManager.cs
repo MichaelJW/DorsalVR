@@ -97,7 +97,7 @@ public class SettingsManager : MonoBehaviour
             }
         }
 
-        if (modeConfig["(common)"].dolphinConfig.exePath != null) {
+        if (modeConfig["(common)"].dolphinConfig.exePath != null && modeConfig["(common)"].dolphinConfig.configDir != null) {
             dolphinConfigManager = new DolphinConfigManager();
             dolphinConfigManager.dolphinConfigDirectory = modeConfig["(common)"].dolphinConfig.configDir;
             dolphinConfigManager.SetControlINIs();

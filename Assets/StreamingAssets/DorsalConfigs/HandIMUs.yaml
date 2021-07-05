@@ -1,0 +1,14 @@
+%YAML 1.1
+---
+devices:
+- type: IMU
+  id: RH_IMU
+  bindings: 
+    position: <XRController>{RightHand}/devicePosition
+    rotation: <XRController>{RightHand}/deviceRotation
+- type: IMU
+  id: LH_IMU
+  bindings: 
+    position: <XRController>{LeftHand}/devicePosition
+    rotation: <XRController>{LeftHand}/deviceRotation
+...

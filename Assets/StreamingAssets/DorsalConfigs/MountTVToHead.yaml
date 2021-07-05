@@ -1,0 +1,11 @@
+%YAML 1.1
+---
+devices:
+- type: Screen
+  id: TV
+  offset:
+    x: 0
+    y: 0
+    z: 1.2
+  mountTo: head
+...
