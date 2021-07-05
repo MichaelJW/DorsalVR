@@ -11,7 +11,44 @@ using UnityEngine;
 
 namespace Dorsal.Config {
     class ConfigLoader {
-        public static Dictionary<string, Config> ParseYamlFile(string yamlPath) {
+        public static string yamlDirectory = Path.Combine(Application.persistentDataPath, @"Config\");
+
+        public static void TryPopulateExampleYamls() {
+            if (!Directory.Exists(yamlDirectory)) {
+                Directory.CreateDirectory(yamlDirectory);
+            }
+            if (!Directory.Exists(Path.Combine(yamlDirectory, "examples/"))) {
+                Directory.CreateDirectory(Path.Combine(yamlDirectory, "examples/"));
+            }
+
+            string examplesPath = Path.Combine(Application.streamingAssetsPath, @"DorsalConfigs/");
+            foreach (string yamlPath in Directory.GetFiles(examplesPath, "*.yaml")) {
+                if (Path.GetFileName(yamlPath) == "default.yaml") {
+                    // Create default if it doesn't exist; otherwise leave it alone in case user has changed it:
+                    if (!File.Exists(Path.Combine(yamlDirectory, "default.yaml"))) {
+                        File.Copy(yamlPath, Path.Combine(yamlDirectory, "default.yaml"));
+                    }
+                } else {
+                    // OTOH, we want the examples to stay under the app's control:
+                    File.Copy(yamlPath, Path.Combine(yamlDirectory, "examples/", Path.GetFileName(yamlPath)), overwrite: true);
+                    //File.SetAttributes(Path.Combine(yamlDirectory, "/examples/", Path.GetFileName(yamlPath)), FileAttributes.ReadOnly);
+                }
+            }
+
+            // While we're at it, copy any hyperlinks, too.
+            foreach (string urlPath in Directory.GetFiles(examplesPath, "*.url")) {
+                File.Copy(urlPath, Path.Combine(yamlDirectory, Path.GetFileName(urlPath)), overwrite: true);
+            }
+        }
+
+        private static string GetYamlStringFromYamlFile(string givenYamlPath) {
+            string yamlPath = givenYamlPath;
+
+            if (Path.GetFullPath(yamlPath) != yamlPath) {
+                // Assume then that yamlPath is relative
+                yamlPath = Path.Combine(yamlDirectory, yamlPath);
+            }
+
             string yamlString;
             try {
                 yamlString = File.ReadAllText(yamlPath);
@@ -19,17 +56,18 @@ namespace Dorsal.Config {
                 Debug.LogError(e.Message);
                 return null;
             }
+
+            return yamlString;
+        }
+
+        public static Dictionary<string, Config> ParseYamlFile(string yamlPath) {
+            string yamlString = GetYamlStringFromYamlFile(yamlPath);
+            if (yamlString == null || yamlString == "") return null;
             return ParseYamlString(yamlString);
         }
 
         public static void ParseYamlFile(string yamlPath, Dictionary<string, Config> modeConfig) {
-            string yamlString;
-            try {
-                yamlString = File.ReadAllText(yamlPath);
-            } catch (Exception e) {
-                Debug.LogError(e.Message);
-                yamlString = null;
-            }
+            string yamlString = GetYamlStringFromYamlFile(yamlPath);
             if (yamlString != null) ParseYamlString(yamlString, modeConfig);
         }
 

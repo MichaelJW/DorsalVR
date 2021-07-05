@@ -20,23 +20,26 @@ public class SettingsManager : MonoBehaviour
     void OnEnable() {
         deviceManager = GameObject.FindObjectOfType<Dorsal.Devices.DeviceManager>();
 
-        string yamlFile = "";
+        string yamlFile = "default.yaml";
 
         string[] args = System.Environment.GetCommandLineArgs();
         foreach (string arg in args) {
             if (arg.StartsWith("--yaml=")) yamlFile = arg.Substring(7);
         }
 
-#if (UNITY_EDITOR)
-        yamlFile = "C:\\Emu\\DorsalVR\\config\\tester.yaml";
-#endif
-
-        // Later we will allow choosing this via UI, but for now, just quit
-        if (!File.Exists(yamlFile)) {
-            Application.Quit();
-        }
+        ConfigLoader.TryPopulateExampleYamls();
 
         Dictionary<string, Config> modeConfig = ConfigLoader.ParseYamlFile(yamlFile);
+        if (modeConfig == null) {
+            // The yaml was empty - open the dir to make it easier for the user, and quit
+            Process.Start(ConfigLoader.yamlDirectory);
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #else
+            Application.Quit();
+            #endif
+            return;  // it still gets to the next line otherwise
+        }
 
         foreach (DeviceConfig device in modeConfig["(common)"].devices) {
             GameObject container = new GameObject();

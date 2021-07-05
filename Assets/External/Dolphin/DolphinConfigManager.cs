@@ -53,19 +53,19 @@ public class DolphinConfigManager {
     public void SetControlINIs() {
         BackUpINI("WiimoteNew.ini");
         File.Copy(
-            Path.Combine(Application.dataPath, "External/Dolphin/DorsalVR - Wiimote.ini"),
+            Path.Combine(Application.streamingAssetsPath, "Dolphin/DorsalVR - Wiimote.ini"),
             Path.Combine(dolphinConfigDirectory, "WiimoteNew.ini"),
             overwrite: true
         );
         BackUpINI("GCPadNew.ini");
         File.Copy(
-            Path.Combine(Application.dataPath, "External/Dolphin/DorsalVR - GCPad.ini"),
+            Path.Combine(Application.streamingAssetsPath, "Dolphin/DorsalVR - GCPad.ini"),
             Path.Combine(dolphinConfigDirectory, "GCPadNew.ini"),
             overwrite: true
         );
         BackUpINI("Hotkeys.ini");
         File.Copy(
-            Path.Combine(Application.dataPath, "External/Dolphin/DorsalVR - Hotkeys.ini"),
+            Path.Combine(Application.streamingAssetsPath, "Dolphin/DorsalVR - Hotkeys.ini"),
             Path.Combine(dolphinConfigDirectory, "Hotkeys.ini"),
             overwrite: true
         );
@@ -74,7 +74,7 @@ public class DolphinConfigManager {
     public void SetDSUClientINI() {
         BackUpINI("DSUClient.ini");
         File.Copy(
-            Path.Combine(Application.dataPath, "External/Dolphin/DorsalVR - DSUClient.ini"),
+            Path.Combine(Application.streamingAssetsPath, "Dolphin/DorsalVR - DSUClient.ini"),
             Path.Combine(dolphinConfigDirectory, "DSUClient.ini"),
             overwrite: true
         );
