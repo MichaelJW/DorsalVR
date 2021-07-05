@@ -101,6 +101,7 @@ namespace Dorsal.Config {
                 dolphinConfig.movie = GetYamlString(dolphinYaml, "movie") ?? dolphinConfig.movie;
                 dolphinConfig.user = GetYamlString(dolphinYaml, "user") ?? dolphinConfig.user;
                 dolphinConfig.extension = GetYamlString(dolphinYaml, "extension") ?? dolphinConfig.extension;
+                dolphinConfig.configDir = GetYamlString(dolphinYaml, "configDir") ?? dolphinConfig.configDir;
 
                 if (dolphinYaml is YamlMappingNode mDolphinYaml) {
                     if (mDolphinYaml.Children.ContainsKey("outputGameTo")) {

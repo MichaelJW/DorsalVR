@@ -69,6 +69,7 @@ namespace Dorsal.Config {
         public string nandTitle = "";
         public string saveState = "";
         public string extension = "none";
+        public string configDir = "";
         public Dictionary<string, string> config = new Dictionary<string, string>();
 
         public DolphinConfig Clone() {
@@ -88,6 +89,7 @@ namespace Dorsal.Config {
             clone.nandTitle = nandTitle;
             clone.saveState = saveState;
             clone.extension = extension;
+            clone.configDir = "";
             clone.config = new Dictionary<string, string>();
             foreach (string key in config.Keys) {
                 clone.config.Add(key, config[key]);

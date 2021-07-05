@@ -15,10 +15,9 @@ using System.Diagnostics;
 public class SettingsManager : MonoBehaviour
 {
     Dorsal.Devices.DeviceManager deviceManager;
+    DolphinConfigManager dolphinConfigManager;
 
-    // Start is called before the first frame update
-    void OnEnable()
-    {
+    void OnEnable() {
         deviceManager = GameObject.FindObjectOfType<Dorsal.Devices.DeviceManager>();
 
         string yamlFile = "";
@@ -28,9 +27,9 @@ public class SettingsManager : MonoBehaviour
             if (arg.StartsWith("--yaml=")) yamlFile = arg.Substring(7);
         }
 
-        #if (UNITY_EDITOR)
+#if (UNITY_EDITOR)
         yamlFile = "C:\\Emu\\DorsalVR\\config\\tester.yaml";
-        #endif
+#endif
 
         // Later we will allow choosing this via UI, but for now, just quit
         if (!File.Exists(yamlFile)) {
@@ -73,7 +72,7 @@ public class SettingsManager : MonoBehaviour
                     if (imu == null) {
                         imu = InputSystem.AddDevice<Dorsal.Devices.IMU>(device.id);
                         imu.ID = device.id;
-                        
+
                         deviceManager.devices.Add(imu);
                         InputSystem.EnableDevice(imu);
                     }
@@ -92,10 +91,16 @@ public class SettingsManager : MonoBehaviour
                 default:
                     UnityEngine.Debug.Log($"Unrecognised Device type: {device.type}");
                     break;
-            }   
+            }
         }
 
         if (modeConfig["(common)"].dolphinConfig.exePath != null) {
+            dolphinConfigManager = new DolphinConfigManager();
+            dolphinConfigManager.dolphinConfigDirectory = modeConfig["(common)"].dolphinConfig.configDir;
+            dolphinConfigManager.SetControlINIs();
+            dolphinConfigManager.SetDSUClientINI();
+            dolphinConfigManager.ModifyKeyOptions();
+
             Dorsal.Processes.ProcessManager processManager = GameObject.Find("ProcessManager").GetComponent<Dorsal.Processes.ProcessManager>();
             Dorsal.Processes.DolphinProcess dp = processManager.StartDolphinProcess(
                 modeConfig["(common)"].dolphinConfig
@@ -117,9 +122,9 @@ public class SettingsManager : MonoBehaviour
             foreach (string actionMap in modeConfig["(common)"].controlsConfig.controls.Keys) {
                 foreach (string action in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping.Keys) {
                     foreach (ControlBinding binding in modeConfig["(common)"].controlsConfig.controls[actionMap].mapping[action]) {
-                        dolphinControls.asset.FindActionMap(actionMap).FindAction(action).AddBinding(
-                            binding.path, binding.interactions, binding.processors
-                        );
+                        dolphinControls.asset.FindActionMap(actionMap).FindAction(action).AddBinding(binding.path)
+                            .WithProcessors(binding.processors)
+                            .WithInteractions(binding.interactions);
                     }
                 }
             }
@@ -142,6 +147,11 @@ public class SettingsManager : MonoBehaviour
             }
             dolphinOutput.GetComponent<DolphinOutput>().selectedExtension = extension;
         }
-        
+    }
+
+    void OnDisable() {
+        if (dolphinConfigManager != null) {
+            dolphinConfigManager.TryRestoreAllBackups();
+        }
     }
 }
