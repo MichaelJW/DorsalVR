@@ -18,6 +18,10 @@ public class SettingsManager : MonoBehaviour
     DolphinConfigManager dolphinConfigManager;
 
     void OnEnable() {
+        #if !(DEVELOPMENT_BUILD || UNITY_EDITOR)
+        UnityEngine.Debug.unityLogger.filterLogType = LogType.Exception;
+        #endif
+
         deviceManager = GameObject.FindObjectOfType<Dorsal.Devices.DeviceManager>();
 
         string yamlFile = "default.yaml";

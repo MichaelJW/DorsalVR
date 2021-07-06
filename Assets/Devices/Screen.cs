@@ -79,17 +79,17 @@ namespace Dorsal.Devices {
                 captureTex.filterMode = FilterMode.Point;
             }
 
-            if (_middleEyeScreen.activeInHierarchy && _middleEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
+            if (_middleEyeScreen != null && _middleEyeScreen.activeInHierarchy && _middleEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
                 _middleEyeScreen.GetComponent<Renderer>().material.mainTexture = captureTex;
                 _middleEyeScreen.GetComponent<Renderer>().material.mainTextureScale = new Vector2(1f, -1f);
             }
 
-            if (_leftEyeScreen.activeInHierarchy && _leftEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
+            if (_leftEyeScreen != null && _leftEyeScreen.activeInHierarchy && _leftEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
                 _leftEyeScreen.GetComponent<Renderer>().material.mainTexture = captureTex;
                 _leftEyeScreen.GetComponent<Renderer>().material.mainTextureScale = new Vector2(0.5f, -1f);
             }
 
-            if (_rightEyeScreen.activeInHierarchy && _rightEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
+            if (_rightEyeScreen != null && _rightEyeScreen.activeInHierarchy && _rightEyeScreen.GetComponent<Renderer>().material.mainTexture != captureTex) {
                 _rightEyeScreen.GetComponent<Renderer>().material.mainTexture = captureTex;
                 _rightEyeScreen.GetComponent<Renderer>().material.mainTextureScale = new Vector2(0.5f, -1f);
                 _rightEyeScreen.GetComponent<Renderer>().material.mainTextureOffset = new Vector2(0.5f, 0f);
