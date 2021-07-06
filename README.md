@@ -23,7 +23,7 @@ Load DorsalVR as you would any VR app or game using SteamVR or Oculus. The first
 
 ### Dolphin
 
-Currently, the only app actively supported is [Dolphin Emulator](https://dolphin-emu.org/); see [this page in the Wiki](https://github.com/MichaelJW/DorsalVR/wiki/Dolphin-Usage-Instructions) for instructions on setting that up.
+Currently, the only app actively supported is [Dolphin Emulator](https://dolphin-emu.org/), ideally [5.0-14382 or higher](https://github.com/dolphin-emu/dolphin/pull/9771#event-4850161151); see [this page in the Wiki](https://github.com/MichaelJW/DorsalVR/wiki/Dolphin-Usage-Instructions) for instructions on setting that up.
 
 ### Command Line Parameters
 
