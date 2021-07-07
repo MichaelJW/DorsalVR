@@ -12,6 +12,8 @@ DorsalVR uses [OpenXR](https://www.khronos.org/openxr/) and is written in [Unity
 
 It supports any VR equipment that supports OpenXR (that is, any equipment that can use SteamVR, Oculus, or WMD), and so it can be used with the Oculus Quest or Quest 2, but only via [Oculus Link](https://www.oculus.com/accessories/oculus-link/), [Air Link](https://www.oculus.com/blog/introducing-oculus-air-link-a-wireless-way-to-play-pc-vr-games-on-oculus-quest-2-plus-infinite-office-updates-support-for-120-hz-on-quest-2-and-more/), or [Virtual Desktop](https://www.vrdesktop.net/) (Windows version) - it cannot run natively on the headset, even via sideloading.
 
+If using Virtual Desktop, you may wish to disable "Increase video nominal range" in the Streaming settings; otherwise, the colours feel more washed out.
+
 ## Usage
 
 First, download the latest release's zip file from [the releases page](https://github.com/MichaelJW/DorsalVR/releases/), and unzip it to a folder on your hard drive.
