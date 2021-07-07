@@ -12,6 +12,8 @@ DorsalVR uses [OpenXR](https://www.khronos.org/openxr/) and is written in [Unity
 
 It supports any VR equipment that supports OpenXR (that is, any equipment that can use SteamVR, Oculus, or WMD), and so it can be used with the Oculus Quest or Quest 2, but only via [Oculus Link](https://www.oculus.com/accessories/oculus-link/), [Air Link](https://www.oculus.com/blog/introducing-oculus-air-link-a-wireless-way-to-play-pc-vr-games-on-oculus-quest-2-plus-infinite-office-updates-support-for-120-hz-on-quest-2-and-more/), or [Virtual Desktop](https://www.vrdesktop.net/) (Windows version) - it cannot run natively on the headset, even via sideloading.
 
+If using Virtual Desktop, you may wish to disable "Increase video nominal range" in the Streaming settings; otherwise, the colours feel more washed out.
+
 ## Usage
 
 First, download the latest release's zip file from [the releases page](https://github.com/MichaelJW/DorsalVR/releases/), and unzip it to a folder on your hard drive.
@@ -23,16 +25,13 @@ Load DorsalVR as you would any VR app or game using SteamVR or Oculus. The first
 
 ### Dolphin
 
-Currently, the only app actively supported is [Dolphin Emulator](https://dolphin-emu.org/); see [this page in the Wiki](https://github.com/MichaelJW/DorsalVR/wiki/Dolphin-Usage-Instructions) for instructions on setting that up.
+Currently, the only app actively supported is [Dolphin Emulator](https://dolphin-emu.org/), ideally [5.0-14382 or higher](https://github.com/dolphin-emu/dolphin/pull/9771#event-4850161151); see [this page in the Wiki](https://github.com/MichaelJW/DorsalVR/wiki/Dolphin-Usage-Instructions) for instructions on setting that up.
 
 ### Command Line Parameters
 
-Three command line parameters are supported:
+One command line parameter is supported:
 
-- `-sbs`: enable side-by-side stereoscopic 3D support.
-- `-selfie`: make the screen move with the HMD, as though attached via a selfie stick.
-- `-port=NNNNN`: set the DSU server to use port NNNNN. (Default: `26659`)
-- `-angleX=XXX`: apply a permanent tilt backwards to the virtual controller by the angle specified. (Degrees; default: `0`.)
+- `--yaml=path/to/config.yaml`: chooses a YAML config file to load. If this is not specified, `default.yaml` will be used.
 
 You can set these command line parameters via the app's Properties in Steam or via Menu > Edit in Oculus - in either case, put the parameters in the Launch Options box.
 
