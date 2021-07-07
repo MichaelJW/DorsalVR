@@ -11,6 +11,7 @@ using System.IO;
 using YamlDotNet.RepresentationModel;
 using Dorsal.Config;
 using System.Diagnostics;
+using UnityEngine.InputSystem.XR;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -51,19 +52,57 @@ public class SettingsManager : MonoBehaviour
             Dorsal.Devices.DeviceTransformer transformer = container.AddComponent<Dorsal.Devices.DeviceTransformer>();
             transformer.TransformFromConfig(device);
 
-            switch (device.mountTo.ToLower().Replace(" ", "")) {
-                case "head":
-                    container.transform.parent = GameObject.Find("Head Mount").transform;
-                    break;
-                case "lefthand":
-                    container.transform.parent = GameObject.Find("Left Hand Mount").transform;
-                    break;
-                case "righthand":
-                    container.transform.parent = GameObject.Find("Right Hand Mount").transform;
-                    break;
-                default:
-                    break;
+            GameObject mount = new GameObject();
+            mount.name = device.type + " Mount | " + device.id;
+            TrackedPoseDriver tpd = mount.AddComponent<TrackedPoseDriver>();
+            
+            if (device.vrEntityConfig.positionBinding != null) {
+                tpd.positionAction = new InputAction();
+                tpd.positionAction.AddBinding(
+                    device.vrEntityConfig.positionBinding.path,
+                    device.vrEntityConfig.positionBinding.interactions,
+                    device.vrEntityConfig.positionBinding.processors
+                );
+                UnityEngine.Debug.Log(tpd.positionAction.bindings.Count);
             }
+            if (device.vrEntityConfig.rotationBinding != null) {
+                tpd.rotationAction = new InputAction();
+                tpd.rotationAction.AddBinding(
+                    device.vrEntityConfig.rotationBinding.path,
+                    device.vrEntityConfig.rotationBinding.interactions,
+                    device.vrEntityConfig.rotationBinding.processors
+                );
+            }
+            container.transform.parent = mount.transform;
+            mount.transform.parent = GameObject.Find("Mounts").transform;
+
+            GameObject vrEntity = new GameObject();
+            if (device.vrEntityConfig.model != null) {
+                switch (device.vrEntityConfig.model.ToLower()) {
+                    case "sphere":
+                        vrEntity = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                        break;
+                    case "capsule":
+                        vrEntity = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                        break;
+                    case "cylinder":
+                        vrEntity = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                        break;
+                    case "cube":
+                        vrEntity = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                        break;
+                    case "plane":
+                        vrEntity = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                        break;
+                    case "quad":
+                        vrEntity = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            vrEntity.transform.parent = container.transform;
+            vrEntity.transform.localScale = Vector3.one;
 
             switch (device.type.ToLower()) {
                 case "screen":
@@ -72,7 +111,7 @@ public class SettingsManager : MonoBehaviour
                     deviceManager.devices.Add(screen);
 
                     screen.Instantiate();
-                    screen.SetSBS3D(device.stereoscopic == "sbs");
+                    screen.SetSBS3D(device.screenConfig.stereoscopic == "sbs");
                     break;
                 case "imu":
                     Dorsal.Devices.IMU imu = deviceManager.devices.OfType<Dorsal.Devices.IMU>().FirstOrDefault(d => d.ID == device.id);
@@ -84,15 +123,24 @@ public class SettingsManager : MonoBehaviour
                         InputSystem.EnableDevice(imu);
                     }
 
-                    if (device.bindings.ContainsKey("position")) {
+                    if (device.imuConfig.positionBinding != null) {
                         InputAction positionAction = new InputAction();
-                        positionAction.AddBinding(device.bindings["position"]);
+                        positionAction.AddBinding(
+                            device.imuConfig.positionBinding.path,
+                            device.imuConfig.positionBinding.interactions,
+                            device.imuConfig.positionBinding.processors
+                        );
                         imu.positionAction = positionAction;
                     }
-                    if (device.bindings.ContainsKey("rotation")) {
+                    if (device.imuConfig.rotationBinding != null) {
                         InputAction rotationAction = new InputAction();
-                        rotationAction.AddBinding(device.bindings["rotation"]);
+                        rotationAction.AddBinding(
+                            device.imuConfig.rotationBinding.path,
+                            device.imuConfig.rotationBinding.interactions,
+                            device.imuConfig.rotationBinding.processors
+                        );
                         imu.rotationAction = rotationAction;
+                        imu.rotationOffset = device.imuConfig.rotationOffset;
                     }
                     break;
                 default:

@@ -62,7 +62,6 @@ namespace Dorsal.Config {
 
         public static Dictionary<string, Config> ParseYamlFile(string yamlPath) {
             string yamlString = GetYamlStringFromYamlFile(yamlPath);
-            Debug.Log(yamlString);
             if (yamlString == null || yamlString == "") return null;
             return ParseYamlString(yamlString);
         }
@@ -176,57 +175,54 @@ namespace Dorsal.Config {
             /// Devices
             if (docRoot.Children.ContainsKey("devices")) {
                 foreach (YamlNode deviceNode in (YamlSequenceNode)docRoot.Children["devices"]) {
-                    if (GetYamlString(deviceNode, "id") == null) {
-                        // We need an ID; if there isn't one, skip it
-                        continue;
-                    }
-                    string deviceId = GetYamlString(deviceNode, "id");
-                    if (modeConfig[currentMode].devices == null) {
-                        modeConfig[currentMode].devices = new List<DeviceConfig>();
-                    }
-
-                    if (modeConfig[currentMode].devices.Count(d => d.id == deviceId) == 0) { 
-                        modeConfig[currentMode].devices.Add(new DeviceConfig() { id = deviceId });
-                    }
-                    DeviceConfig deviceConfig = modeConfig[currentMode].devices.First<DeviceConfig>(d => d.id == deviceId);
-
-                    deviceConfig.type = GetYamlString(deviceNode, "type") ?? deviceConfig.type;
-                    deviceConfig.active = GetYamlBool(deviceNode, "active", deviceConfig.active);
-                    deviceConfig.mountTo = GetYamlString(deviceNode, "mountTo") ?? deviceConfig.mountTo;
-                    deviceConfig.stereoscopic= GetYamlString(deviceNode, "stereoscopic") ?? deviceConfig.stereoscopic;
-
-                    if (deviceNode is YamlMappingNode mapDeviceNode) {
-                        if (mapDeviceNode.Children.ContainsKey("offset")) {
-                            deviceConfig.offset.Set(
-                                GetYamlFloat(mapDeviceNode["offset"], "x", deviceConfig.offset.x),
-                                GetYamlFloat(mapDeviceNode["offset"], "y", deviceConfig.offset.y),
-                                GetYamlFloat(mapDeviceNode["offset"], "z", deviceConfig.offset.z)
-                            );
+                    if (deviceNode is YamlMappingNode mDeviceNode) {
+                        if (GetYamlString(mDeviceNode, "id") == null) {
+                            // We need an ID; if there isn't one, skip it
+                            continue;
+                        }
+                        string deviceId = GetYamlString(mDeviceNode, "id");
+                        if (modeConfig[currentMode].devices == null) {
+                            modeConfig[currentMode].devices = new List<DeviceConfig>();
                         }
 
-                        if (mapDeviceNode.Children.ContainsKey("scale")) {
-                            deviceConfig.scale.Set(
-                                GetYamlFloat(mapDeviceNode["scale"], "x", deviceConfig.scale.x),
-                                GetYamlFloat(mapDeviceNode["scale"], "y", deviceConfig.scale.y),
-                                GetYamlFloat(mapDeviceNode["scale"], "z", deviceConfig.scale.z)
-                            );
+                        if (modeConfig[currentMode].devices.Count(d => d.id == deviceId) == 0) {
+                            modeConfig[currentMode].devices.Add(new DeviceConfig() { id = deviceId });
                         }
+                        DeviceConfig deviceConfig = modeConfig[currentMode].devices.First<DeviceConfig>(d => d.id == deviceId);
 
-                        if (mapDeviceNode.Children.ContainsKey("rotation")) {
-                            deviceConfig.rotation.Set(
-                                GetYamlFloat(mapDeviceNode["rotation"], "x", deviceConfig.rotation.x),
-                                GetYamlFloat(mapDeviceNode["rotation"], "y", deviceConfig.rotation.y),
-                                GetYamlFloat(mapDeviceNode["rotation"], "z", deviceConfig.rotation.z)
-                            );
-                        }
+                        deviceConfig.type = GetYamlString(mDeviceNode, "type") ?? deviceConfig.type;
+                        deviceConfig.active = GetYamlBool(mDeviceNode, "active", deviceConfig.active);
 
-                        if (mapDeviceNode.Children.ContainsKey("bindings")) {
-                            YamlNode bindingsNode = mapDeviceNode.Children["bindings"];
-                            if (bindingsNode is YamlMappingNode mBindingsNode) {
-                                foreach (YamlNode keyNode in mBindingsNode.Children.Keys) {
-                                    if (!deviceConfig.bindings.ContainsKey((string)keyNode)) deviceConfig.bindings.Add((string)keyNode, (string)mBindingsNode[keyNode]);
+                        // Set specifics and vrEntity defaults based on device type
+                        switch (deviceConfig.type.ToLower()) {
+                            case "screen":
+                                deviceConfig.screenConfig.stereoscopic = GetYamlString(mDeviceNode, "stereoscopic") ?? deviceConfig.screenConfig.stereoscopic;
+                                break;
+                            case "imu":
+                                if (mDeviceNode.Children.ContainsKey("bindings") && mDeviceNode.Children["bindings"] is YamlMappingNode mBindings) {
+                                    deviceConfig.imuConfig.positionBinding = GetYamlControlBinding(mBindings, "positionBinding");
+                                    deviceConfig.imuConfig.rotationBinding = GetYamlControlBinding(mBindings, "rotationBinding");
+                                    deviceConfig.imuConfig.positionOffset = GetYamlVector3(mBindings, "positionOffset", deviceConfig.imuConfig.positionOffset);
+                                    Vector3 eulerRotationOffset = GetYamlVector3(mBindings, "rotationOffset");
+                                    deviceConfig.imuConfig.rotationOffset = Quaternion.Euler(eulerRotationOffset);
                                 }
-                            }
+                                deviceConfig.vrEntityConfig.positionBinding = new ControlBinding($"{deviceId}/devicePosition");
+                                deviceConfig.vrEntityConfig.rotationBinding = new ControlBinding($"{deviceId}/deviceRotation");
+                                break;
+                            default:
+                                break;
+                        }
+
+                        if (mDeviceNode.Children.ContainsKey("vrEntity") && mDeviceNode.Children["vrEntity"] is YamlMappingNode vrEntity) {
+                            deviceConfig.vrEntityConfig.positionOffset = GetYamlVector3(vrEntity, "positionOffset", deviceConfig.vrEntityConfig.positionOffset);
+                            deviceConfig.vrEntityConfig.scale = GetYamlVector3(vrEntity, "scale", deviceConfig.vrEntityConfig.scale);
+                            deviceConfig.vrEntityConfig.rotationOffset.eulerAngles = GetYamlVector3(vrEntity, "rotationOffset", deviceConfig.vrEntityConfig.rotationOffset.eulerAngles);
+
+                            deviceConfig.vrEntityConfig.model = GetYamlString(vrEntity, "model", deviceConfig.vrEntityConfig.model);
+                            deviceConfig.vrEntityConfig.positionBinding = GetYamlControlBinding(vrEntity, "positionBinding", deviceConfig.vrEntityConfig.positionBinding);
+                            deviceConfig.vrEntityConfig.rotationBinding = GetYamlControlBinding(vrEntity, "rotationBinding", deviceConfig.vrEntityConfig.rotationBinding);
+                            deviceConfig.vrEntityConfig.positionOffset = GetYamlVector3(vrEntity, "positionOffset", deviceConfig.vrEntityConfig.positionOffset);
+                            deviceConfig.vrEntityConfig.rotationOffset = Quaternion.Euler(GetYamlVector3(vrEntity, "rotationOffset"));
                         }
                     }
                 }
@@ -330,6 +326,41 @@ namespace Dorsal.Config {
                 return Convert.ToSingle(node[key].ToString());
             }
             return previousValue;
+        }
+
+        public static ControlBinding GetYamlControlBinding(YamlNode node, string key, ControlBinding previousValue = null) {
+            ControlBinding binding = previousValue;
+            if (node is YamlMappingNode mNode && mNode.Children.ContainsKey(key)) {
+                YamlNode subNode = mNode.Children[key];
+                if (subNode is YamlScalarNode vSubNode) {
+                    binding = new ControlBinding(vSubNode.ToString());
+                } else if (subNode is YamlMappingNode mSubNode) {
+                    binding = new ControlBinding(
+                        GetYamlString(mSubNode, "path", ""),
+                        GetYamlString(mSubNode, "interactions", ""),
+                        GetYamlString(mSubNode, "processors", "")
+                    );
+                }
+            }
+            return binding;
+        }
+
+        public static Vector3 GetYamlVector3(YamlNode node, string key) {
+            return GetYamlVector3(node, key, Vector3.zero);
+        }
+
+        public static Vector3 GetYamlVector3(YamlNode node, string key, Vector3 previousValue) {
+            Vector3 vector3 = previousValue;
+
+            if (node is YamlMappingNode mNode) {
+                if (mNode.Children.ContainsKey(key) && mNode.Children[key] is YamlMappingNode mSubNode) {
+                    vector3.x = GetYamlFloat(mSubNode, "x", vector3.x);
+                    vector3.y = GetYamlFloat(mSubNode, "y", vector3.y);
+                    vector3.z = GetYamlFloat(mSubNode, "z", vector3.z);
+                }
+            }
+
+            return vector3;
         }
     }
 }

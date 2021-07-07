@@ -30,28 +30,67 @@ namespace Dorsal.Config {
         public string id;
         public string type;
         public bool active = true;
-        public string mountTo = "";
-        public string stereoscopic;
-        public Vector3 offset = new Vector3(0f, 0f, 0f);
-        public Vector3 scale = new Vector3(1f, 1f, 1f);
-        public Vector3 rotation = new Vector3(0f, 0f, 0f);
-        public Dictionary<string, string> bindings = new Dictionary<string, string>();
+        public DeviceVREntityConfig vrEntityConfig = new DeviceVREntityConfig();
+        public DeviceIMUConfig imuConfig = new DeviceIMUConfig();
+        public DeviceScreenConfig screenConfig = new DeviceScreenConfig();
 
         public DeviceConfig Clone() {
             DeviceConfig clone = new DeviceConfig();
-
             clone.id = id;
             clone.type = type;
             clone.active = active;
-            clone.mountTo = mountTo;
+            clone.vrEntityConfig = vrEntityConfig.Clone();
+            clone.imuConfig = imuConfig.Clone();
+            clone.screenConfig = screenConfig.Clone();
+
+            return clone;
+        }
+    }
+
+    public class DeviceVREntityConfig {
+        public Vector3 positionOffset = Vector3.zero;
+        public Vector3 scale = Vector3.one;
+        public Quaternion rotationOffset = Quaternion.identity;
+        public string model;
+        public ControlBinding positionBinding = new ControlBinding();
+        public ControlBinding rotationBinding = new ControlBinding();
+
+        public DeviceVREntityConfig Clone() {
+            DeviceVREntityConfig clone = new DeviceVREntityConfig();
+            clone.positionOffset = positionOffset;
+            clone.scale = scale;
+            clone.rotationOffset = rotationOffset;
+            clone.model = model;
+            clone.positionBinding = positionBinding.Clone();
+            clone.rotationBinding = rotationBinding.Clone();
+
+            return clone;
+        }
+    }
+
+    public class DeviceScreenConfig {
+        public string stereoscopic;
+
+        public DeviceScreenConfig Clone() {
+            DeviceScreenConfig clone = new DeviceScreenConfig();
             clone.stereoscopic = stereoscopic;
-            clone.offset = new Vector3(offset.x, offset.y, offset.z);
-            clone.scale = new Vector3(scale.x, scale.y, scale.z);
-            clone.rotation = new Vector3(rotation.x, rotation.y, rotation.z);
-            clone.bindings= new Dictionary<string, string>();
-            foreach (string key in bindings.Keys) {
-                clone.bindings.Add(key, bindings[key]);
-            }
+            
+            return clone;
+        }
+    }
+
+    public class DeviceIMUConfig {
+        public ControlBinding positionBinding;
+        public ControlBinding rotationBinding;
+        public Vector3 positionOffset = Vector3.zero;
+        public Quaternion rotationOffset = Quaternion.identity;
+
+        public DeviceIMUConfig Clone() {
+            DeviceIMUConfig clone = new DeviceIMUConfig();
+            clone.positionBinding = positionBinding;
+            clone.rotationBinding = rotationBinding;
+            clone.positionOffset = positionOffset;
+            clone.rotationOffset = rotationOffset;
 
             return clone;
         }
@@ -190,5 +229,20 @@ namespace Dorsal.Config {
         public string path = "";
         public string interactions = "";
         public string processors = "";
+
+        public ControlBinding(string _path = "", string _interactions = "", string _processors = "") {
+            path = _path;
+            interactions = _interactions;
+            processors = _processors;
+        }
+
+        public ControlBinding Clone() {
+            ControlBinding clone = new ControlBinding();
+            clone.path = path;
+            clone.interactions = interactions;
+            clone.processors = processors;
+
+            return clone;
+        }
     }
 }

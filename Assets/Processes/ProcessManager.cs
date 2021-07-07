@@ -21,7 +21,6 @@ namespace Dorsal.Processes {
         private static extern IntPtr GetWindowThreadProcessId(IntPtr window, out int process);
         private delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
-
         private List<IDorsalProcess> _processes = new List<IDorsalProcess>();
 
         public DolphinProcess StartDolphinProcess(Dorsal.Config.DolphinConfig dolphinConfig) {
