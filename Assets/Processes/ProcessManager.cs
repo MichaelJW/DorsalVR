@@ -46,7 +46,6 @@ namespace Dorsal.Processes {
                         args += dolphinConfig.config[key];
                     }
                 }
-                UnityEngine.Debug.Log(args);
                 p.StartInfo.Arguments = args;
 
                 p.Start();

@@ -114,7 +114,6 @@ public class SettingsManager : MonoBehaviour
             );
             if (modeConfig["(common)"].dolphinConfig.outputGameTo.Count > 0) {
                 foreach (string output in modeConfig["(common)"].dolphinConfig.outputGameTo) {
-
                     Dorsal.Devices.Screen dolphinGameScreen = deviceManager.devices.OfType<Dorsal.Devices.Screen>()
                                                                 .Where<Dorsal.Devices.Screen>(
                                                                     t => t.ID == output
