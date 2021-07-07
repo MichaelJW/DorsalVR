@@ -27,12 +27,9 @@ Currently, the only app actively supported is [Dolphin Emulator](https://dolphin
 
 ### Command Line Parameters
 
-Three command line parameters are supported:
+One command line parameter is supported:
 
-- `-sbs`: enable side-by-side stereoscopic 3D support.
-- `-selfie`: make the screen move with the HMD, as though attached via a selfie stick.
-- `-port=NNNNN`: set the DSU server to use port NNNNN. (Default: `26659`)
-- `-angleX=XXX`: apply a permanent tilt backwards to the virtual controller by the angle specified. (Degrees; default: `0`.)
+- `--yaml=path/to/config.yaml`: chooses a YAML config file to load. If this is not specified, `default.yaml` will be used.
 
 You can set these command line parameters via the app's Properties in Steam or via Menu > Edit in Oculus - in either case, put the parameters in the Launch Options box.
 
