@@ -2,13 +2,25 @@
 ---
 devices:
 - type: IMU
-  id: RH_IMU
-  bindings: 
-    position: <XRController>{RightHand}/devicePosition
-    rotation: <XRController>{RightHand}/deviceRotation
-- type: IMU
   id: LH_IMU
-  bindings: 
-    position: <XRController>{LeftHand}/devicePosition
-    rotation: <XRController>{LeftHand}/deviceRotation
+  vrEntity:
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.036, y: 0.031, z: 0.16}
+    rotationOffset: {x: 0, y: 0, z: 0}
+    model: cube
+  bindings:
+    positionBinding: <XRController>{LeftHand}/pointerPosition
+    rotationBinding: <XRController>{LeftHand}/pointerRotation
+    rotationOffset: {x: 0, y: 0, z: 0}
+- type: IMU
+  id: RH_IMU
+  vrEntity:
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.036, y: 0.031, z: 0.16}
+    rotationOffset: {x: 0, y: 0, z: 0}
+    model: cube
+  bindings:
+    positionBinding: <XRController>{RightHand}/pointerPosition
+    rotationBinding: <XRController>{RightHand}/pointerRotation
+    rotationOffset: {x: 90, y: 0, z: 0}
 ...

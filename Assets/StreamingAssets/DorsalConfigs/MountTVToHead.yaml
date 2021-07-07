@@ -3,9 +3,8 @@
 devices:
 - type: Screen
   id: TV
-  offset:
-    x: 0
-    y: 0
-    z: 1.2
-  mountTo: head
+  vrEntity:
+    positionOffset: {x: 0, y: 0, z: 1.2}
+    positionBinding: <XRHMD>/centerEyePosition
+    rotationBinding: <XRHMD>/centerEyeRotation
 ...
