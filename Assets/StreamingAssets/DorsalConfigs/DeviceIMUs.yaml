@@ -1,0 +1,26 @@
+%YAML 1.1
+---
+devices:
+- type: IMU
+  id: LH_IMU
+  vrEntity:
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.036, y: 0.031, z: 0.16}
+    rotationOffset: {x: 0, y: 0, z: 0}
+    model: cube
+  bindings:
+    positionBinding: <XRController>{LeftHand}/devicePosition
+    rotationBinding: <XRController>{LeftHand}/deviceRotation
+    rotationOffset: {x: 0, y: 0, z: 0}
+- type: IMU
+  id: RH_IMU
+  vrEntity:
+    positionOffset: {x: 0, y: 0, z: 0}
+    scale: {x: 0.036, y: 0.031, z: 0.16}
+    rotationOffset: {x: 0, y: 0, z: 0}
+    model: cube
+  bindings:
+    positionBinding: <XRController>{RightHand}/devicePosition
+    rotationBinding: <XRController>{RightHand}/deviceRotation
+    rotationOffset: {x: 0, y: 0, z: 0}
+...

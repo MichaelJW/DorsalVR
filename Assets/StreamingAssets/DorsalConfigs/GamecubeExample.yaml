@@ -3,6 +3,6 @@
 imports:
 - examples/43TV.yaml
 - examples/Stereoscopic.yaml
-- examples/HandIMUs.yaml
+- examples/DeviceIMUs.yaml
 - examples/GCPadNoCStick.yaml
 ...

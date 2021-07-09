@@ -3,6 +3,6 @@
 imports:
 - examples/WidescreenTV.yaml
 - examples/Stereoscopic.yaml
-- examples/HandIMUs.yaml
+- examples/PointerIMUs.yaml
 - examples/WiimoteNunchuk.yaml
 ...
