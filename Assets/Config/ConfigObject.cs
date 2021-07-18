@@ -9,6 +9,7 @@ namespace Dorsal.Config {
         public List<DeviceConfig> devices;
         public DolphinConfig dolphinConfig;
         public ControlsConfig controlsConfig;
+        public DebugConfig debugConfig;
 
         public Config Clone() {
             Config clone = new Config();
@@ -21,6 +22,7 @@ namespace Dorsal.Config {
                 }
             }
             if (controlsConfig != null) clone.controlsConfig = controlsConfig.Clone();
+            if (debugConfig != null) clone.debugConfig = debugConfig.Clone();
 
             return clone;
         }
@@ -241,6 +243,21 @@ namespace Dorsal.Config {
             clone.path = path;
             clone.interactions = interactions;
             clone.processors = processors;
+
+            return clone;
+        }
+    }
+
+    public class DebugConfig {
+        public List<ControlBinding> bindings = new List<ControlBinding>();
+
+        public DebugConfig Clone() {
+            DebugConfig clone = new DebugConfig();
+
+            clone.bindings = new List<ControlBinding>();
+            for (int i = 0; i < bindings.Count; i++) {
+                clone.bindings.Add(bindings[i].Clone());
+            }
 
             return clone;
         }

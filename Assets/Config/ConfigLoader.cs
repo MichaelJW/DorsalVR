@@ -284,6 +284,22 @@ namespace Dorsal.Config {
                     }
                 }
             }
+
+            if (docRoot.Children.ContainsKey("debug")) {
+                YamlMappingNode debugRoot = (YamlMappingNode)docRoot.Children["debug"];
+                if (modeConfig[currentMode].debugConfig == null) {
+                    modeConfig[currentMode].debugConfig = new DebugConfig();
+                }
+                DebugConfig debugConfig = modeConfig[currentMode].debugConfig;
+
+                if (debugRoot.Children.ContainsKey("bindings") && debugRoot.Children["bindings"] is YamlSequenceNode sBindingsNode) {
+                    foreach (YamlNode valueNode in sBindingsNode.Children) {
+                        if (valueNode is YamlScalarNode vValueNode) {
+                            debugConfig.bindings.Add(new ControlBinding(vValueNode.ToString()));
+                        }
+                    }
+                }
+            }
         }
 
         public static string GetYamlString(YamlNode node, string key) {

@@ -201,6 +201,36 @@ public class SettingsManager : MonoBehaviour
             }
             dolphinOutput.GetComponent<DolphinOutput>().selectedExtension = extension;
         }
+
+        if (modeConfig["(common)"].debugConfig != null && modeConfig["(common)"].debugConfig.bindings.Count > 0) {
+            UnityEngine.UI.VerticalLayoutGroup debugLayout = GameObject.Find("Debug Layout").GetComponent<UnityEngine.UI.VerticalLayoutGroup>();
+
+            foreach (ControlBinding debugBinding in modeConfig["(common)"].debugConfig.bindings) {
+                GameObject debugOutput = new GameObject();
+                UnityEngine.UI.Text debugText = debugOutput.AddComponent<UnityEngine.UI.Text>();
+                debugText.name = $"{debugBinding.path} debug output";
+                debugText.color = new Color(0, 0, 0);
+                debugText.font = Font.CreateDynamicFontFromOSFont("Arial", 18);
+
+                debugText.rectTransform.SetParent(debugLayout.transform, false);
+                debugText.text = debugBinding.path;
+
+                InputAction debugAction = new InputAction();
+                debugAction.AddBinding(debugBinding.path);
+                debugAction.performed += DebugInputAction_Callback;
+                debugAction.canceled += DebugInputAction_Callback;
+                debugAction.started += DebugInputAction_Callback;
+                debugAction.Enable();
+            }
+        } else {
+            GameObject.Find("Debug Related").SetActive(false);
+        }
+    }
+
+    private void DebugInputAction_Callback(InputAction.CallbackContext obj) {
+        UnityEngine.Debug.Log($"DebugAction {obj.phase} {obj.action.bindings[0].path} {obj.ReadValueAsObject().ToString()}");
+        UnityEngine.UI.Text debugText = GameObject.Find($"{obj.action.bindings[0].path} debug output").GetComponent<UnityEngine.UI.Text>();
+        debugText.text = $"{obj.action.bindings[0].path}:\t{obj.ReadValueAsObject().ToString()}";
     }
 
     void OnDisable() {

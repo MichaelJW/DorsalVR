@@ -77,22 +77,24 @@ public class DSUServer
         uint messageType = BitConverter.ToUInt32(message, 16);
         if (messageType == (uint)MessageType.ControllerMetaInfo) {
             int numPortsRequested = BitConverter.ToInt32(message, 20);
-            Debug.Log(string.Format("INFO requested:\t{0} port(s)", numPortsRequested));
+            // Debug.Log(string.Format("INFO requested:\t{0} port(s)", numPortsRequested));
 
             for (int i = 0; i < numPortsRequested; i++) {
                 port = (int)message[24 + i];
                 if (port >= numPortsSupported | port < 0) {
                     Debug.Log(string.Format("Port {0} out of range.", port));
                 } else {
-                    Debug.Log(string.Format("Sending info for controller in port {0}", port));
+                    // Debug.Log(string.Format("Sending info for controller in port {0}", port));
                     SendMessage(GetInfoBytes(port), clientEP);
                 }
             }
         } else if (messageType == (uint)MessageType.ActualControllerData) {
+            /*
             Debug.Log(
                 string.Format("DATA requested: {0}\tSlot requested: {1}\tMAC requested: {2}\tPort: {3}",
                 message[20], message[21], BitConverter.ToString(message, 22, 6), clientEP.Port)
             );
+            */
             if (message[20] == 1) {  // wants controllers by slot
                 slotEndPoints[(int)message[21]] = clientEP;
             } else if (message[20] == 0) {  // wants all controllers
