@@ -276,14 +276,27 @@ namespace Dorsal.Devices {
                 Vector3.Dot(accel[0], -dForward)
             );
 
+
+            DorsalIMUState state = new DorsalIMUState();
+
             // Only queue the update if we have enough samples going far enough back to get a decent result
             if (timestamp[0] - timestamp[j] >= minTimeDiff) {
-                var state = new DorsalIMUState();
+                // If we have enough samples going far enough back to get a decent result, use them...
                 state.accelerometer = dAccel + dGravity;
                 state.devicePosition = dPos[0] + positionOffset;
                 state.deviceRotation = dRot[0] * rotationOffset;
                 state.eulerDeviceRotation = state.deviceRotation.eulerAngles;
                 state.gyroscope = dGyroscope;
+
+                InputSystem.QueueStateEvent<DorsalIMUState>(this, state, timestamp[0]);
+            } else {
+                // ...otherwise, just send values as if static, to try to stop calibration screwups.
+                // (e.g. https://github.com/MichaelJW/DorsalVR/issues/7)
+                state.accelerometer = dGravity;
+                state.devicePosition = positionOffset;
+                state.deviceRotation = rotationOffset;
+                state.eulerDeviceRotation = state.deviceRotation.eulerAngles;
+                state.gyroscope = Vector3.zero;
 
                 InputSystem.QueueStateEvent<DorsalIMUState>(this, state, timestamp[0]);
             }
