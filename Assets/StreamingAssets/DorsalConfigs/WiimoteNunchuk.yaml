@@ -1,28 +1,8 @@
 %YAML 1.1
 ---
+imports:
+- examples/Wiimote.yaml
 controls:
-  Dolphin/Wiimote:
-    Accelerometer X: RH_IMU/accelerometer/x
-    Accelerometer Y: RH_IMU/accelerometer/y
-    Accelerometer Z: RH_IMU/accelerometer/z
-    Gyro Pitch: RH_IMU/gyroscope/x
-    Gyro Yaw: RH_IMU/gyroscope/y
-    Gyro Roll: RH_IMU/gyroscope/z
-    A: <XRController>{RightHand}/primaryButton
-    B: <XRController>{RightHand}/trigger
-    Recenter: <XRController>{RightHand}/grip
-    D-Pad Up: 
-      path: <XRController>{RightHand}/thumbstick/y
-      processors: clamp(min=0.0,max=1.0)
-    D-Pad Down: 
-      path: <XRController>{RightHand}/thumbstick/y
-      processors: invert();clamp(min=0.0,max=1.0)
-    D-Pad Right: 
-      path: <XRController>{RightHand}/thumbstick/x
-      processors: clamp(min=0.0,max=1.0)
-    D-Pad Left: 
-      path: <XRController>{RightHand}/thumbstick/x
-      processors: invert();clamp(min=0.0,max=1.0)
   Dolphin/Nunchuk:
     C: <XRController>{LeftHand}/trigger
     Z: <XRController>{LeftHand}/grip

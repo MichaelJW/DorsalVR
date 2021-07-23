@@ -1,0 +1,14 @@
+%YAML 1.1
+---
+controls:
+  Dolphin/Wiimote:
+    Recenter: 
+      - unset
+      - path: <ValveIndexController>{RightHand}/gripForce
+        processors: axisDeadzone(max=0.4)
+  Dolphin/Nunchuk:
+    Z:
+      - unset
+      - path: <ValveIndexController>{LeftHand}/gripForce
+        processors: axisDeadzone(max=0.4)
+...
