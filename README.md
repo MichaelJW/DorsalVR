@@ -64,8 +64,9 @@ In particular, thanks to [iwubcode](https://github.com/iwubcode), [jordan-woyak]
 
 Thanks also to:
 
-- [https://github.com/ruccho](ruccho) for [UnityGraphicsCapture](https://github.com/ruccho/UnityGraphicsCapture), which does the work of mirroring the desktop to a virtual screen using [Windows.Graphics.Capture](https://blogs.windows.com/windowsdeveloper/2019/09/16/new-ways-to-do-screen-capture/).
-- [https://github.com/Davidobot](Davidobot) for [https://github.com/Davidobot/BetterJoy](BetterJoy), which has been very useful for debugging actual movement data.
+- [ruccho](https://github.com/ruccho) for [UnityGraphicsCapture](https://github.com/ruccho/UnityGraphicsCapture), which does the work of mirroring the desktop to a virtual screen using [Windows.Graphics.Capture](https://blogs.windows.com/windowsdeveloper/2019/09/16/new-ways-to-do-screen-capture/).
+- [Davidobot](https://github.com/Davidobot) for [BetterJoy](https://github.com/Davidobot/BetterJoy), which has been very useful for debugging actual movement data.
 - Rajkosto and v1993 for [the DSU/Cemuhook protocol](https://cemuhook.sshnuke.net/) and [its documentation](https://v1993.github.io/cemuhook-protocol/).
 - NullFX for [this Crc32 implementation](http://sanity-free.org/12/crc32_implementation_in_csharp.html) which is used here to compute the checksum required by the DSU protocol.
 - Antoine Aubry for [YamlDotNet](https://github.com/aaubry/YamlDotNet), which I use (albeit clumsily) to parse the config files.
+- [Jaitsu](https://github.com/Jaitsu) for help with testing DorsalVR and for figuring out issues on Valve Index in particular.
