@@ -32,6 +32,10 @@ public class SettingsManager : MonoBehaviour
             if (arg.StartsWith("--yaml=")) yamlFile = arg.Substring(7);
         }
 
+        UnityEngine.Debug.Log("Starting up...");
+        UnityEngine.Debug.Log($"Operating System is: {SystemInfo.operatingSystem}");
+        UnityEngine.Debug.Log($"YAML path is: {yamlFile}");
+
         ConfigLoader.TryPopulateExampleYamls();
 
         Dictionary<string, Config> modeConfig = ConfigLoader.ParseYamlFile(yamlFile);
@@ -47,6 +51,7 @@ public class SettingsManager : MonoBehaviour
         }
 
         foreach (DeviceConfig device in modeConfig["(common)"].devices) {
+            UnityEngine.Debug.Log($"Attempting to load {modeConfig["(common)"].devices.Count} Devices...");
             GameObject container = new GameObject();
             container.name = device.type + " Container | " + device.id;
             Dorsal.Devices.DeviceTransformer transformer = container.AddComponent<Dorsal.Devices.DeviceTransformer>();
@@ -149,7 +154,11 @@ public class SettingsManager : MonoBehaviour
             }
         }
 
+        UnityEngine.Debug.Log($"Attempting to load Dolphin...");
         if (modeConfig["(common)"].dolphinConfig.exePath != null && modeConfig["(common)"].dolphinConfig.configDir != null) {
+            UnityEngine.Debug.Log($"Dolphin exePath: {modeConfig["(common)"].dolphinConfig.exePath}");
+            UnityEngine.Debug.Log($"Dolphin configDir: {modeConfig["(common)"].dolphinConfig.configDir}");
+
             dolphinConfigManager = new DolphinConfigManager();
             dolphinConfigManager.dolphinConfigDirectory = modeConfig["(common)"].dolphinConfig.configDir;
             dolphinConfigManager.SetControlINIs();
@@ -170,6 +179,8 @@ public class SettingsManager : MonoBehaviour
                         dolphinGameScreen.SetHwndViaDelegate(dp.GetGameHWnd);
                     }
                 }
+            } else {
+                UnityEngine.Debug.Log($"No Dolphin output set!");
             }
 
             DolphinControls dolphinControls = new DolphinControls();

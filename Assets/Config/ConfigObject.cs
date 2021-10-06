@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using UnityEngine;
 
 namespace Dorsal.Config {
@@ -137,6 +138,14 @@ namespace Dorsal.Config {
             }
 
             return clone;
+        }
+
+        public override string ToString() {
+            string toReturn = $"exec: {exec}\nvideoBackend: {videoBackend}\naudioEmulation: {audioEmulation}\nmovie: {movie}\nuser: {user}\nnandTitle: {nandTitle}\nsaveState: {saveState}\nextension: {extension}";
+            foreach (string key in config.Keys) {
+                toReturn += $"\n{key}: {config[key]}";
+            }
+            return toReturn;
         }
     }
 
