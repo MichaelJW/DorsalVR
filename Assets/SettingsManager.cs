@@ -33,6 +33,7 @@ public class SettingsManager : MonoBehaviour
         }
 
         UnityEngine.Debug.Log("Starting up...");
+        UnityEngine.Debug.Log($"DorsalVR version is: {Application.version}");
         UnityEngine.Debug.Log($"Operating System is: {SystemInfo.operatingSystem}");
         UnityEngine.Debug.Log($"YAML path is: {yamlFile}");
 
