@@ -8,6 +8,7 @@ using System.IO;
 using System.Reflection;
 using System.Linq;
 using UnityEngine;
+using MoonSharp.Interpreter;
 
 namespace Dorsal.Config {
     class ConfigLoader {
