@@ -22,17 +22,44 @@ public class SettingsManager : MonoBehaviour
     DolphinConfigManager dolphinConfigManager;
 
     private void OnEnable() {
+        #if !(DEVELOPMENT_BUILD || UNITY_EDITOR)
+             UnityEngine.Debug.unityLogger.filterLogType = LogType.Exception;
+        #endif
+
+        List<String> luaFilenames = GetLuaFilenames();
+        RunLuaScripts(luaFilenames);
+
+    }
+
+    private void RunLuaScripts(List<String> luaFilenames) {
         DolphinManager dolphinManager = this.GetComponent<DolphinManager>();
         UserData.RegisterAssembly();  // Registers everything with a [MoonSharpUserData] attrib
         UserData.RegisterProxyType<DolphinManagerProxy, DolphinManager>(r => new DolphinManagerProxy(dolphinManager));
         Script script = new Script();
         script.Options.ScriptLoader = new FileSystemScriptLoader();
         script.Globals["dolphinManager"] = dolphinManager;
+
         try {
-            DynValue res = script.DoFile((Path.Combine(Application.persistentDataPath, @"Config\test.lua")));
-        } catch ( Exception e ) {
+            for (int i = 0; i < luaFilenames.Count; i++) {
+                string fullPath = (Path.Combine(Application.persistentDataPath, $"Config\\{luaFilenames[i]}"));
+                UnityEngine.Debug.Log($"Loading Lua file: {fullPath}");
+                DynValue res = script.DoFile(fullPath);
+            }
+        } catch (Exception e) {
             UnityEngine.Debug.Log(e.Message);
         }
+    }
+
+    private List<String> GetLuaFilenames() {
+        List<String> luaFilenames = new List<String>();
+        string[] args = System.Environment.GetCommandLineArgs();
+        foreach (string arg in args) {
+            if (arg.StartsWith("--lua=")) {
+                luaFilenames.Add(arg.Substring(6));
+            }
+        }
+        if (luaFilenames.Count == 0) luaFilenames.Add("default.lua");
+        return luaFilenames;
     }
 
     void old_yaml_based_OnEnable() {
