@@ -14,6 +14,7 @@ using System.Diagnostics;
 using UnityEngine.InputSystem.XR;
 using MoonSharp.Interpreter;
 using Dorsal.External.Dolphin;
+using MoonSharp.Interpreter.Loaders;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -22,14 +23,16 @@ public class SettingsManager : MonoBehaviour
 
     private void OnEnable() {
         DolphinManager dolphinManager = this.GetComponent<DolphinManager>();
-
-        string luaScript = "dolphinManager:launch(\"C:\\\\Emu\\\\Dolphin\\\\Dolphin.exe\", \"C:\\\\Users\\\\micha\\\\Documents\\\\Dolphin Emulator\\\\Config\\\\\");";
         UserData.RegisterAssembly();  // Registers everything with a [MoonSharpUserData] attrib
         UserData.RegisterProxyType<DolphinManagerProxy, DolphinManager>(r => new DolphinManagerProxy(dolphinManager));
         Script script = new Script();
+        script.Options.ScriptLoader = new FileSystemScriptLoader();
         script.Globals["dolphinManager"] = dolphinManager;
-        UnityEngine.Debug.Log(luaScript);
-        DynValue res = script.DoString(luaScript);
+        try {
+            DynValue res = script.DoFile((Path.Combine(Application.persistentDataPath, @"Config\test.lua")));
+        } catch ( Exception e ) {
+            UnityEngine.Debug.Log(e.Message);
+        }
     }
 
     void old_yaml_based_OnEnable() {
