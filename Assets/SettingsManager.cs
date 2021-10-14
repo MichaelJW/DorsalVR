@@ -12,13 +12,30 @@ using YamlDotNet.RepresentationModel;
 using Dorsal.Config;
 using System.Diagnostics;
 using UnityEngine.InputSystem.XR;
+using MoonSharp.Interpreter;
+using Dorsal.External.Dolphin;
 
 public class SettingsManager : MonoBehaviour
 {
     Dorsal.Devices.DeviceManager deviceManager;
     DolphinConfigManager dolphinConfigManager;
 
-    void OnEnable() {
+    private void OnEnable() {
+        DolphinManager dolphinManager = GameObject.Find("DolphinManager").GetComponent<Dorsal.External.Dolphin.DolphinManager>();
+        //DolphinManagerProxy dolphinManagerProxy = new DolphinManagerProxy(dolphinManager);
+
+        string luaScript = "dolphinManager:launch(\"C:\\\\Emu\\\\Dolphin\\\\Dolphin.exe\", \"C:\\\\Users\\\\micha\\\\Documents\\\\Dolphin Emulator\\\\Config\\\\\");";
+        UserData.RegisterAssembly();  // Registers everything with a [MoonSharpUserData] attrib
+        UserData.RegisterProxyType<DolphinManagerProxy, DolphinManager>(r => new DolphinManagerProxy(dolphinManager));
+        Script script = new Script();
+        //script.Globals.Set("dolphinManager", dolphinManagerProxy);
+        script.Globals["dolphinManager"] = dolphinManager;
+        UnityEngine.Debug.Log(luaScript);
+        DynValue res = script.DoString(luaScript);
+
+    }
+
+    void old_yaml_based_OnEnable() {
         #if !(DEVELOPMENT_BUILD || UNITY_EDITOR)
         UnityEngine.Debug.unityLogger.filterLogType = LogType.Exception;
         #endif
@@ -50,6 +67,36 @@ public class SettingsManager : MonoBehaviour
             #endif
             return;  // it still gets to the next line otherwise
         }
+
+
+        UnityEngine.Debug.Log($"Native C#: {modeConfig["(common)"].dolphinConfig.exePath}");
+        string scriptCode = @"
+            return obj.exePath;
+        ";
+        UserData.RegisterAssembly();  // Registers everything with a [MoonSharpUserData] attrib
+        Script script = new Script();
+        DynValue obj = UserData.Create(modeConfig["(common)"].dolphinConfig);
+        script.Globals.Set("obj", obj);
+        DynValue res = script.DoString(scriptCode);
+        UnityEngine.Debug.Log($"MoonSharp Test: {res.String}");
+
+        string scriptCode2 = @"
+            obj.exePath = 'C:\\Windows\\Notepad.exe';
+        ";
+        script.DoString(scriptCode2);
+        UnityEngine.Debug.Log($"Attempted to change exePath via MoonSharp...");
+        UnityEngine.Debug.Log($"Native C#: {modeConfig["(common)"].dolphinConfig.exePath}");
+
+        // Above works! That's promising...
+
+        string scriptCode3 = @"
+            return obj.config['Graphics.Stereoscopy.StereoMode'];
+        ";
+        res = script.DoString(scriptCode3);
+        UnityEngine.Debug.Log($"MoonSharp Test for StereoMode: {res.String}");
+        // Can access elements of a Dictionary by a string key too then
+
+
 
         foreach (DeviceConfig device in modeConfig["(common)"].devices) {
             UnityEngine.Debug.Log($"Attempting to load {modeConfig["(common)"].devices.Count} Devices...");
