@@ -21,18 +21,15 @@ public class SettingsManager : MonoBehaviour
     DolphinConfigManager dolphinConfigManager;
 
     private void OnEnable() {
-        DolphinManager dolphinManager = GameObject.Find("DolphinManager").GetComponent<Dorsal.External.Dolphin.DolphinManager>();
-        //DolphinManagerProxy dolphinManagerProxy = new DolphinManagerProxy(dolphinManager);
+        DolphinManager dolphinManager = this.GetComponent<DolphinManager>();
 
         string luaScript = "dolphinManager:launch(\"C:\\\\Emu\\\\Dolphin\\\\Dolphin.exe\", \"C:\\\\Users\\\\micha\\\\Documents\\\\Dolphin Emulator\\\\Config\\\\\");";
         UserData.RegisterAssembly();  // Registers everything with a [MoonSharpUserData] attrib
         UserData.RegisterProxyType<DolphinManagerProxy, DolphinManager>(r => new DolphinManagerProxy(dolphinManager));
         Script script = new Script();
-        //script.Globals.Set("dolphinManager", dolphinManagerProxy);
         script.Globals["dolphinManager"] = dolphinManager;
         UnityEngine.Debug.Log(luaScript);
         DynValue res = script.DoString(luaScript);
-
     }
 
     void old_yaml_based_OnEnable() {
