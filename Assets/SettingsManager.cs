@@ -30,9 +30,9 @@ public class SettingsManager : MonoBehaviour
         UnityEngine.Debug.Log($"DorsalVR version is: {Application.version}");
         UnityEngine.Debug.Log($"Operating System is: {SystemInfo.operatingSystem}");
 
+        TryPopulateUserConfigFiles();
         List<String> luaFilenames = GetLuaFilenames();
         RunLuaScripts(luaFilenames);
-
     }
 
     private void RunLuaScripts(List<String> luaFilenames) {
@@ -43,14 +43,29 @@ public class SettingsManager : MonoBehaviour
         script.Options.ScriptLoader = new FileSystemScriptLoader();
         script.Globals["dolphinManager"] = dolphinManager;
 
+        int scriptsRun = 0;
         try {
             for (int i = 0; i < luaFilenames.Count; i++) {
                 string fullPath = (Path.Combine(Application.persistentDataPath, $"Config\\{luaFilenames[i]}"));
                 UnityEngine.Debug.Log($"Loading Lua file: {fullPath}");
+                if (File.ReadAllText(fullPath).Trim() == "") {
+                    throw new Exception("Lua file is empty.");
+                }
                 DynValue res = script.DoFile(fullPath);
+                scriptsRun++;
             }
         } catch (Exception e) {
             UnityEngine.Debug.Log(e.Message);
+        }
+        if (scriptsRun == 0) {
+            // None of the Lua files existed - open the dir to make it easier for the user, and quit
+            Process.Start(ConfigLoader.yamlDirectory);
+            #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+            #else
+                Application.Quit();
+            #endif
+            return;  // it still gets to the next line otherwise
         }
     }
 
@@ -64,6 +79,38 @@ public class SettingsManager : MonoBehaviour
         }
         if (luaFilenames.Count == 0) luaFilenames.Add("default.lua");
         return luaFilenames;
+    }
+
+
+    public void TryPopulateUserConfigFiles() {
+        string userConfigDirectory = Path.Combine(Application.persistentDataPath, @"Config\");
+
+        if (!Directory.Exists(userConfigDirectory)) {
+            Directory.CreateDirectory(userConfigDirectory);
+        }
+        if (!Directory.Exists(Path.Combine(userConfigDirectory, "examples/"))) {
+            Directory.CreateDirectory(Path.Combine(userConfigDirectory, "examples/"));
+        }
+
+        string examplesPath = Path.Combine(Application.streamingAssetsPath, @"DorsalConfigs/");
+        foreach (string luaPath in Directory.GetFiles(examplesPath, "*.lua")) {
+            if (Path.GetFileName(luaPath) == "defs.lua") {
+                File.Copy(luaPath, Path.Combine(userConfigDirectory, "defs.lua"), overwrite: true);
+            } else {
+                // OTOH, we want the examples to stay under the app's control:
+                File.Copy(luaPath, Path.Combine(userConfigDirectory, "examples/", Path.GetFileName(luaPath)), overwrite: true);
+            }
+        }
+
+        // While we're at it, copy any hyperlinks, too.
+        foreach (string urlPath in Directory.GetFiles(examplesPath, "*.url")) {
+            File.Copy(urlPath, Path.Combine(userConfigDirectory, Path.GetFileName(urlPath)), overwrite: true);
+        }
+
+        // And the VS Code Workspace file for easier IntelliSense
+        foreach (string vscWorkspacePath in Directory.GetFiles(examplesPath, "*.code-workspace")) {
+            File.Copy(vscWorkspacePath, Path.Combine(userConfigDirectory, Path.GetFileName(vscWorkspacePath)), overwrite: true);
+        }
     }
 
     void old_yaml_based_OnEnable() {
