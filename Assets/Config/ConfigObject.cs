@@ -7,7 +7,6 @@ using UnityEngine;
 
 namespace Dorsal.Config {
 
-    [MoonSharpUserData]
     public class Config {
         // id, DeviceConfig
         public List<DeviceConfig> devices;
@@ -32,7 +31,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class DeviceConfig {
         public string id;
         public string type;
@@ -54,7 +52,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class DeviceVREntityConfig {
         public Vector3 positionOffset = Vector3.zero;
         public Vector3 scale = Vector3.one;
@@ -76,7 +73,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class DeviceScreenConfig {
         public string stereoscopic;
 
@@ -88,7 +84,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class DeviceIMUConfig {
         public ControlBinding positionBinding;
         public ControlBinding rotationBinding;
@@ -106,7 +101,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class DolphinConfig {
         public string exePath;
         public string configDir;
@@ -157,7 +151,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class ControlsConfig {
         // Action map, mapping
         public Dictionary<string, ControlMapping> controls = new Dictionary<string, ControlMapping>();
@@ -206,7 +199,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class ControlMapping {
         // Action, binding(s)
         public Dictionary<string, List<ControlBinding>> mapping = new Dictionary<string, List<ControlBinding>>();
@@ -246,7 +238,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class ControlBinding {
         public string path = "";
         public string interactions = "";
@@ -268,7 +259,6 @@ namespace Dorsal.Config {
         }
     }
 
-    [MoonSharpUserData]
     public class DebugConfig {
         public List<ControlBinding> bindings = new List<ControlBinding>();
 

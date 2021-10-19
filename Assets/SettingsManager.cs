@@ -22,9 +22,13 @@ public class SettingsManager : MonoBehaviour
     DolphinConfigManager dolphinConfigManager;
 
     private void OnEnable() {
-        #if !(DEVELOPMENT_BUILD || UNITY_EDITOR)
+#if !(DEVELOPMENT_BUILD || UNITY_EDITOR)
              UnityEngine.Debug.unityLogger.filterLogType = LogType.Exception;
-        #endif
+#endif
+
+        UnityEngine.Debug.Log("Starting up...");
+        UnityEngine.Debug.Log($"DorsalVR version is: {Application.version}");
+        UnityEngine.Debug.Log($"Operating System is: {SystemInfo.operatingSystem}");
 
         List<String> luaFilenames = GetLuaFilenames();
         RunLuaScripts(luaFilenames);
@@ -34,7 +38,7 @@ public class SettingsManager : MonoBehaviour
     private void RunLuaScripts(List<String> luaFilenames) {
         DolphinManager dolphinManager = this.GetComponent<DolphinManager>();
         UserData.RegisterAssembly();  // Registers everything with a [MoonSharpUserData] attrib
-        UserData.RegisterProxyType<DolphinManagerProxy, DolphinManager>(r => new DolphinManagerProxy(dolphinManager));
+        UserData.RegisterProxyType<DolphinManagerLuaProxy, DolphinManager>(r => new DolphinManagerLuaProxy(dolphinManager));
         Script script = new Script();
         script.Options.ScriptLoader = new FileSystemScriptLoader();
         script.Globals["dolphinManager"] = dolphinManager;
