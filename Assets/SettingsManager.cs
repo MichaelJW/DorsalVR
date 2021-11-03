@@ -41,7 +41,7 @@ public class SettingsManager : MonoBehaviour
         UserData.RegisterProxyType<DolphinManagerLuaProxy, DolphinManager>(r => new DolphinManagerLuaProxy(dolphinManager));
         Script script = new Script();
         script.Options.ScriptLoader = new FileSystemScriptLoader();
-        script.Globals["dolphinManager"] = dolphinManager;
+        script.Globals["DolphinManager"] = dolphinManager;
 
         int scriptsRun = 0;
         try {
@@ -58,7 +58,7 @@ public class SettingsManager : MonoBehaviour
             UnityEngine.Debug.Log(e.Message);
         }
         if (scriptsRun == 0) {
-            // None of the Lua files existed - open the dir to make it easier for the user, and quit
+            // None of the Lua files existed (or they were all empty) - open the dir to make it easier for the user, and quit
             Process.Start(ConfigLoader.yamlDirectory);
             #if UNITY_EDITOR
                 UnityEditor.EditorApplication.isPlaying = false;

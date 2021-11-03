@@ -16,18 +16,10 @@ namespace Dorsal.External.Dolphin {
             target = p;
         } 
 
+        [LuaTag(description = "Launches a new instance of Dolphin.")]
         public void Launch(string exePath, string configDir) {
+            UnityEngine.Debug.Log("Proxy Launch() called");
             target.Launch(exePath, configDir);
-        }
-
-        [LuaTag(description = "Does something.")]
-        public string DoSomething(int integer) {
-            return "something";
-        }
-
-        [LuaTag(description = "Tests the auto-reload.\nInclude multi-line comment.")]
-        public string CheckAutoReload(string test) {
-            return "test";
         }
     }
 }
