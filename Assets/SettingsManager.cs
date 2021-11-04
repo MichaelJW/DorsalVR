@@ -41,7 +41,7 @@ public class SettingsManager : MonoBehaviour
         UserData.RegisterProxyType<DolphinManagerLuaProxy, DolphinManager>(r => new DolphinManagerLuaProxy(dolphinManager));
         Script script = new Script();
         script.Options.ScriptLoader = new FileSystemScriptLoader();
-        script.Globals["DolphinManager"] = dolphinManager;
+        script.Globals["dolphinManager"] = dolphinManager;
 
         int scriptsRun = 0;
         try {

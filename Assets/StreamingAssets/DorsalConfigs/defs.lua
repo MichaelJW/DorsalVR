@@ -5,8 +5,35 @@
 
 --- @class DolphinManager
 --- This manages Dolphin.
-DolphinManager={};
+local DolphinManager_def = {}
 --- @param exePath string
 --- @param configDir string
 --- Launches a new instance of Dolphin.
-function DolphinManager:Launch(exePath, configDir) end
+function DolphinManager_def:Launch(exePath, configDir) end
+--- @return DolphinConfig
+function DolphinManager_def:CreateDolphinConfig() end
+--- @param dc DolphinConfig
+function DolphinManager_def:ReadDolphinConfig(dc) end
+
+--- @class DolphinConfig
+--- @field configDir string
+--- @field outputGameTo table<number, string>
+--- @field exec string
+--- @field videoBackend string
+--- @field audioEmulation string
+--- @field movie string
+--- @field user string
+--- @field nandTitle string
+--- @field saveState string
+--- @field extension string
+--- @field config table<string, string>
+--- @field exePath string
+local DolphinConfig_def = {}
+--- @return DolphinConfig
+function DolphinConfig_def:Clone() end
+--- @return string
+function DolphinConfig_def:ToString() end
+
+--- Define the objects that are always created by DorsalVR and therefore already accessible:
+--- @type DolphinManager
+dolphinManager = {};

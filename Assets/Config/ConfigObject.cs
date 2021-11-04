@@ -101,8 +101,9 @@ namespace Dorsal.Config {
         }
     }
 
+    [MoonSharpUserData]
     public class DolphinConfig {
-        public string exePath;
+        public string exePath { get; set; } = "";
         public string configDir;
         public List<string> outputGameTo = new List<string>();
 

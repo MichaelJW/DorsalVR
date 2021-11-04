@@ -18,8 +18,15 @@ namespace Dorsal.External.Dolphin {
 
         [LuaTag(description = "Launches a new instance of Dolphin.")]
         public void Launch(string exePath, string configDir) {
-            UnityEngine.Debug.Log("Proxy Launch() called");
             target.Launch(exePath, configDir);
+        }
+
+        public Config.DolphinConfig CreateDolphinConfig() {
+            return target.CreateDolphinConfig();
+        }
+
+        public void ReadDolphinConfig(Config.DolphinConfig dc) {
+            UnityEngine.Debug.Log(dc.exePath);
         }
     }
 }

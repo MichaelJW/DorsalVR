@@ -28,5 +28,9 @@ namespace Dorsal.External.Dolphin {
                 );
             }
         }
+
+        public Config.DolphinConfig CreateDolphinConfig() {
+            return new Config.DolphinConfig();
+        }
     }
 }
