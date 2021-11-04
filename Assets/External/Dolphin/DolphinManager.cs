@@ -7,7 +7,9 @@ using UnityEngine;
 
 namespace Dorsal.External.Dolphin {
     class DolphinManager : MonoBehaviour {
-        public void Launch(string exePath, string configDir) {
+        public void Launch(Config.DolphinConfig dolphinConfig) {
+            string exePath = dolphinConfig.exePath;
+            string configDir = dolphinConfig.configDir;
             if (exePath != null && configDir != null) {
                 UnityEngine.Debug.Log($"Dolphin exePath: {exePath}");
                 UnityEngine.Debug.Log($"Dolphin configDir: {configDir}");
@@ -17,10 +19,6 @@ namespace Dorsal.External.Dolphin {
                 dolphinConfigManager.SetControlINIs();
                 dolphinConfigManager.SetDSUClientINI();
                 dolphinConfigManager.ModifyKeyOptions();
-
-                Config.DolphinConfig dolphinConfig = new Config.DolphinConfig();
-                dolphinConfig.exePath = exePath;
-                dolphinConfig.configDir = configDir;
 
                 Dorsal.Processes.ProcessManager processManager = GameObject.Find("ProcessManager").GetComponent<Dorsal.Processes.ProcessManager>();
                 Dorsal.Processes.DolphinProcess dp = processManager.StartDolphinProcess(

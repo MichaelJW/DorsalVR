@@ -29,7 +29,6 @@ public class LuaDefs {
         defs.WriteLine($"--- See: https://github.com/MichaelJW/DorsalVR");
 
         foreach (Type t in result) {
-            Debug.Log(t.Name);
             string className = t.Name.Replace("LuaProxy", "");
             defs.WriteLine();
             defs.WriteLine($"--- @class {className}");
@@ -53,11 +52,7 @@ public class LuaDefs {
             }
             defs.WriteLine($"local {className}_def = {{}}");
             foreach (MethodInfo m in t.GetMethods(~BindingFlags.NonPublic)) {
-                Debug.Log($"{m.Name}");
-                Debug.Log($"{m.DeclaringType.Name}");
-                Debug.Log($"{m.DeclaringType.Namespace}");
                 if ((m.DeclaringType == t | m.DeclaringType.Namespace.StartsWith("Dorsal.")) & !(m.Name.StartsWith("get_") | m.Name.StartsWith("set_"))) {  // only methods that we explicitly define
-                    Debug.Log(m.Name);
                     string mParams = "";
                     foreach (ParameterInfo mParam in m.GetParameters()) {
                         mParams += mParam.Name + ", ";  // TODO: Use LINQ or something
@@ -94,7 +89,7 @@ public class LuaDefs {
                 string className = componentType.Name;
                 string instanceName = className.Substring(0, 1).ToLower() + className.Substring(1);
                 defs.WriteLine($"--- @type {className}");
-                defs.WriteLine($"{instanceName} = {{}};");
+                defs.WriteLine($"{instanceName} = {{}}");
             }
         }
 

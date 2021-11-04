@@ -17,16 +17,12 @@ namespace Dorsal.External.Dolphin {
         } 
 
         [LuaTag(description = "Launches a new instance of Dolphin.")]
-        public void Launch(string exePath, string configDir) {
-            target.Launch(exePath, configDir);
+        public void Launch(Config.DolphinConfig dolphinConfig) {
+            target.Launch(dolphinConfig);
         }
 
         public Config.DolphinConfig CreateDolphinConfig() {
             return target.CreateDolphinConfig();
-        }
-
-        public void ReadDolphinConfig(Config.DolphinConfig dc) {
-            UnityEngine.Debug.Log(dc.exePath);
         }
     }
 }
