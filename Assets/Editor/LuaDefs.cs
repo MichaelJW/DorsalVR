@@ -41,11 +41,13 @@ public class LuaDefs {
                 }
             }
             foreach (FieldInfo f in t.GetFields()) {
+                if (f.GetCustomAttributes(typeof(MoonSharp.Interpreter.MoonSharpHiddenAttribute), false).Length > 0) continue;
                 if (f.DeclaringType == t | f.DeclaringType.Namespace.StartsWith("Dorsal.")) {
                     defs.WriteLine($"--- @field {f.Name} {CSharpTypeToLuaType(f.FieldType)}");  
                 }
             }
             foreach (PropertyInfo p in t.GetProperties()) {
+                if (p.GetCustomAttributes(typeof(MoonSharp.Interpreter.MoonSharpHiddenAttribute), false).Length > 0) continue;
                 if (p.DeclaringType == t | p.DeclaringType.Namespace.StartsWith("Dorsal.")) {
                    defs.WriteLine($"--- @field {p.Name} {CSharpTypeToLuaType(p.PropertyType)}");
                 }
@@ -78,21 +80,22 @@ public class LuaDefs {
         // We assume that any Dorsal components attached to SettingsManager will be accessible via 
         // scripts.Globals[] in Lua, and so make references for them here
         SettingsManager settingsManager = GameObject.FindObjectOfType<SettingsManager>();
-        Component[] smComponents = settingsManager.GetComponents(typeof(Component));
-        if (smComponents.Length > 0) {
-            defs.WriteLine();
-            defs.WriteLine($"--- Define the objects that are always created by DorsalVR and therefore already accessible:");
-        }
-        for (int i = 0; i < smComponents.Length; i++) {
-            Type componentType = smComponents[i].GetType();
-            if (!(componentType.Namespace is null) && componentType.Namespace.StartsWith("Dorsal.")) {
-                string className = componentType.Name;
-                string instanceName = className.Substring(0, 1).ToLower() + className.Substring(1);
-                defs.WriteLine($"--- @type {className}");
-                defs.WriteLine($"{instanceName} = {{}}");
+        if (settingsManager != null) {
+            Component[] smComponents = settingsManager.GetComponents(typeof(Component));
+            if (smComponents.Length > 0) {
+                defs.WriteLine();
+                defs.WriteLine($"--- Define the objects that are always created by DorsalVR and therefore already accessible:");
+            }
+            for (int i = 0; i < smComponents.Length; i++) {
+                Type componentType = smComponents[i].GetType();
+                if (!(componentType.Namespace is null) && componentType.Namespace.StartsWith("Dorsal.")) {
+                    string className = componentType.Name;
+                    string instanceName = className.Substring(0, 1).ToLower() + className.Substring(1);
+                    defs.WriteLine($"--- @type {className}");
+                    defs.WriteLine($"{instanceName} = {{}}");
+                }
             }
         }
-
         defs.Close();
         Debug.Log("Wrote Lua defs to file.");
     }

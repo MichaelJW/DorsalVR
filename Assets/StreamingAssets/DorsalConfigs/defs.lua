@@ -23,13 +23,21 @@ function DolphinManager_def:CreateDolphinConfig() end
 --- @field nandTitle string
 --- @field saveState string
 --- @field extension string
---- @field config table<string, string>
 --- @field exePath string
 local DolphinConfig_def = {}
 --- @return DolphinConfig
 function DolphinConfig_def:Clone() end
 --- @return string
 function DolphinConfig_def:ToString() end
+--- @param systemSectionKey string
+--- @param value string
+--- Sets a configuration option as specified by a --config or -C command line option
+function DolphinConfig_def:SetConfigOption(systemSectionKey, value) end
+--- @param systemSectionKey string
+--- Clears a configuration option as specified by a --config or -C command line option
+function DolphinConfig_def:ClearConfigOption(systemSectionKey) end
+--- Clears all configuration options specified by a --config or -C command line option
+function DolphinConfig_def:ClearAllConfigOptions() end
 
 --- Define the objects that are always created by DorsalVR and therefore already accessible:
 --- @type DolphinManager

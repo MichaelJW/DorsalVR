@@ -115,6 +115,7 @@ namespace Dorsal.Config {
         public string nandTitle = "";
         public string saveState = "";
         public string extension = "none";
+        [MoonSharpHidden]
         public Dictionary<string, string> config = new Dictionary<string, string>();
 
         public DolphinConfig Clone() {
@@ -149,6 +150,21 @@ namespace Dorsal.Config {
                 toReturn += $"\n{key}: {config[key]}";
             }
             return toReturn;
+        }
+
+        [LuaTag(description = "Sets a configuration option as specified by a --config or -C command line option")]
+        public void SetConfigOption(string systemSectionKey, string value) {
+            config[systemSectionKey] = value;
+        }
+
+        [LuaTag(description = "Clears a configuration option as specified by a --config or -C command line option")]
+        public void ClearConfigOption(string systemSectionKey) {
+            config.Remove(systemSectionKey);
+        }
+
+        [LuaTag(description = "Clears all configuration options specified by a --config or -C command line option")]
+        public void ClearAllConfigOptions() {
+            config.Clear();
         }
     }
 
