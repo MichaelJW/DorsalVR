@@ -118,6 +118,8 @@ namespace Dorsal.Config {
         [MoonSharpHidden]
         public Dictionary<string, string> config = new Dictionary<string, string>();
 
+        public Dorsal.Devices.Screen gameScreen;
+
         public DolphinConfig Clone() {
             DolphinConfig clone = new DolphinConfig();
 
@@ -140,6 +142,8 @@ namespace Dorsal.Config {
             foreach (string key in config.Keys) {
                 clone.config.Add(key, config[key]);
             }
+
+            clone.gameScreen = gameScreen;
 
             return clone;
         }

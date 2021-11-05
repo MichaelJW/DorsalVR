@@ -67,6 +67,7 @@ function Screen_def:ResetRotationOffset() end
 --- @field nandTitle string
 --- @field saveState string
 --- @field extension string
+--- @field gameScreen Screen
 --- @field exePath string
 local DolphinConfig_def = {}
 --- @return DolphinConfig

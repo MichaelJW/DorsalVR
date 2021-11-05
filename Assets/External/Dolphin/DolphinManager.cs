@@ -34,6 +34,10 @@ namespace Dorsal.External.Dolphin {
                 Dorsal.Processes.DolphinProcess dp = processManager.StartDolphinProcess(
                     dolphinConfig
                 );
+
+                if (dolphinConfig.gameScreen != null) {
+                    dolphinConfig.gameScreen.SetHwndViaDelegate(dp.GetGameHWnd);                    
+                }
             }
         }
 
