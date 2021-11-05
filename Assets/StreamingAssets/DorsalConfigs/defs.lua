@@ -20,6 +20,15 @@ function VRGO_def:ResetScale() end
 --- @param z number
 function VRGO_def:SetRotationOffset(x, y, z) end
 function VRGO_def:ResetRotationOffset() end
+--- @param path string
+--- @param interactions string
+--- @param processors string
+function VRGO_def:SetPositionBinding(path, interactions, processors) end
+function VRGO_def:ResetPositionBinding() end
+--- @param path string
+--- @param interactions string
+--- @param processors string
+function VRGO_def:SetRotationBinding(path, interactions, processors) end
 
 --- @class DolphinManager
 --- This manages Dolphin.
@@ -55,6 +64,15 @@ function Screen_def:ResetScale() end
 --- @param z number
 function Screen_def:SetRotationOffset(x, y, z) end
 function Screen_def:ResetRotationOffset() end
+--- @param path string
+--- @param interactions string
+--- @param processors string
+function Screen_def:SetPositionBinding(path, interactions, processors) end
+function Screen_def:ResetPositionBinding() end
+--- @param path string
+--- @param interactions string
+--- @param processors string
+function Screen_def:SetRotationBinding(path, interactions, processors) end
 
 --- @class DolphinConfig
 --- @field configDir string

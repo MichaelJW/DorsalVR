@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.InputSystem.XR;
+using UnityEngine.InputSystem;
 
 namespace Dorsal.VREntity {
     // Virtual Reality Game Object
@@ -39,6 +41,32 @@ namespace Dorsal.VREntity {
 
         public void ResetRotationOffset() {
             container.transform.rotation = Quaternion.identity;
+        }
+
+        public void SetPositionBinding(string path = "", string interactions = "", string processors = "") {
+            TrackedPoseDriver tpd = mount.GetComponent<TrackedPoseDriver>();
+            tpd.positionAction = new InputAction();
+            tpd.positionAction.AddBinding(path, interactions, processors);
+        }
+
+        public void ResetPositionBinding() {
+            TrackedPoseDriver tpd = mount.GetComponent<TrackedPoseDriver>();
+            tpd.positionAction.Disable();
+            tpd.positionAction.Dispose();
+            tpd.positionAction = null;
+        }
+
+        public void SetRotationBinding(string path = "", string interactions = "", string processors = "") {
+            TrackedPoseDriver tpd = mount.GetComponent<TrackedPoseDriver>();
+            tpd.rotationAction = new InputAction();
+            tpd.rotationAction.AddBinding(path, interactions, processors);
+        }
+
+        public void ResetRotationBinding() {
+            TrackedPoseDriver tpd = mount.GetComponent<TrackedPoseDriver>();
+            tpd.rotationAction.Disable();
+            tpd.rotationAction.Dispose();
+            tpd.rotationAction = null;
         }
     }
 }

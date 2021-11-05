@@ -36,6 +36,18 @@ namespace Dorsal.VREntity {
         public void ResetRotationOffset() {
             target.ResetRotationOffset();
         }
+
+        public void SetPositionBinding(string path = "", string interactions = "", string processors = "") {
+            target.SetPositionBinding(path, interactions, processors);
+        }
+
+        public void ResetPositionBinding() {
+            target.ResetPositionBinding();
+        }
+
+        public void SetRotationBinding(string path = "", string interactions = "", string processors = "") {
+            target.SetRotationBinding(path, interactions, processors);
+        }
     }
 
 }

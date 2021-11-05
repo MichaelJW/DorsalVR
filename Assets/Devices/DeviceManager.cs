@@ -23,7 +23,8 @@ namespace Dorsal.Devices {
             container.transform.parent = mount.transform;
             mount.transform.parent = GameObject.Find("Mounts").transform;
 
-            container.name = "screen test (lol)";
+            mount.name = "Mount for Screen";
+            container.name = "Screen Container";
             Screen screen = container.AddComponent<Screen>();
 
             screen.container = container;
