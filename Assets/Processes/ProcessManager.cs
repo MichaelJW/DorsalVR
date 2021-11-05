@@ -25,7 +25,7 @@ namespace Dorsal.Processes {
 
         public DolphinProcess StartDolphinProcess(Dorsal.Config.DolphinConfig dolphinConfig) {
             try {
-                UnityEngine.Debug.Log($"Attempting to start Dolphin process using these config options:\n{dolphinConfig.ToString()}");
+                UnityEngine.Debug.Log($"Attempting to start Dolphin process using these command line options:\n{dolphinConfig.ToString()}");
                 DolphinProcess dp = new DolphinProcess();
                 Process p = new Process();
                 p.StartInfo.FileName = dolphinConfig.exePath;
