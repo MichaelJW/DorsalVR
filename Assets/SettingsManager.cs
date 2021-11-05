@@ -15,6 +15,7 @@ using UnityEngine.InputSystem.XR;
 using MoonSharp.Interpreter;
 using Dorsal.External.Dolphin;
 using MoonSharp.Interpreter.Loaders;
+using Dorsal.Devices;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -37,11 +38,15 @@ public class SettingsManager : MonoBehaviour
 
     private void RunLuaScripts(List<String> luaFilenames) {
         DolphinManager dolphinManager = this.GetComponent<DolphinManager>();
+        DeviceManager deviceManager = this.GetComponent<DeviceManager>();
         UserData.RegisterAssembly();  // Registers everything with a [MoonSharpUserData] attrib
         UserData.RegisterProxyType<DolphinManagerLuaProxy, DolphinManager>(r => new DolphinManagerLuaProxy(dolphinManager));
+        UserData.RegisterProxyType<DeviceManagerLuaProxy, DeviceManager>(r => new DeviceManagerLuaProxy(deviceManager));
+        UserData.RegisterProxyType<ScreenLuaProxy, Dorsal.Devices.Screen>(r => new ScreenLuaProxy(r));
         Script script = new Script();
         script.Options.ScriptLoader = new FileSystemScriptLoader();
         script.Globals["dolphinManager"] = dolphinManager;
+        script.Globals["deviceManager"] = deviceManager;
 
         int scriptsRun = 0;
         try {

@@ -4,9 +4,10 @@ using UnityEngine;
 using Ruccho.GraphicsCapture;
 using System.Linq;
 using System;
+using Dorsal.VREntity;
 
 namespace Dorsal.Devices {
-    class Screen : MonoBehaviour, IDevice {
+    public class Screen : VRGO, IDevice {
         GameObject _middleEyeScreen;
         GameObject _leftEyeScreen;
         GameObject _rightEyeScreen;

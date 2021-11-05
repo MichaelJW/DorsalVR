@@ -3,6 +3,24 @@
 --- This file, and workspace.code-workspace, are required to make Visual Studio Code's IntelliSense work for DorsalVR's Lua scripting.
 --- See: https://github.com/MichaelJW/DorsalVR
 
+--- @class VRGO
+local VRGO_def = {}
+--- @param x number
+--- @param y number
+--- @param z number
+function VRGO_def:SetPositionOffset(x, y, z) end
+function VRGO_def:ResetPositionOffset() end
+--- @param x number
+--- @param y number
+--- @param z number
+function VRGO_def:SetScale(x, y, z) end
+function VRGO_def:ResetScale() end
+--- @param x number
+--- @param y number
+--- @param z number
+function VRGO_def:SetRotationOffset(x, y, z) end
+function VRGO_def:ResetRotationOffset() end
+
 --- @class DolphinManager
 --- This manages Dolphin.
 local DolphinManager_def = {}
@@ -11,6 +29,32 @@ local DolphinManager_def = {}
 function DolphinManager_def:Launch(dolphinConfig) end
 --- @return DolphinConfig
 function DolphinManager_def:CreateDolphinConfig() end
+
+--- @class DeviceManager
+--- Allows creation of Dorsal devices
+local DeviceManager_def = {}
+--- @return Screen
+function DeviceManager_def:CreateScreen() end
+
+--- @class Screen
+local Screen_def = {}
+function Screen_def:EnableSBS3D() end
+function Screen_def:DisableSBS3D() end
+--- @param x number
+--- @param y number
+--- @param z number
+function Screen_def:SetPositionOffset(x, y, z) end
+function Screen_def:ResetPositionOffset() end
+--- @param x number
+--- @param y number
+--- @param z number
+function Screen_def:SetScale(x, y, z) end
+function Screen_def:ResetScale() end
+--- @param x number
+--- @param y number
+--- @param z number
+function Screen_def:SetRotationOffset(x, y, z) end
+function Screen_def:ResetRotationOffset() end
 
 --- @class DolphinConfig
 --- @field configDir string
@@ -42,3 +86,5 @@ function DolphinConfig_def:ClearAllConfigOptions() end
 --- Define the objects that are always created by DorsalVR and therefore already accessible:
 --- @type DolphinManager
 dolphinManager = {}
+--- @type DeviceManager
+deviceManager = {}

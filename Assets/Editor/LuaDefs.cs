@@ -53,27 +53,29 @@ public class LuaDefs {
                 }
             }
             defs.WriteLine($"local {className}_def = {{}}");
-            foreach (MethodInfo m in t.GetMethods(~BindingFlags.NonPublic)) {
-                if ((m.DeclaringType == t | m.DeclaringType.Namespace.StartsWith("Dorsal.")) & !(m.Name.StartsWith("get_") | m.Name.StartsWith("set_"))) {  // only methods that we explicitly define
-                    string mParams = "";
-                    foreach (ParameterInfo mParam in m.GetParameters()) {
-                        mParams += mParam.Name + ", ";  // TODO: Use LINQ or something
-                        defs.WriteLine($"--- @param {mParam.Name} {CSharpTypeToLuaType(mParam.ParameterType)}");
-                    }
-                    mParams = mParams.Substring(0, Math.Max(0, mParams.Length - 2));  // remove trailing comma
-                    if (m.ReturnType.Name != "Void") {
-                        defs.WriteLine($"--- @return {CSharpTypeToLuaType(m.ReturnType)}");
-                    }
-                    if (m.GetCustomAttributes(typeof(LuaTag), false).Length > 0) {
-                        string description = m.GetCustomAttribute<LuaTag>().description;
-                        if (description != "") {
-                            foreach (string descriptionLine in description.Split('\n')) {
-                                defs.WriteLine($"--- {descriptionLine}");
-                            }
+            foreach (MethodInfo m in t.GetMethods()) {
+                if (m.Name.StartsWith("get_") | m.Name.StartsWith("set_")) continue;
+                if (!(m.DeclaringType == t | m.DeclaringType.Namespace.StartsWith("Dorsal."))) continue;
+                if (m.IsPrivate) continue;
+
+                string mParams = "";
+                foreach (ParameterInfo mParam in m.GetParameters()) {
+                    mParams += mParam.Name + ", ";  // TODO: Use LINQ or something
+                    defs.WriteLine($"--- @param {mParam.Name} {CSharpTypeToLuaType(mParam.ParameterType)}");
+                }
+                mParams = mParams.Substring(0, Math.Max(0, mParams.Length - 2));  // remove trailing comma
+                if (m.ReturnType.Name != "Void") {
+                    defs.WriteLine($"--- @return {CSharpTypeToLuaType(m.ReturnType)}");
+                }
+                if (m.GetCustomAttributes(typeof(LuaTag), false).Length > 0) {
+                    string description = m.GetCustomAttribute<LuaTag>().description;
+                    if (description != "") {
+                        foreach (string descriptionLine in description.Split('\n')) {
+                            defs.WriteLine($"--- {descriptionLine}");
                         }
                     }
-                    defs.WriteLine($"function {className}_def:{m.Name}({mParams}) end");
                 }
+                defs.WriteLine($"function {className}_def:{m.Name}({mParams}) end");
             }
         }
 
