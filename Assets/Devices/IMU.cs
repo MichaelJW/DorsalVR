@@ -157,6 +157,20 @@ namespace Dorsal.Devices {
             UpdateOutputs(context.time);
         }
 
+        public void SetPositionBinding(string path = "", string interactions = "", string processors = "") {
+            UnbindPosition();
+            InputAction inputAction = new InputAction();
+            inputAction.AddBinding(path, interactions, processors);
+            this.positionAction = inputAction;
+        }
+
+        public void SetRotationBinding(string path = "", string interactions = "", string processors = "") {
+            UnbindPosition();
+            InputAction inputAction = new InputAction();
+            inputAction.AddBinding(path, interactions, processors);
+            this.rotationAction = inputAction;
+        }
+
         // For internal representation of controller
         Vector3[] dPos;  // device position
         double[] velX;

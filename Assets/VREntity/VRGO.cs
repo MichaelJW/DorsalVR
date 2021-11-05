@@ -19,6 +19,38 @@ namespace Dorsal.VREntity {
 
         }
 
+        public void SetVREntity(string primitive = "Cube") {
+            if (vrEntity != null) {
+                Destroy(vrEntity);
+            }
+            switch (primitive.ToLower()) {
+                case "sphere":
+                    vrEntity = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    break;
+                case "capsule":
+                    vrEntity = GameObject.CreatePrimitive(PrimitiveType.Capsule);
+                    break;
+                case "cylinder":
+                    vrEntity = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+                    break;
+                case "cube":
+                    vrEntity = GameObject.CreatePrimitive(PrimitiveType.Cube);
+                    break;
+                case "plane":
+                    vrEntity = GameObject.CreatePrimitive(PrimitiveType.Plane);
+                    break;
+                case "quad":
+                    vrEntity = GameObject.CreatePrimitive(PrimitiveType.Quad);
+                    break;
+                default:
+                    break;
+            }
+            if (vrEntity != null) {
+                vrEntity.transform.parent = container.transform;
+                vrEntity.transform.localScale = Vector3.one;
+            }
+        }
+
         public void SetPositionOffset(float x = 0.0f, float y = 0.0f, float z = 0.0f) {
             container.transform.position = new Vector3(x, y, z);
         }

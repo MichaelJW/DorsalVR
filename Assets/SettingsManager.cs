@@ -16,6 +16,7 @@ using MoonSharp.Interpreter;
 using Dorsal.External.Dolphin;
 using MoonSharp.Interpreter.Loaders;
 using Dorsal.Devices;
+using Dorsal.VREntity;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -40,9 +41,13 @@ public class SettingsManager : MonoBehaviour
         DolphinManager dolphinManager = this.GetComponent<DolphinManager>();
         DeviceManager deviceManager = this.GetComponent<DeviceManager>();
         UserData.RegisterAssembly();  // Registers everything with a [MoonSharpUserData] attrib
+        
         UserData.RegisterProxyType<DolphinManagerLuaProxy, DolphinManager>(r => new DolphinManagerLuaProxy(dolphinManager));
         UserData.RegisterProxyType<DeviceManagerLuaProxy, DeviceManager>(r => new DeviceManagerLuaProxy(deviceManager));
         UserData.RegisterProxyType<ScreenLuaProxy, Dorsal.Devices.Screen>(r => new ScreenLuaProxy(r));
+        UserData.RegisterProxyType<DecorationLuaProxy, Decoration>(r => new DecorationLuaProxy(r));
+        UserData.RegisterProxyType<IMULuaProxy, Dorsal.Devices.IMU>(r => new IMULuaProxy(r));
+
         Script script = new Script();
         script.Options.ScriptLoader = new FileSystemScriptLoader();
         script.Globals["dolphinManager"] = dolphinManager;

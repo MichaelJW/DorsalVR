@@ -1,4 +1,5 @@
-﻿using MoonSharp.Interpreter;
+﻿using Dorsal.VREntity;
+using MoonSharp.Interpreter;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,6 +19,14 @@ namespace Dorsal.Devices {
 
         public Screen CreateScreen() {
             return target.CreateScreen();
+        }
+
+        public IMU CreateIMU(string id) {
+            return target.CreateIMU(id);
+        }
+
+        public VRGO CreateDecoration() {
+            return target.CreateDecoration();
         }
     }
 }

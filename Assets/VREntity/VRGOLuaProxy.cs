@@ -13,6 +13,10 @@ namespace Dorsal.VREntity {
         public VRGOLuaProxy() {
         }
 
+        public void SetVREntity(string primitive = "Cube") {
+            target.SetVREntity(primitive);
+        }
+
         public void SetPositionOffset(float x = 0, float y = 0, float z = 0) {
             target.SetPositionOffset(x, y, z);
         }

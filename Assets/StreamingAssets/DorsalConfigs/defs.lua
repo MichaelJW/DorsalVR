@@ -5,6 +5,8 @@
 
 --- @class VRGO
 local VRGO_def = {}
+--- @param primitive string
+function VRGO_def:SetVREntity(primitive) end
 --- @param x number
 --- @param y number
 --- @param z number
@@ -39,16 +41,63 @@ function DolphinManager_def:Launch(dolphinConfig) end
 --- @return DolphinConfig
 function DolphinManager_def:CreateDolphinConfig() end
 
+--- @class Decoration
+local Decoration_def = {}
+--- @param primitive string
+function Decoration_def:SetVREntity(primitive) end
+--- @param x number
+--- @param y number
+--- @param z number
+function Decoration_def:SetPositionOffset(x, y, z) end
+function Decoration_def:ResetPositionOffset() end
+--- @param x number
+--- @param y number
+--- @param z number
+function Decoration_def:SetScale(x, y, z) end
+function Decoration_def:ResetScale() end
+--- @param x number
+--- @param y number
+--- @param z number
+function Decoration_def:SetRotationOffset(x, y, z) end
+function Decoration_def:ResetRotationOffset() end
+--- @param path string
+--- @param interactions string
+--- @param processors string
+function Decoration_def:SetPositionBinding(path, interactions, processors) end
+function Decoration_def:ResetPositionBinding() end
+--- @param path string
+--- @param interactions string
+--- @param processors string
+function Decoration_def:SetRotationBinding(path, interactions, processors) end
+
 --- @class DeviceManager
 --- Allows creation of Dorsal devices
 local DeviceManager_def = {}
 --- @return Screen
 function DeviceManager_def:CreateScreen() end
+--- @param id string
+--- @return IMU
+function DeviceManager_def:CreateIMU(id) end
+--- @return VRGO
+function DeviceManager_def:CreateDecoration() end
+
+--- @class IMU
+local IMU_def = {}
+--- @param path string
+--- @param interactions string
+--- @param processors string
+function IMU_def:SetPositionBinding(path, interactions, processors) end
+--- @param path string
+--- @param interactions string
+--- @param processors string
+function IMU_def:SetRotationBinding(path, interactions, processors) end
 
 --- @class Screen
 local Screen_def = {}
 function Screen_def:EnableSBS3D() end
 function Screen_def:DisableSBS3D() end
+--- @param primitive string
+function Screen_def:SetVREntity(primitive) end
 --- @param x number
 --- @param y number
 --- @param z number
