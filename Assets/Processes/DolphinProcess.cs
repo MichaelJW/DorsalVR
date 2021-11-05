@@ -57,7 +57,34 @@ namespace Dorsal.Processes {
                 0
             );
 
+            if (gameHWnd == (IntPtr)0) return GetMenuHWnd();
             return gameHWnd;
+        }
+
+        public IntPtr GetMenuHWnd() {
+            IntPtr menuHWnd = (IntPtr)0;
+            if (_windowsProcess == null) return menuHWnd;
+            _windowsProcess.Refresh();  // need to do this to get the latest info about the process
+
+            EnumWindows(  // iterate through all windows
+                delegate (IntPtr hWnd, int lParam) {
+                    GetWindowThreadProcessId(hWnd, out int processId);  // get processId of current window
+                    if (processId == _windowsProcess.Id) {  // if it matches our process (i.e. if spawned by Dolphin)...
+                        // ... get the title:
+                        int windowTextLength = GetWindowTextLength(hWnd);
+                        StringBuilder builder = new StringBuilder(windowTextLength);
+                        GetWindowText(hWnd, builder, windowTextLength + 1);
+                        if (builder.ToString().StartsWith("Dolphin") && !builder.ToString().Contains("|")) {
+                            menuHWnd = hWnd;
+                            return true;  // EnumWindowsProc spec wants this
+                        }
+                    }
+                    return true;  // EnumWindowsProc spec wants this
+                },
+                0
+            );
+
+            return menuHWnd;
         }
 
         public void Close() {
